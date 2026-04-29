@@ -40,6 +40,11 @@ const positions = [
 export default function CareersPage() {
   const [selectedPosition, setSelectedPosition] = useState<string>('');
   const formRef = useRef<HTMLDivElement>(null);
+  const openingsRef = useRef<HTMLElement>(null);
+
+  const scrollToOpenings = () => {
+    openingsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   const handleApplyNow = (positionTitle: string) => {
     setSelectedPosition(positionTitle);
@@ -74,10 +79,10 @@ export default function CareersPage() {
             At ZAR, craftsmanship is not just a process—it’s a shared philosophy. Every piece of jewellery is the result of seamless collaboration between designers, artisans, technicians, and business teams, all working towards a single standard of excellence.
           </p>
           <div className={styles.btn_wrapper}>
-            <Button href="/contact" variant="primary" showArrow>
+            <Button variant="primary" showArrow onClick={scrollToOpenings}>
               View Open Positions
             </Button>
-            <Button href="/contact" variant="secondary" showArrow>
+            <Button variant="secondary" showArrow onClick={() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
               Apply Now
             </Button>
           </div>
@@ -178,7 +183,7 @@ export default function CareersPage() {
       <CareerSlider />
       
       {/* Current Openings Section */}
-      <section className={`mt-100 ${styles.openingsSection}`}>
+      <section ref={openingsRef} className={`mt-100 ${styles.openingsSection}`}>
         <div className="container">
           <h2 className="fs_54 txt_center" style={{ marginBottom: '12px' }}>CURRENT OPENINGS</h2>
           <p style={{ textAlign: 'center', color: '#666', marginBottom: '60px', fontSize: '14px' }}>

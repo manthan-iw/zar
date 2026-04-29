@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper';
 import { Autoplay } from 'swiper/modules';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from './RetailerSlider.module.css';
 
@@ -79,10 +79,34 @@ export default function RetailerSlider() {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const wrapRefs  = useRef<(HTMLDivElement | null)[]>([]);
   const swiperRef = useRef<SwiperType | null>(null);
+  const [skeletonTarget, setSkeletonTarget] = useState(3);
   const [loadedVideos, setLoadedVideos] = useState<boolean[]>(() =>
     testimonials.map(() => false)
   );
-  const showSkeleton = loadedVideos.some((loaded) => !loaded);
+  const showSkeleton = loadedVideos.slice(0, skeletonTarget).some((loaded) => !loaded);
+
+  useEffect(() => {
+    function updateSkeletonTarget() {
+      if (window.innerWidth <= 767) {
+        setSkeletonTarget(1);
+        return;
+      }
+
+      if (window.innerWidth <= 1199) {
+        setSkeletonTarget(2);
+        return;
+      }
+
+      setSkeletonTarget(3);
+    }
+
+    updateSkeletonTarget();
+    window.addEventListener('resize', updateSkeletonTarget);
+
+    return () => {
+      window.removeEventListener('resize', updateSkeletonTarget);
+    };
+  }, []);
 
   function markVideoLoaded(idx: number) {
     setLoadedVideos((current) => {
@@ -195,7 +219,7 @@ export default function RetailerSlider() {
           }}
           onSwiper={(s) => { swiperRef.current = s; }}
           onSlideChange={stopAll}
-          className={styles.swiper}
+          className={`${styles.swiper} ${showSkeleton ? styles.swiperLoading : ''}`}
         >
           {testimonials.map((t, idx) => (
             <SwiperSlide

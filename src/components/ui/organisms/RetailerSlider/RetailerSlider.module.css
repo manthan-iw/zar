@@ -92,6 +92,10 @@
   overflow: visible !important;
 }
 
+.swiperLoading {
+  opacity: 0;
+}
+
 .swiper :global(.swiper-wrapper) {
   align-items: flex-start !important;
 }
