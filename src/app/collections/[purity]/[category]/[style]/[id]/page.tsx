@@ -11,20 +11,24 @@ type Props = {
 };
 
 type TradeHighlight = {
+  icon: string;
   title: string;
   description: string;
 };
 
 const TRADE_HIGHLIGHTS: TradeHighlight[] = [
   {
+    icon: 'images/sa.svg',
     title: 'Sample Availability',
     description: 'Ready for viewing at our headquarters and major trade shows.',
   },
   {
+    icon: 'images/bp.svg',
     title: 'Bulk Production',
     description: '12 to 15 business days from order confirmation.',
   },
   {
+    icon: 'images/moq.svg',
     title: 'MOQ',
     description: '1 Piece (Custom) or 5+ Pieces for wholesale pricing.',
   },
@@ -114,10 +118,7 @@ export default async function ProductDetailPage({ params }: Props) {
             {TRADE_HIGHLIGHTS.map((item) => (
               <article key={item.title} className={styles.highlightCard}>
                 <div className={styles.highlightIcon} aria-hidden="true">
-                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="24" cy="24" r="23.25" stroke="#8D7547" strokeWidth="1.5" />
-                    <circle cx="24" cy="24" r="6" fill="#CAAC8F" />
-                  </svg>
+                  <img src={item.icon} alt="" />
                 </div>
                 <h3 className={styles.highlightTitle}>{item.title}</h3>
                 <p className={styles.highlightDescription}>{item.description}</p>
@@ -127,16 +128,16 @@ export default async function ProductDetailPage({ params }: Props) {
         </div>
       </section>
 
-      <RelatedProductsSlider
-        title="You might also like"
-        products={related.map((item) => ({
-          id: item.id,
-          title: item.name,
-          description: item.description,
-          image: item.image,
-        }))}
-        basePath={`/collections/${purity}/${category}/${style}`}
-      />
-    </div>
+  <RelatedProductsSlider
+    title="You might also like"
+    products={related.map((item) => ({
+      id: item.id,
+      title: item.name,
+      description: item.description,
+      image: item.image,
+    }))}
+    basePath={`/collections/${purity}/${category}/${style}`}
+  />
+    </div >
   );
 }

@@ -86,6 +86,7 @@ export default function ModelShowcaseSection() {
                       poster={model.poster}
                       camera-controls
                       disable-zoom
+                      disable-tap
                       max-camera-orbit="auto auto 100%"
                       auto-rotate
                       touch-action="pan-y"

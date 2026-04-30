@@ -62,14 +62,14 @@
 
 .sortLabel {
     display: flex;
-    align-items: center;    
+    align-items: center;
     gap: 10px;
     text-transform: uppercase;
     white-space: nowrap;
 }
 
 .sortSelect {
-    font-size: 18px;    
+    font-size: 18px;
     color: var(--color-black);
     background: none;
     border: none;
@@ -160,7 +160,7 @@
     transform: scale(1.04);
 }
 
-.productContent{
+.productContent {
     display: flex;
     gap: 30px;
     justify-content: space-between;
@@ -175,10 +175,13 @@
 }
 
 .productTitle {
-    font-family: var(--font-body);
-    font-size: 16px;
-    font-weight: var(--fw-medium);
-    color: var(--color-brown);
+    color: #000;
+    font-family: "Helvetica Neue";
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px;
+    /* 106.667% */
 }
 
 .productDesc {

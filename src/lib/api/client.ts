@@ -18,7 +18,8 @@ function getApiBaseUrl() {
     return `https://${process.env.VERCEL_URL}`;
   }
 
-  return 'http://localhost:3000';
+  const port = process.env.PORT || '3000';
+  return `http://localhost:${port}`;
 }
 
 export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
