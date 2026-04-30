@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from '@/components/ui/atoms/Button/Button';
 import styles from './page.module.css';
 import Image from 'next/image';
@@ -9,38 +9,53 @@ import CareerSlider from './CareerSlider';
 import SelectField from '@/components/ui/atoms/SelectField/SelectField';
 import InputField from '@/components/ui/atoms/InputField/InputField';
 import PhoneField from '@/components/ui/atoms/PhoneField/PhoneField';
+import { fetchCareerPositions } from '@/lib/api/careers';
+import type { CareerPosition } from '@/types/domain';
 
-const positions = [
+const fallbackPositions: CareerPosition[] = [
   {
+    id: 'fallback-hr',
+    slug: 'hr-executive',
     title: 'HR Executive',
     location: 'Mumbai',
     experience: '2-4 Years',
-    description: 'Join our team of expert goldsmiths crafting premium bangles. 5+ years of experience required in traditional goldsmithing techniques.',
+    description: 'Join our team to build people systems and hiring pipelines that support craftsmanship excellence.',
+    isActive: true,
   },
   {
+    id: 'fallback-qa',
+    slug: 'quality-assurance-manager',
     title: 'Quality Assurance Manager',
     location: 'Mumbai',
     experience: '1-4 Years',
-    description: 'Lead our quality assurance processes and ensure every Zar product meets the highest standards of excellence.',
-  },
-  {
-    title: 'Product Designer',
-    location: 'Mumbai',
-    experience: '2-5 Years',
-    description: 'Design the next generation of gold bangles that blend traditional aesthetics with contemporary appeal.',
-  },
-  {
-    title: 'Sales Executive — Retail Partnerships',
-    location: 'Pan India',
-    experience: '2-4 Years',
-    description: 'Build and maintain relationships with our retail partners across India. Travel required.',
+    description: 'Lead quality assurance processes and ensure every Zar product meets premium finishing standards.',
+    isActive: true,
   },
 ];
 
 export default function CareersPage() {
   const [selectedPosition, setSelectedPosition] = useState<string>('');
+  const [positions, setPositions] = useState<CareerPosition[]>(fallbackPositions);
   const formRef = useRef<HTMLDivElement>(null);
   const openingsRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetchCareerPositions()
+      .then((items) => {
+        if (!cancelled && items.length > 0) {
+          setPositions(items);
+        }
+      })
+      .catch(() => {
+        // Keep fallback positions on API failure.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const scrollToOpenings = () => {
     openingsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });

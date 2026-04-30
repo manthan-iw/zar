@@ -20,21 +20,21 @@ interface Category {
 
 const categoriesByKt: Record<string, Category[]> = {
   '22kt': [
-    { label: 'Bangles & Bracelet', href: '/collections/22k/bangles-bracelet', image: '/images/menu-kids-jewellery.webp' },
-    { label: 'Mangalsutra & Necklace', href: '/collections/22k/mangalsutra-necklace', image: '/images/menu-kids-jewellery.webp' },
-    { label: 'Mens Jewellery', href: '/collections/22k/mens-jewellery', image: '/images/menu-kids-jewellery.webp' },
-    { label: 'Earrings', href: '/collections/22k/earrings', image: '/images/menu-kids-jewellery.webp' },
-    { label: 'Kids Jewellery', href: '/collections/22k/kids-jewellery', image: '/images/menu-kids-jewellery.webp' },
-    { label: 'Lightweight Jewellery', href: '/collections/22k/lightweight-jewellery', image: '/images/menu-kids-jewellery.webp' },
-    { label: 'Rings', href: '/collections/22k/rings', image: '/images/menu-kids-jewellery.webp' },
+    { label: 'Bangles & Bracelet', href: '/collections/22k/bangles-bracelet', image: '/images/menu/menu-1.png' },
+    { label: 'Mangalsutra & Necklace', href: '/collections/22k/mangalsutra-necklace', image: '/images/menu/menu-2.png' },
+    { label: 'Mens Jewellery', href: '/collections/22k/mens-jewellery', image: '/images/menu/menu-3.png' },
+    { label: 'Earrings', href: '/collections/22k/earrings', image: '/images/menu/menu-4.png' },
+    { label: 'Kids Jewellery', href: '/collections/22k/kids-jewellery', image: '/images/menu/menu-5.png' },
+    { label: 'Lightweight Jewellery', href: '/collections/22k/lightweight-jewellery', image: '/images/menu/menu-8.png' },
+    { label: 'Rings', href: '/collections/22k/rings', image: '/images/menu/menu-6.png' },
   ],
   '18kt': [
-    { label: 'Bangles & Bracelet', href: '/collections/18k/bangles-bracelet', image: '/images/menu-kids-jewellery.webp' },
-    { label: 'Mangalsutra & Necklace', href: '/collections/18k/mangalsutra-necklace', image: '/images/menu-kids-jewellery.webp' },
-    { label: 'Lightweight Jewellery', href: '/collections/18k/lightweight-jewellery', image: '/images/menu-kids-jewellery.webp' },
-    { label: 'Earrings', href: '/collections/18k/earrings', image: '/images/menu-kids-jewellery.webp' },
-    { label: 'Rings', href: '/collections/18k/rings', image: '/images/menu-kids-jewellery.webp' },
-    { label: 'Kids Jewellery', href: '/collections/18k/kids-jewellery', image: '/images/menu-kids-jewellery.webp' },
+    { label: 'Bangles & Bracelet', href: '/collections/18k/bangles-bracelet', image: '/images/menu/menu-1.png' },
+    { label: 'Mangalsutra & Necklace', href: '/collections/18k/mangalsutra-necklace', image: '/images/menu/menu-2.png' },
+    { label: 'Lightweight Jewellery', href: '/collections/18k/lightweight-jewellery', image: '/images/menu/menu-3.png' },
+    { label: 'Earrings', href: '/collections/18k/earrings', image: '/images/menu/menu-4.png' },
+    { label: 'Rings', href: '/collections/18k/rings', image: '/images/menu/menu-5.png' },
+    { label: 'Kids Jewellery', href: '/collections/18k/kids-jewellery', image: '/images/menu/menu-6.png' },
   ],
 };
 

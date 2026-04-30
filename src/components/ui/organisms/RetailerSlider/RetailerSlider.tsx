@@ -81,7 +81,7 @@ export default function RetailerSlider() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [skeletonTarget, setSkeletonTarget] = useState(3);
   const [loadedVideos, setLoadedVideos] = useState<boolean[]>(() =>
-    testimonials.map(() => false)
+    testimonials.map(() => true)
   );
   const showSkeleton = loadedVideos.slice(0, skeletonTarget).some((loaded) => !loaded);
 
@@ -234,7 +234,7 @@ export default function RetailerSlider() {
               >
                 <video
                   ref={(el) => { videoRefs.current[idx] = el; }}
-                  src={t.video}
+                  // src={t.video}
                   poster="/images/Distributor-Testimonials.png"
                   loop
                   playsInline

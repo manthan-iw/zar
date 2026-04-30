@@ -22,7 +22,6 @@
   transition:
     transform 0.4s ease,
     opacity 0.4s ease;
-  transform: scale(0.8);
   opacity: 1;
 }
 
@@ -36,9 +35,13 @@
   opacity: 1;
 }
 
-.slider :global(.swiper-slide-active) .cardLabel,
-.slider :global(.swiper-slide-active) .circleBg {
+.slider :global(.swiper-slide-active) .cardLabel{
   opacity: 1;
+}
+
+.slider :global(.swiper-slide-active) .viewer {
+  width: 100%;
+  height: 400px;
 }
 
 .card {
@@ -62,8 +65,8 @@
 }
 
 .viewer {
-  width: 100%;
-  height: 400px;
+  width: 50%;
+  height: 340px;
   display: block;
   object-fit: cover;
 }
@@ -87,7 +90,7 @@
   width: 95%;
   height: 100%;
   transform: translate(-50%, -50%) scale(0.65);
-  opacity: 0;
+  opacity: 1;
   z-index: -1;
   pointer-events: none;
   background-image: url('data:image/svg+xml;utf8,<svg width="551" height="567" viewBox="0 0 551 567" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="275.451" cy="266.834" r="266.334" stroke="%23D0B480"/><circle cx="275.45" cy="291.465" r="274.95" stroke="%23D0B480"/></svg>');
@@ -135,12 +138,12 @@
 
 /* 50% of the 72px arrow overlaps the slides = 36px inside */
 .navPrev {
-  left: -36px;
+  left: 0px;
   transform: translateY(-50%) rotate(180deg);
 }
 
 .navNext {
-  right: -36px;
+  right: 0px;
 }
 
 /* Hide default Swiper arrows */

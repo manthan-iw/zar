@@ -85,11 +85,12 @@ export default function ModelShowcaseSection() {
                       alt={model.alt}
                       poster={model.poster}
                       camera-controls
+                      disable-zoom
                       max-camera-orbit="auto auto 100%"
                       auto-rotate
                       touch-action="pan-y"
                       interaction-prompt="auto"
-                      shadow-intensity="1"
+                      shadow-intensity="0"
                       exposure="1"
                       loading="lazy"
                       reveal="auto"

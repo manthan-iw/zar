@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import PageHeader from '@/components/ui/PageHeader/PageHeader';
+import { fetchProducts } from '@/lib/api/catalog';
 import ProductListingClient from './ProductListingClient';
 import styles from './page.module.css';
 
@@ -32,17 +33,16 @@ export default async function ProductListingPage({ params }: Props) {
   const categoryName = formatName(category);
   const styleName = formatName(style);
 
-  // Dummy Product Data
-  const products = [
-    { id: 'dazzling-1', title: 'Design No. CS100006', description: 'Lorem ipsum dolor sit amet consectetur. Nisl nec faucibus nisi.', image: '/images/homepage/product_1.webp' },
-    { id: 'dazzling-2', title: 'Design No. CS100007', description: 'Lorem ipsum dolor sit amet consectetur. Nisl nec faucibus nisi.', image: '/images/homepage/product_2.webp' },
-    { id: 'dazzling-3', title: 'Design No. CS100008', description: 'Lorem ipsum dolor sit amet consectetur. Nisl nec faucibus nisi.', image: '/images/homepage/product_3.webp' },
-    { id: 'dazzling-4', title: 'Design No. CS100009', description: 'Lorem ipsum dolor sit amet consectetur. Nisl nec faucibus nisi.', image: '/images/homepage/product_1.webp' },
-    { id: 'dazzling-5', title: 'Design No. CS100010', description: 'Lorem ipsum dolor sit amet consectetur. Nisl nec faucibus nisi.', image: '/images/homepage/product_2.webp' },
-    { id: 'dazzling-6', title: 'Design No. CS100011', description: 'Lorem ipsum dolor sit amet consectetur. Nisl nec faucibus nisi.', image: '/images/homepage/product_3.webp' },
-    { id: 'dazzling-7', title: 'Design No. CS100012', description: 'Lorem ipsum dolor sit amet consectetur. Nisl nec faucibus nisi.', image: '/images/homepage/product_1.webp' },
-    { id: 'dazzling-8', title: 'Design No. CS100013', description: 'Lorem ipsum dolor sit amet consectetur. Nisl nec faucibus nisi.', image: '/images/homepage/product_2.webp' },
-  ];
+  const products = await fetchProducts(purity, category, style)
+    .then((items) =>
+      items.map((item) => ({
+        id: item.id,
+        title: item.name,
+        description: item.description,
+        image: item.image,
+      }))
+    )
+    .catch(() => []);
 
   return (
     <div className={styles.page}>
@@ -51,10 +51,10 @@ export default async function ProductListingPage({ params }: Props) {
           { label: 'Home', href: '/' },
           { label: `${purityLabel} Gold`, href: `/collections/${purity}` },
           { label: categoryName, href: `/collections/${purity}/${category}` },
-          { label: styleName, isActive: true }
+          { label: styleName, isActive: true },
         ]}
       />
-      <div className='banner'>
+      <div className="banner">
         <Image
           src="/images/about/about_banner.webp"
           alt="Crafting gold bangle"
