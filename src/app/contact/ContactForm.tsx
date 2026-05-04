@@ -7,6 +7,7 @@ import InputField from '@/components/ui/atoms/InputField/InputField';
 import PhoneField from '@/components/ui/atoms/PhoneField/PhoneField';
 import SelectField from '@/components/ui/atoms/SelectField/SelectField';
 import TextareaField from '@/components/ui/atoms/TextareaField/TextareaField';
+import AppLoader from '@/components/ui/organisms/AppLoader/AppLoader';
 import styles from './page.module.css';
 
 type ContactFormValues = {
@@ -220,7 +221,14 @@ export default function ContactForm() {
         </div>
 
         <Button variant="primary" showArrow type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+          {isSubmitting ? (
+            <span className={styles.submitLoadingInline}>
+              <AppLoader size={28} delayMs={0} label="Submitting form" showLabel={false} />
+              <span>Sending...</span>
+            </span>
+          ) : (
+            'Send Message'
+          )}
         </Button>
 
         {submitMessage && (

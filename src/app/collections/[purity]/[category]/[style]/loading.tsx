@@ -1,7 +1,11 @@
+import PageHeaderSkeleton from '@/components/ui/PageHeader/PageHeaderSkeleton';
+import ProductListingSkeleton from '@/components/ui/organisms/ProductListingSkeleton/ProductListingSkeleton';
+
 export default function StyleLoading() {
   return (
-    <section className="container" style={{ padding: '100px 0' }}>
-      <p>Loading products...</p>
-    </section>
+    <>
+      <PageHeaderSkeleton showBanner />
+      <ProductListingSkeleton cardCount={6} />
+    </>
   );
 }

@@ -18,17 +18,17 @@ type TradeHighlight = {
 
 const TRADE_HIGHLIGHTS: TradeHighlight[] = [
   {
-    icon: 'images/sa.svg',
+    icon: '/images/sa.svg',
     title: 'Sample Availability',
     description: 'Ready for viewing at our headquarters and major trade shows.',
   },
   {
-    icon: 'images/bp.svg',
+    icon: '/images/bp.svg',
     title: 'Bulk Production',
     description: '12 to 15 business days from order confirmation.',
   },
   {
-    icon: 'images/moq.svg',
+    icon: '/images/moq.svg',
     title: 'MOQ',
     description: '1 Piece (Custom) or 5+ Pieces for wholesale pricing.',
   },

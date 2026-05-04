@@ -55,6 +55,12 @@
   color: #d13b3b;
 }
 
+.submitLoadingInline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .contactMapSection {
   display: grid;
   grid-template-columns: 35% 50%;

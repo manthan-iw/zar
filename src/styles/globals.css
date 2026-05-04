@@ -322,35 +322,8 @@ ol {
   margin-bottom: 12px;
 }
 
-body.route-transition-active {
-  transition-property: opacity, background-color, transform, filter;
-  transition-timing-function: ease-in-out;
-  transition-duration: 500ms;
-}
-
 .page-transition-shell {
-  opacity: 1;
-  background: transparent;
-  transform: translateY(0);
-  filter: blur(0);
-  transition-property: opacity, background-color, transform, filter;
-  transition-timing-function: ease-in-out;
-  transition-duration: 500ms;
   will-change: opacity, transform, filter;
-}
-
-.page-transition-leaving {
-  opacity: 0;
-  background: #000;
-  transform: translateY(40px);
-  filter: blur(12px);
-}
-
-.page-transition-entering {
-  opacity: 1;
-  background: transparent;
-  transform: translateY(0);
-  filter: blur(0);
 }
 
 .valueCard p {

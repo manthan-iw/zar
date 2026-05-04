@@ -1,0 +1,52 @@
+.section {
+  margin-top: 20px;
+}
+
+.breadcrumbs,
+.title,
+.banner {
+  background: linear-gradient(90deg, #f6f6f6 0%, #ececec 50%, #f6f6f6 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+
+.breadcrumbs {
+  height: 16px;
+  width: min(420px, 92%);
+  margin-top: 70px;
+  margin-bottom: 20px;
+  border-radius: 999px;
+}
+
+.title {
+  height: 72px;
+  width: min(520px, 95%);
+  border-radius: 12px;
+}
+
+.banner {
+  width: min(100%, var(--max-width));
+  margin: 28px auto 0;
+  aspect-ratio: 21 / 8;
+  border-radius: 14px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .title {
+    height: 48px;
+  }
+
+  .banner {
+    aspect-ratio: 16 / 10;
+  }
+}

@@ -1,7 +1,5 @@
+import RouteLoadingState from '@/components/ui/organisms/RouteLoadingState/RouteLoadingState';
+
 export default function Loading() {
-  return (
-    <section className="container" style={{ padding: '120px 0' }}>
-      {/* <p>Loading content...</p> */}
-    </section>
-  );
+  return <RouteLoadingState message="" />;
 }
