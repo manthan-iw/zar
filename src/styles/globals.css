@@ -190,14 +190,14 @@ ol {
   font-weight: 400;
   line-height: 27px;
   font-family: var(--font-body);
-  color: #000;
+  color: #999;
   background: #ffffff;
   outline: none;
   transition: border-color 0.2s;
 }
 
-.input::placeholder {
-  color: #000;
+.input::placeholder, textarea::placeholder {
+  color: #999;
 }
 
 .input:focus {
@@ -209,7 +209,7 @@ ol {
 }
 
 .iti__selected-dial-code {
-  color: #000
+  color: #999;
 }
 
 .inputfile {

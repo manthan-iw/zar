@@ -1,4 +1,3 @@
-
 .content {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -58,8 +57,8 @@
 }
 
 .contactMapSection {
-  display: grid;
   grid-template-columns: 35% 50%;
+  display: grid;
   gap: 50px;
   justify-content: space-between;
   align-items: center;
@@ -137,9 +136,16 @@
 
 .contactMapFrameWrap {
   border: 1px solid var(--color-gold-accent);
+  padding-bottom: 1px;
 }
 
 
+
+@media (max-width: 1441px) {
+  .contactMapSection {
+    grid-template-columns: 45% 50%;
+  }
+}
 
 @media (max-width: 768px) {
   .content {
