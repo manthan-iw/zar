@@ -15,7 +15,7 @@ function getApiBaseUrl() {
   }
 
   if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+    return `https://https://zar-one.vercel.app/`;
   }
 
   const port = process.env.PORT || '3000';

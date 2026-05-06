@@ -176,11 +176,14 @@
   .formRow {
     flex-direction: column;
   }
+
   .contactMapSection {
     grid-template-columns: 1fr;
+    padding: 0;
   }
-  .contactMapFrameWrap iframe{
+
+  .contactMapFrameWrap iframe {
     height: 400px;
   }
-  
+
 }
