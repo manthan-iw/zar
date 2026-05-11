@@ -6,8 +6,9 @@ import { Autoplay } from 'swiper/modules';
 import Button from '@/components/ui/atoms/Button/Button';
 import { showcaseModels } from '@/lib/model-showcase';
 
-// Duplicate list so Swiper loop mode has enough slides (needs >= slidesPerView * 2 = 6).
-const displayModels = [...showcaseModels, ...showcaseModels];
+// Triple the list so we have enough real slides to scroll both directions
+// without loop mode (which clones DOM nodes and breaks model-viewer web components).
+const displayModels = [...showcaseModels, ...showcaseModels, ...showcaseModels];
 import type { Swiper as SwiperType } from 'swiper';
 import 'swiper/css';
 import styles from './ModelShowcaseSection.module.css';
@@ -54,7 +55,8 @@ export default function ModelShowcaseSection() {
             spaceBetween={0}
             slidesPerView={1}
             centeredSlides={true}
-            loop={true}
+            loop={false}
+            initialSlide={showcaseModels.length}
             allowTouchMove={false}
             // autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
             onSwiper={(swiper) => {
@@ -81,15 +83,14 @@ export default function ModelShowcaseSection() {
                       poster={model.poster}
                       camera-controls
                       disable-zoom
-                      disable-tap
                       max-camera-orbit="auto auto 100%"
                       auto-rotate
                       touch-action="pan-y"
                       interaction-prompt="auto"
                       shadow-intensity="0"
                       exposure="1"
-                      loading={index < 3 ? "eager" : "lazy"}  // first 3 are visible
-                      reveal={index < 3 ? "auto" : "interaction"}
+                      loading="eager"
+                      reveal="auto"
                       className={styles.viewer}
                     />
                   </div>
