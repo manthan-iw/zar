@@ -104,7 +104,6 @@ export default function ClientelePage() {
       </section>
 
       <RetailerSlider />
-<<<<<<< HEAD
       <section className="mt-100 mb-100">
         <div className="container">
           <h4 className="fs_54 txt_center">What Our Customers Say</h4>
@@ -114,18 +113,6 @@ export default function ClientelePage() {
                 <div className={styles.testi_message}>{testi.message}</div>
                 <div className={styles.testi_name}>{testi.name}</div>
                 <div className={styles.testi_designation}>{testi.designation}</div>
-=======
-
-      <section className="mt-100 mb-100">
-        <div className="container">
-          <h4 className='fs_54 txt_center'>What Our Customers Say</h4>
-          <div className={styles.testimonialGrid}>
-            {testimonials.map((testimonial, i) => (
-              <div key={i} className={styles.testimonialCard}>
-                <div className={styles.testimonialText}>{testimonial.message}</div>
-                <div className={styles.testimonialName}>{testimonial.name}</div>
-                <div className={styles.testimonialDesignation}>{testimonial.designation}</div>
->>>>>>> 9ed58c91ab3af0c2fb83ea22b861df1b7569e8da
               </div>
             ))}
           </div>
