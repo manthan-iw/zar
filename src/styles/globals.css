@@ -69,8 +69,8 @@ ol {
 }
 
 .imgFluid{
-  width: 100%;
-  height: auto;
+  width: 100%!important;
+  height: auto!important;
 }
 
 .mb_30 {
@@ -281,9 +281,9 @@ textarea::placeholder {
   overflow: hidden;
 }
 
-.storyImage {
+/* .storyImage {
   object-fit: cover;
-}
+} */
 
 
 .storyTextBlock p {
@@ -310,7 +310,7 @@ textarea::placeholder {
 
 .valuesGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 50px;
 }
 

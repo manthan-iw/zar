@@ -218,11 +218,11 @@ export default function HeroSection() {
                 </h1>
                 <p className={`${styles.subtitle} ${styles.subtitleEnter}`}>{activeSlide.subtitle}</p>
               </div>
-              <div className={styles.buttonWrap}>
+              {/* <div className={styles.buttonWrap}>
                 <Button variant="outline" showArrow onClick={() => setEnquiryOpen(true)}>
                   Enquire Now
                 </Button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -238,14 +238,14 @@ export default function AboutPage() {
         <div className="container">
           <div className="storyGrid">
             <div className="storyImageWrapper">
-              <Image src="/images/about/abt-4.jpg" alt="Zar team at work" fill className="storyImage" />
+              <Image src="/images/about/abt-4.jpg" alt="Zar team at work" fill className="storyImage imgFluid" />
             </div>
             <div className="storyTextBlock">
               <h2 className="fs_54">Design & Innovation</h2>
               <p>
                 <strong className="txt_black">Precision, Engineered.</strong>
               </p>
-              <p>At ZAR, design is not just expression it is execution.                </p>
+              <p>At ZAR, design is not just expression it is execution.</p>
               <p>We create ultra-light, design-led gold jewellery that merges heritage craftsmanship with modern engineering—crafted for those who value precision, comfort, and refinement.</p>
               <p className='txt_black'>Every piece is developed with intent:</p>
               <p>to make gold lighter, stronger, and more wearable—without compromising presence.</p>
@@ -296,21 +296,7 @@ export default function AboutPage() {
               </div>
               <h4>Discipline Over Hype</h4>
               <p>We value consistency, precision, and execution over noise.</p>
-            </div>
-            <div className="valueCard">
-              <div className="valueIcon">
-                <Image src="/images/about/cg.svg" alt="Zar team at work" height={130} width={130} />
-              </div>
-              <h4>Continuous Growth</h4>
-              <p>We evolve constantly raising our standards, processes, and capabilities.</p>
-            </div>
-            <div className="valueCard">
-              <div className="valueIcon">
-                <Image src="/images/about/lti.svg" alt="Zar team at work" height={130} width={130}  />
-              </div>
-              <h4>Legacy Through Impact</h4>
-              <p>We build lasting value through trust, quality, and enduring relationships.</p>
-            </div>            
+            </div>                        
           </div>
         </div>
       </section>

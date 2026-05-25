@@ -386,6 +386,11 @@ ul.designList li::marker {
   color: #666;
 }
 
+
+/* -------------------------------------------------------------- RESPONSIVE STARTS --------------------------------------------------------------*/
+@media (max-width: 1537px) {
+
+}
 @media (max-width: 1024px) {
   .collectionsGrid {
     grid-template-columns: repeat(2, 1fr);
