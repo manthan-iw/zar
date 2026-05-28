@@ -56,7 +56,7 @@ export default function RelatedProductsSlider({
     dispatch(addItem({
       id: product.id,
       name: product.title,
-      price: product.price ?? 0,
+      price: 12999,
       quantity: 1,
       image: product.image,
       purity: product.purity,
