@@ -1,13 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@/components/ui/atoms/Button/Button';
+import CustomCaptcha from '@/components/ui/molecules/CustomCaptcha/CustomCaptcha';
 import InputField from '@/components/ui/atoms/InputField/InputField';
 import PhoneField from '@/components/ui/atoms/PhoneField/PhoneField';
 import SelectField from '@/components/ui/atoms/SelectField/SelectField';
 import TextareaField from '@/components/ui/atoms/TextareaField/TextareaField';
 import AppLoader from '@/components/ui/organisms/AppLoader/AppLoader';
+import { submitContactInquiry } from '@/lib/api/contact';
 import styles from './page.module.css';
 
 type ContactFormValues = {
@@ -27,6 +29,17 @@ const MESSAGE_REGEX = /^[A-Za-z0-9\s.,'"?!@#$%&*()\-:+;[\]{}]{10,1000}$/;
 export default function ContactForm() {
   const [submitMessage, setSubmitMessage] = useState('');
   const [submitError, setSubmitError] = useState(false);
+  const [captchaValue, setCaptchaValue] = useState('');
+  const [isCaptchaValid, setIsCaptchaValid] = useState(false);
+  const [captchaRefreshKey, setCaptchaRefreshKey] = useState(0);
+
+  const handleCaptchaStatusChange = useCallback(
+    ({ value, isValid }: { value: string; isValid: boolean }) => {
+      setCaptchaValue(value);
+      setIsCaptchaValid(isValid);
+    },
+    []
+  );
 
   const {
     register,
@@ -50,26 +63,34 @@ export default function ContactForm() {
     setSubmitMessage('');
     setSubmitError(false);
 
+    if (!captchaValue || !isCaptchaValid) {
+      setSubmitError(true);
+      setSubmitMessage('Please complete the 4-digit captcha correctly before submitting.');
+      return;
+    }
+
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
+      const result = await submitContactInquiry({
+        fullName: values.name,           // ← Mapping
+        companyName: values.company || undefined,
+        email: values.email,
+        contactNumber: values.phone,     // ← Mapping
+        inquiryType: values.subject,     // ← Mapping
+        message: values.message,
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
+      if (!result.success) {
         setSubmitError(true);
-        setSubmitMessage(result?.error || 'Unable to submit your message. Please try again.');
+        setSubmitMessage(result.message || 'Unable to submit your message. Please try again.');
         return;
       }
 
       reset();
+      setCaptchaValue('');
+      setIsCaptchaValid(false);
+      setCaptchaRefreshKey((current) => current + 1);
       setSubmitError(false);
-      setSubmitMessage('Your message has been submitted successfully.');
+      setSubmitMessage(result.message || 'Your message has been submitted successfully.');
     } catch {
       setSubmitError(true);
       setSubmitMessage('Network error. Please try again in a moment.');
@@ -220,10 +241,12 @@ export default function ContactForm() {
           />
         </div>
 
+        <CustomCaptcha key={captchaRefreshKey} onStatusChange={handleCaptchaStatusChange} />
+
         <Button variant="primary" showArrow type="submit" disabled={isSubmitting}>
           {isSubmitting ? (
             <span className={styles.submitLoadingInline}>
-              <AppLoader size={28} delayMs={0} label="Submitting form" showLabel={false} />
+              {/* <AppLoader size={28} delayMs={0} label="Submitting form" showLabel={false} /> */}
               <span>Submitting...</span>
             </span>
           ) : (

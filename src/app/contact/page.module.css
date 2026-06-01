@@ -36,7 +36,6 @@
 
 .submitStatusSuccess,
 .submitStatusError {
-  margin: 10px 0 0;
   font-size: 14px;
   line-height: 1.4;
   font-family: var(--font-body);
@@ -54,6 +53,95 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+}
+
+.captchaBlock {
+  border: 1px solid rgba(163, 130, 116, 0.35);
+  padding: 14px;
+  background: rgba(208, 180, 128, 0.08);
+}
+
+.captchaHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.captchaLabel {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.captchaRefreshButton {
+  width: 42px;
+  height: 42px;
+  border: 1px solid #d5d0c8;
+  border-radius: 6px;
+  background: #f3f1ed;
+  color: #4d4d4d;
+  font-family: var(--font-body);
+  font-size: 22px;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.captchaRefreshButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.captchaRefreshIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-1px);
+}
+
+.captchaRow {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.captchaImageFrame {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  min-height: 42px;
+}
+
+.captchaImage {
+  display: block;
+  width: 160px;
+  height: 42px;
+  border-radius: 4px;
+  user-select: none;
+}
+
+.captchaImagePlaceholder {
+  width: 160px;
+  height: 42px;
+  border: 1px solid #d5d0c8;
+  border-radius: 4px;
+  background: #f8f6f2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #7e7e7e;
+  letter-spacing: 0.4em;
+}
+
+.captchaInputGroup {
+  flex: 1;
 }
 
 .contactMapSection {
@@ -177,6 +265,10 @@
 
 @media (max-width: 576px) {
   .formRow {
+    flex-direction: column;
+  }
+
+  .captchaRow {
     flex-direction: column;
   }
 

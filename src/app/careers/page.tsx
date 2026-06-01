@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@/components/ui/atoms/Button/Button';
 import styles from './page.module.css';
@@ -10,6 +10,7 @@ import CareerSlider from './CareerSlider';
 import SelectField from '@/components/ui/atoms/SelectField/SelectField';
 import InputField from '@/components/ui/atoms/InputField/InputField';
 import PhoneField from '@/components/ui/atoms/PhoneField/PhoneField';
+import CustomCaptcha from '@/components/ui/molecules/CustomCaptcha/CustomCaptcha';
 import { fetchCareerPositions } from '@/lib/api/careers';
 import type { CareerPosition } from '@/types/domain';
 
@@ -26,15 +27,26 @@ type CareerFormValues = {
 const NAME_REGEX = /^[A-Za-z][A-Za-z\s'.-]{1,79}$/;
 const COMPANY_REGEX = /^[A-Za-z0-9][A-Za-z0-9\s'&.,()-]{1,99}$/;
 const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-const WORK_REGEX = /^[A-Za-z0-9\s+\-\/]{1,30}$/;
+const WORK_REGEX = /^[A-Za-z0-9\s+-]{1,30}$/;
 
 
 export default function CareersPage() {
   const [positions, setPositions] = useState<CareerPosition[]>([]);
   const [submitMessage, setSubmitMessage] = useState('');
   const [submitError, setSubmitError] = useState(false);
+  const [captchaValue, setCaptchaValue] = useState('');
+  const [isCaptchaValid, setIsCaptchaValid] = useState(false);
+  const [captchaRefreshKey, setCaptchaRefreshKey] = useState(0);
   const formRef = useRef<HTMLDivElement>(null);
   const openingsRef = useRef<HTMLElement>(null);
+
+  const handleCaptchaStatusChange = useCallback(
+    ({ value, isValid }: { value: string; isValid: boolean }) => {
+      setCaptchaValue(value);
+      setIsCaptchaValid(isValid);
+    },
+    []
+  );
 
   const {
     register,
@@ -80,6 +92,13 @@ export default function CareersPage() {
   const onCareerSubmit = handleSubmit(async (values) => {
     setSubmitMessage('');
     setSubmitError(false);
+
+    if (!captchaValue || !isCaptchaValid) {
+      setSubmitError(true);
+      setSubmitMessage('Please complete the 4-digit captcha correctly before submitting.');
+      return;
+    }
+
     try {
       const response = await fetch('/api/careers', {
         method: 'POST',
@@ -99,6 +118,9 @@ export default function CareersPage() {
         return;
       }
       reset();
+      setCaptchaValue('');
+      setIsCaptchaValid(false);
+      setCaptchaRefreshKey((current) => current + 1);
       setSubmitError(false);
       setSubmitMessage('Your application has been submitted successfully. We will be in touch!');
     } catch {
@@ -248,7 +270,7 @@ export default function CareersPage() {
             </p>
             <div className={styles.openingsGrid}>
               {positions.map((position, index) => (
-                <div key={index} className={styles.openingCard}>
+                <div key={position.id || position.title} className={styles.openingCard}>
                   {/* Part 1: Counter + Title */}
                   <div className={styles.openingPart1}>
                     <span className={styles.positionNumber}>{String(index + 1).padStart(2, '0')}</span>
@@ -457,6 +479,9 @@ export default function CareersPage() {
                     )}
                   </div>
                 </div>
+
+                <CustomCaptcha key={captchaRefreshKey} onStatusChange={handleCaptchaStatusChange} />
+
                 <Button variant="primary" showArrow type="submit" disabled={isSubmitting}>
                   {isSubmitting ? 'Submitting...' : 'Submit'}
                 </Button>
