@@ -1,17 +1,9 @@
+import Image from 'next/image';
 import PageHeader from '@/components/ui/PageHeader/PageHeader';
 import ProductGallery from '@/components/ProductGallery/ProductGallery';
 import ProductInfo from '@/components/ProductInfo/ProductInfo';
 import RelatedProductsSlider from '@/components/RelatedProductsSlider/RelatedProductsSlider';
-import { fetchProductDetail } from '@/lib/api/catalog';
-// Fetch 18K product detail from external API
-async function fetch18KProductDetail() {
-  const res = await fetch('https://testintelliworkz.tech/Zar_backend/api/products/2', {
-    cache: 'no-store',
-  });
-  if (!res.ok) throw new Error('Failed to fetch 18K product detail');
-  return res.json();
-}
-import catalogData from '@/lib/data/catalog.json';
+import { fetchProductDetail, isCatalogRouteError } from '@/lib/api/catalog';
 import { notFound } from 'next/navigation';
 import styles from './page.module.css';
 
@@ -20,27 +12,6 @@ import TradeHighlightsSlider from '@/components/TradeHighlightsSlider';
 type Props = {
   params: Promise<{ purity: string; category: string; style: string; id: string }>;
 };
-
-export function generateStaticParams() {
-  const catalog = catalogData as {
-    purities: {
-      purity: string;
-      categories: { slug: string; styles: { slug: string; products: { id: string }[] }[] }[];
-    }[];
-  };
-  return catalog.purities.flatMap((p) =>
-    p.categories.flatMap((c) =>
-      c.styles.flatMap((s) =>
-        s.products.map((prod) => ({
-          purity: p.purity,
-          category: c.slug,
-          style: s.slug,
-          id: prod.id,
-        }))
-      )
-    )
-  );
-}
 
 type TradeHighlight = {
   icon: string;
@@ -79,7 +50,33 @@ function formatName(slug: string) {
     .join(' ');
 }
 
-export async function generateMetadata({ params }: Props) {
+function mapRelatedProduct(item: { id: string; name: string; description: string; image: string; purity: string; price: number }) {
+  return {
+    id: item.id,
+    title: item.name,
+    description: item.description,
+    image: item.image,
+    purity: item.purity,
+    price: item.price,
+  };
+}
+
+function renderTradeHighlight(item: TradeHighlight) {
+  return (
+    <article key={item.title} className={styles.highlightCard}>
+      <div className={styles.highlightIcon} aria-hidden="true">
+        <Image src={item.icon} alt="" width={48} height={48} />
+      </div>
+      <h3 className={styles.highlightTitle}>{item.title}</h3>
+      <p
+        className={styles.highlightDescription}
+        dangerouslySetInnerHTML={{ __html: item.description }}
+      />
+    </article>
+  );
+}
+
+export async function generateMetadata({ params }: Readonly<Props>) {
   const { purity, category, style, id } = await params;
 
   try {
@@ -96,52 +93,26 @@ export async function generateMetadata({ params }: Props) {
   }
 }
 
-export default async function ProductDetailPage({ params }: Props) {
+export default async function ProductDetailPage({ params }: Readonly<Props>) {
   const { purity, category, style, id } = await params;
 
-  const purityLabel = purity.toUpperCase();
-  const categoryName = formatName(category);
-  const styleName = formatName(style);
+  let detail;
 
-  let detail: any = null;
-  let is18K = purity === '18k' || purity === '18K';
-  let product: any = null;
-  let related: any[] = [];
-
-  if (is18K) {
-    // Fetch from external API for 18K
-    try {
-      const apiData = await fetch18KProductDetail();
-      // Adapt the API response to your product structure if needed
-      product = {
-        id: apiData.id,
-        name: apiData.name,
-        sku: apiData.sku,
-        description: apiData.description,
-        price: apiData.price,
-        image: apiData.image,
-        images: apiData.images || [apiData.image],
-        specifications: apiData.specifications || {},
-        purity: apiData.purity,
-        pcs: apiData.pcs,
-        finish: apiData.finish,
-        technicalSpecs: apiData.technicalSpecs,
-        manufacturing: apiData.manufacturing,
-        manufacturingHtml: apiData.manufacturingHtml,
-      };
-      // If related products are available in API, map them
-      related = apiData.related || [];
-    } catch {
+  try {
+    detail = await fetchProductDetail(purity, category, style, id);
+  } catch (error) {
+    if (isCatalogRouteError(error)) {
       notFound();
     }
-  } else {
-    detail = await fetchProductDetail(purity, category, style, id).catch(() => null);
-    if (!detail) {
-      notFound();
-    }
-    product = detail.product;
-    related = detail.related;
+
+    throw error;
   }
+
+  const product = detail.product;
+  const related = detail.related;
+  const purityLabel = product.goldTypeName || purity.toUpperCase();
+  const categoryName = product.categoryName || formatName(category);
+  const styleName = product.collectionTypeName || formatName(style);
 
   return (
     <div className={styles.page}>
@@ -177,7 +148,7 @@ export default async function ProductDetailPage({ params }: Props) {
                   price: product.price,
                   image: product.image,
                   specifications: product.specifications || {},
-                  purity: product.purity,
+                  purity: product.goldTypeName || product.purity.toUpperCase(),
                   pcs: product.pcs,
                   finish: product.finish,
                   technicalSpecs: product.technicalSpecs,
@@ -193,18 +164,7 @@ export default async function ProductDetailPage({ params }: Props) {
       <section className={styles.tradeHighlights} aria-label="Trade highlights">
         <div className="container">
           <div className={styles.tradeHighlightsInner}>
-            {TRADE_HIGHLIGHTS.map((item) => (
-              <article key={item.title} className={styles.highlightCard}>
-                <div className={styles.highlightIcon} aria-hidden="true">
-                  <img src={item.icon} alt="" />
-                </div>
-                <h3 className={styles.highlightTitle}>{item.title}</h3>
-                <p
-                  className={styles.highlightDescription}
-                  dangerouslySetInnerHTML={{ __html: item.description }}
-                />
-              </article>
-            ))}
+            {TRADE_HIGHLIGHTS.map(renderTradeHighlight)}
           </div>
         </div>
       </section>
@@ -214,14 +174,7 @@ export default async function ProductDetailPage({ params }: Props) {
 
       <RelatedProductsSlider
         title="You might also like"
-        products={related.map((item) => ({
-          id: item.id,
-          title: item.name,
-          description: item.description,
-          image: item.image,
-          purity: item.purity,
-          price: item.price,
-        }))}
+        products={related.map(mapRelatedProduct)}
         basePath={`/collections/${purity}/${category}/${style}`}
       />
     </div >

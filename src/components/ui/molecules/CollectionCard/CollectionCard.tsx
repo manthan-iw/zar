@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './CollectionCard.module.css';
-import { cn } from '@/lib/utils';
+import { cn, getImageUrl } from '@/lib/utils';
 
 interface CollectionCardProps {
   name: string;
@@ -17,7 +17,7 @@ export default function CollectionCard({ name, image, href, active = false }: Co
         {/* <div className={styles.circleOuter} />
         <div className={styles.circleInner} /> */}
         <Image
-          src={image}
+          src={getImageUrl(image)}
           alt={name}
           width={active ? 303 : 214}
           height={active ? 412 : 290}

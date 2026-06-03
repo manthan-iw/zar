@@ -3,6 +3,7 @@
 import type { CSSProperties } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
+import { getImageUrl } from '@/lib/utils';
 import Button from '@/components/ui/atoms/Button/Button';
 import EnquiryModal from '@/components/ui/organisms/EnquiryModal/EnquiryModal';
 import { HERO_SLIDES } from '@/lib/data/heroSlider';
@@ -193,7 +194,7 @@ export default function HeroSection() {
         <div className={styles.slide}>
           <div className={styles.backgroundImage}>
             <Image
-              src={activeSlide.image}
+              src={getImageUrl(activeSlide.image)}
               alt={activeSlide.alt}
               fill
               sizes="100vw"
@@ -230,7 +231,7 @@ export default function HeroSection() {
         {transitionData ? (
           <div className={styles.transitionLayer} style={transitionData.style} aria-hidden="true">
             <div className={styles.nextSlide}>
-              <Image src={transitionData.toSlide.image} alt="" fill sizes="100vw" />
+              <Image src={getImageUrl(transitionData.toSlide.image)} alt="" fill sizes="100vw" />
               <div className={styles.overlay} />
             </div>
 
@@ -243,12 +244,12 @@ export default function HeroSection() {
             >
               <div className={`${styles.slice} ${styles.sliceOne}`}>
                 <div className={styles.sliceMedia}>
-                  <Image src={transitionData.fromSlide.image} alt="" fill sizes="100vw" />
+                  <Image src={getImageUrl(transitionData.fromSlide.image)} alt="" fill sizes="100vw" />
                 </div>
               </div>
               <div className={`${styles.slice} ${styles.sliceTwo}`}>
                 <div className={styles.sliceMedia}>
-                  <Image src={transitionData.fromSlide.image} alt="" fill sizes="100vw" />
+                  <Image src={getImageUrl(transitionData.fromSlide.image)} alt="" fill sizes="100vw" />
                 </div>
               </div>
             </div>

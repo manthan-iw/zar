@@ -1,20 +1,14 @@
 import PageHeader from '@/components/ui/PageHeader/PageHeader';
 import CollectionGrid from '@/components/ui/organisms/CollectionGrid/CollectionGrid';
-import { fetchCategories } from '@/lib/api/catalog';
-import catalogData from '@/lib/data/catalog.json';
+import { fetchCategories, isCatalogRouteError } from '@/lib/api/catalog';
+import { notFound } from 'next/navigation';
 import styles from './page.module.css';
 
 interface Props {
   params: Promise<{ purity: string }>;
 }
 
-export function generateStaticParams() {
-  return (catalogData as { purities: { purity: string }[] }).purities.map((p) => ({
-    purity: p.purity,
-  }));
-}
-
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Readonly<Props>) {
   const { purity } = await params;
   const purityLabel = purity.toUpperCase();
   return {
@@ -23,20 +17,34 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-export default async function CategoryListingPage({ params }: Props) {
+export async function generateStaticParams(): Promise<Array<{ purity: string }>> {
+  // Provide known purity options for static export. If you need dynamic discovery,
+  // we can fetch available purities from the backend instead.
+  return [{ purity: '18k' }, { purity: '22k' }];
+}
+
+export default async function CategoryListingPage({ params }: Readonly<Props>) {
   const { purity } = await params;
   const purityLabel = purity.toUpperCase();
 
-  const categories = await fetchCategories(purity)
-    .then((items) =>
-      items.map((item) => ({
-        id: item.slug,
-        name: item.name,
-        image: item.image,
-        href: `/collections/${purity}/${item.slug}`,
-      }))
-    )
-    .catch(() => []);
+  let categories;
+
+  try {
+    categories = await fetchCategories(purity);
+  } catch (error) {
+    if (isCatalogRouteError(error)) {
+      notFound();
+    }
+
+    throw error;
+  }
+
+  const collections = categories.map((item) => ({
+    id: item.slug,
+    name: item.name,
+    image: item.image,
+    href: `/collections/${purity}/${item.slug}`,
+  }));
 
   return (
     <div className={styles.page}>
@@ -50,7 +58,7 @@ export default async function CategoryListingPage({ params }: Props) {
       />
       <section className="mt-100 mb-100">
         <div className="container">
-          <CollectionGrid collections={categories} />
+          <CollectionGrid collections={collections} />
         </div>
       </section>
     </div>

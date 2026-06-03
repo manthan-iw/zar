@@ -1,51 +1,78 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Button from '@/components/ui/atoms/Button/Button';
+import { fetchCategories } from '@/lib/api/catalog';
+import type { Category } from '@/types/domain';
 import styles from './MegaMenu.module.css';
-import { cn } from '@/lib/utils';
+import { cn, getImageUrl } from '@/lib/utils';
 
 const ktFilters = [
-  { label: '18 KT Jewellery', value: '18kt' },
-  { label: '22 KT Jewellery', value: '22kt' },
+  { label: '18 KT Jewellery', value: '18kt', purity: '18k' },
+  { label: '22 KT Jewellery', value: '22kt', purity: '22k' },
 ];
-
-interface Category {
-  label: string;
-  href: string;
-  image: string;
-}
-
-const categoriesByKt: Record<string, Category[]> = {
-  '22kt': [
-    { label: 'Bangles & Bracelet', href: '/collections/22k/bangles-bracelet', image: '/images/menu/menu-1.png' },
-    { label: 'Mangalsutra & Necklace', href: '/collections/22k/mangalsutra-necklace', image: '/images/menu/menu-2.png' },
-    { label: 'Mens Jewellery', href: '/collections/22k/mens-jewellery', image: '/images/menu/menu-3.png' },
-    { label: 'Earrings', href: '/collections/22k/earrings', image: '/images/menu/menu-4.png' },
-    { label: 'Kids Jewellery', href: '/collections/22k/kids-jewellery', image: '/images/menu/menu-5.png' },
-    { label: 'Lightweight Jewellery', href: '/collections/22k/lightweight-jewellery', image: '/images/menu/menu-8.png' },
-  ],
-  '18kt': [
-    { label: 'Bangles & Bracelet', href: '/collections/18k/bangles-bracelet', image: '/images/menu/menu-1.png' },
-    { label: 'Mangalsutra & Necklace', href: '/collections/18k/mangalsutra-necklace', image: '/images/menu/menu-2.png' },
-    { label: 'Lightweight Jewellery', href: '/collections/18k/lightweight-jewellery', image: '/images/menu/menu-3.png' },
-    { label: 'Earrings', href: '/collections/18k/earrings', image: '/images/menu/menu-4.png' },
-    { label: 'Rings', href: '/collections/18k/rings', image: '/images/menu/menu-5.png' },
-    { label: 'Kids Jewellery', href: '/collections/18k/kids-jewellery', image: '/images/menu/menu-6.png' },
-  ],
-};
 
 interface MegaMenuProps {
   open: boolean;
   onClose: () => void;
 }
 
-export default function MegaMenu({ open, onClose }: MegaMenuProps) {
+export default function MegaMenu({ open, onClose }: Readonly<MegaMenuProps>) {
   const [activeKt, setActiveKt] = useState('18kt');
+  const [categoriesByKt, setCategoriesByKt] = useState<Record<string, Category[]>>({});
+  const [loadingKt, setLoadingKt] = useState<string | null>(null);
 
-  const categories = categoriesByKt[activeKt] ?? categoriesByKt['18kt'];
+  useEffect(() => {
+    const filter = ktFilters.find((item) => item.value === activeKt);
+
+    if (!filter) {
+      return;
+    }
+
+    if (categoriesByKt[activeKt]) {
+      return;
+    }
+
+    const { purity } = filter;
+
+    let cancelled = false;
+
+    async function loadCategories() {
+      setLoadingKt(activeKt);
+
+      try {
+        const items = await fetchCategories(purity);
+
+        if (!cancelled) {
+          setCategoriesByKt((current) => ({
+            ...current,
+            [activeKt]: items,
+          }));
+        }
+      } catch {
+        if (!cancelled) {
+          setCategoriesByKt((current) => ({
+            ...current,
+            [activeKt]: [],
+          }));
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingKt((current) => (current === activeKt ? null : current));
+        }
+      }
+    }
+
+    void loadCategories();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeKt, categoriesByKt]);
+
+  const activePurity = ktFilters.find((item) => item.value === activeKt)?.purity || '18k';
+  const categories = categoriesByKt[activeKt] ?? [];
 
   const overlayClass = cn(styles.overlay, open && styles.overlayOpen);
 
@@ -84,7 +111,7 @@ export default function MegaMenu({ open, onClose }: MegaMenuProps) {
                   : 'Traditional craftsmanship meets everyday luxury in our signature high-purity collections.'}
                 <div>
                   <a
-                    href={kt.value === '18kt' ? '/collections/18k' : '/collections/22k'}
+                    href={`/collections/${kt.purity}`}
                     className={styles.ktCardLink}
                     style={{ display: 'inline-block', marginTop: 8, color: '#bfa15a', textDecoration: 'underline' }}
                     onClick={onClose}
@@ -104,17 +131,19 @@ export default function MegaMenu({ open, onClose }: MegaMenuProps) {
         </div>
 
         <div className={styles.grid}>
-          {categories.map((cat) => (
+          {loadingKt === activeKt && categories.length === 0 ? <p>Loading categories...</p> : null}
+          {!loadingKt && categories.length === 0 ? <p>No categories available.</p> : null}
+          {categories.map((category) => (
             <Link
-              key={cat.href}
-              href={cat.href}
+              key={`${activePurity}-${category.id}`}
+              href={`/collections/${activePurity}/${category.slug}`}
               className={styles.categoryCard}
               onClick={onClose}
             >
               <div className={styles.categoryImage}>
-                <Image src={cat.image} alt={cat.label} fill sizes="230px" />
+                <Image src={getImageUrl(category.image)} alt={category.name} fill sizes="230px" />
               </div>
-              <span className={styles.categoryName}>{cat.label}</span>
+              <span className={styles.categoryName}>{category.name}</span>
             </Link>
           ))}
         </div>

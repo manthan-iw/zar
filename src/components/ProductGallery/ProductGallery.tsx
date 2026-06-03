@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, MouseEvent } from 'react';
 import Image from 'next/image';
+import { getImageUrl } from '@/lib/utils';
 import styles from './ProductGallery.module.css';
 
 interface ProductGalleryProps {
@@ -38,7 +39,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
             onClick={() => setActiveImage(img)}
           >
             <Image 
-              src={img} 
+              src={getImageUrl(img)} 
               alt={`Thumbnail ${index + 1}`} 
               fill
               className={styles.thumbnailImg} 
@@ -55,7 +56,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
         onMouseLeave={handleMouseLeave}
       >
         <Image 
-          src={activeImage} 
+          src={getImageUrl(activeImage)} 
           alt="Product Main Image" 
           fill
           priority

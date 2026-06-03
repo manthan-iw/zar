@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
+import { getImageUrl } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper';
@@ -121,7 +122,7 @@ export default function RelatedProductsSlider({
               >
                 <div className={styles.productImageWrapper}>
                   <Image
-                    src={product.image}
+                    src={getImageUrl(product.image)}
                     alt={product.title}
                     fill
                     className={styles.productImage}

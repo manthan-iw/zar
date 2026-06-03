@@ -4,6 +4,9 @@ export interface Category {
   slug: string;
   image: string;
   purity: string;
+  imageUrl?: string;
+  goldTypeId?: number;
+  goldTypeName?: string;
 }
 
 export interface Style {
@@ -13,6 +16,11 @@ export interface Style {
   image: string;
   purity: string;
   categorySlug: string;
+  imageUrl?: string;
+  goldTypeId?: number;
+  goldTypeName?: string;
+  categoryId?: number;
+  categoryName?: string;
 }
 
 export interface ProductCard {
@@ -25,6 +33,17 @@ export interface ProductCard {
   category: string;
   purity: string;
   style: string;
+  images?: string[];
+  sku?: string;
+  categoryId?: number;
+  categoryName?: string;
+  goldTypeId?: number;
+  goldTypeName?: string;
+  collectionTypeId?: number;
+  collectionTypeName?: string;
+  numberOfPcs?: number;
+  finish?: string;
+  productUrl?: string;
 }
 
 export interface TechnicalSpec {
@@ -53,12 +72,14 @@ export interface ProductDetail extends ProductCard {
     points: ManufacturingPoint[];
   };
   manufacturingHtml?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface CareerPosition {
-  id: string;
+  id: number | string;
   title: string;
-  slug: string;
+  slug?: string;
   location: string;
   experience: string;
   description: string;
@@ -74,12 +95,12 @@ export interface ContactFormPayload {
   message: string;
 }
 
-export interface CareerApplyPayload {
-  name: string;
-  company?: string;
+export interface CareerApplicationPayload {
+  fullName: string;
+  companyName?: string;
   role: string;
   workExperience: string;
   email: string;
-  phone: string;
-  resumeUrl?: string;
+  contactNumber: string;
+  cvFile?: string;
 }

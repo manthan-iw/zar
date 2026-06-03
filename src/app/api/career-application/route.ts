@@ -1,38 +1,30 @@
 import { NextResponse } from 'next/server';
-import { CAREER_POSITIONS } from '@/lib/data/careers';
 
 export const dynamic = 'force-static';
 
-type CareerPayload = {
-  name?: string;
-  company?: string;
+type CareerApplicationPayload = {
+  fullName?: string;
+  companyName?: string;
   role?: string;
   workExperience?: string;
   email?: string;
-  phone?: string;
+  contactNumber?: string;
   cvFile?: string;
 };
 
 const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
-export async function GET() {
-  return NextResponse.json({
-    success: true,
-    data: CAREER_POSITIONS.filter((position) => position.isActive),
-  });
-}
-
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as CareerPayload;
+    const body = (await request.json()) as CareerApplicationPayload;
 
-    const name = body.name?.trim() || '';
+    const fullName = body.fullName?.trim() || '';
     const role = body.role?.trim() || '';
     const workExperience = body.workExperience?.trim() || '';
     const email = body.email?.trim() || '';
-    const phone = body.phone?.trim() || '';
+    const contactNumber = body.contactNumber?.trim() || '';
 
-    if (!name || !role || !workExperience || !email || !phone) {
+    if (!fullName || !role || !workExperience || !email || !contactNumber) {
       return NextResponse.json(
         { success: false, error: 'Please fill all required fields.' },
         { status: 400 }

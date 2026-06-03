@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { toggleCart, removeItem } from '@/features/cart/cartSlice';
 import styles from './CartDrawer.module.css';
-import { cn } from '@/lib/utils';
+import { cn, getImageUrl } from '@/lib/utils';
 
 export default function CartDrawer() {
   const dispatch = useAppDispatch();
@@ -54,7 +54,7 @@ export default function CartDrawer() {
               {items.map((item) => (
                 <div key={item.id} className={styles.item}>
                   <div className={styles.itemImage}>
-                    <Image src={item.image} alt={item.name} fill style={{ objectFit: 'cover' }} sizes="80px" />
+                    <Image src={getImageUrl(item.image)} alt={item.name} fill style={{ objectFit: 'cover' }} sizes="80px" />
                   </div>
                   <div className={styles.itemDetails}>
                     <p className={styles.itemName}>{item.name}</p>

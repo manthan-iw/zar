@@ -15,15 +15,23 @@ function getApiBaseUrl() {
   }
 
   if (process.env.VERCEL_URL) {
-    return `https://https://zar-one.vercel.app/`;
+    return `https://zar-one.vercel.app`;
   }
 
   const port = process.env.PORT || '3000';
   return `http://localhost:${port}`;
 }
 
+function resolveUrl(path: string): string {
+  if (/^https?:\/\//i.test(path) || /^\/\//.test(path)) {
+    return path;
+  }
+
+  return `${getApiBaseUrl()}${path}`;
+}
+
 export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`${getApiBaseUrl()}${path}`, {
+  const response = await fetch(resolveUrl(path), {
     ...init,
     headers: {
       'Content-Type': 'application/json',
@@ -42,7 +50,7 @@ export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export async function apiPost<T, B>(path: string, body: B, init?: RequestInit): Promise<T> {
-  const response = await fetch(`${getApiBaseUrl()}${path}`, {
+  const response = await fetch(resolveUrl(path), {
     method: 'POST',
     ...init,
     headers: {

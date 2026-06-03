@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { getImageUrl } from '@/lib/utils';
 import styles from './CollectionGrid.module.css';
 
 interface CollectionItem {
@@ -50,7 +51,7 @@ export default function CollectionGrid({
         >
           <div className={styles.cardImage}>
             <Image
-              src={collection.image}
+              src={getImageUrl(collection.image)}
               alt={collection.name}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"

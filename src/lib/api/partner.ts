@@ -26,7 +26,7 @@ export async function submitBuildConnection(
   payload: BuildConnectionPayload
 ): Promise<BuildConnectionResponse> {
   const response = await axios.post<BuildConnectionResponse>(
-    `${API_BASE_URL}/api/build-connection`,
+    `${API_BASE_URL}/api/build-connections`,
     payload,
     {
       headers: { 'Content-Type': 'application/json' },

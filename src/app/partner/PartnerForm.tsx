@@ -1,6 +1,7 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { Country, State, City } from 'country-state-city';
 import Button from '@/components/ui/atoms/Button/Button';
 import InputField from '@/components/ui/atoms/InputField/InputField';
 import PhoneField from '@/components/ui/atoms/PhoneField/PhoneField';
@@ -17,6 +18,14 @@ export default function PartnerForm() {
   const [isCaptchaValid, setIsCaptchaValid] = useState(false);
   const [captchaRefreshKey, setCaptchaRefreshKey] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [countries, setCountries] = useState<{ name: string; isoCode: string }[]>([]);
+  const [statesList, setStatesList] = useState<{ name: string; isoCode: string }[]>([]);
+  const [citiesList, setCitiesList] = useState<{ name: string }[]>([]);
+  const [selectedCountryCode, setSelectedCountryCode] = useState('');
+  const [selectedCountryName, setSelectedCountryName] = useState('');
+  const [selectedStateCode, setSelectedStateCode] = useState('');
+  const [selectedStateName, setSelectedStateName] = useState('');
+  const [selectedCityName, setSelectedCityName] = useState('');
 
   const handleCaptchaStatusChange = useCallback(
     ({ value, isValid }: { value: string; isValid: boolean }) => {
@@ -25,6 +34,50 @@ export default function PartnerForm() {
     },
     []
   );
+
+  useEffect(() => {
+    setCountries(Country.getAllCountries().map((country) => ({
+      name: country.name,
+      isoCode: country.isoCode,
+    })));
+  }, []);
+
+  useEffect(() => {
+    if (!selectedCountryCode) {
+      setStatesList([]);
+      setSelectedStateCode('');
+      setSelectedStateName('');
+      setCitiesList([]);
+      setSelectedCityName('');
+      return;
+    }
+
+    setStatesList(
+      State.getStatesOfCountry(selectedCountryCode).map((state) => ({
+        name: state.name,
+        isoCode: state.isoCode,
+      }))
+    );
+    setSelectedStateCode('');
+    setSelectedStateName('');
+    setCitiesList([]);
+    setSelectedCityName('');
+  }, [selectedCountryCode]);
+
+  useEffect(() => {
+    if (!selectedCountryCode || !selectedStateCode) {
+      setCitiesList([]);
+      setSelectedCityName('');
+      return;
+    }
+
+    setCitiesList(
+      City.getCitiesOfState(selectedCountryCode, selectedStateCode).map((city) => ({
+        name: city.name,
+      }))
+    );
+    setSelectedCityName('');
+  }, [selectedCountryCode, selectedStateCode]);
 
   const onSubmit = (event: { preventDefault: () => void; currentTarget: HTMLFormElement }) => {
     event.preventDefault();
@@ -47,6 +100,19 @@ export default function PartnerForm() {
     const getValue = (key: string) => {
       const formData = new FormData(form);
       const value = formData.get(key);
+
+      if (key === 'country') {
+        return selectedCountryName || (typeof value === 'string' ? value.trim() : '');
+      }
+
+      if (key === 'state') {
+        return selectedStateName || (typeof value === 'string' ? value.trim() : '');
+      }
+
+      if (key === 'city') {
+        return selectedCityName || (typeof value === 'string' ? value.trim() : '');
+      }
+
       return typeof value === 'string' ? value.trim() : '';
     };
 
@@ -77,9 +143,13 @@ export default function PartnerForm() {
         }
 
         form.reset();
+        setSelectedCountryCode('');
+        setSelectedCountryName('');
+        setSelectedStateCode('');
+        setSelectedStateName('');
+        setSelectedCityName('');
         setCaptchaValue('');
         setIsCaptchaValid(false);
-        setCaptchaRefreshKey((current) => current + 1);
         setSubmitError(false);
         setSubmitMessage(
           result.message || 'Your request has been submitted successfully. Our team will contact you soon.'
@@ -88,6 +158,9 @@ export default function PartnerForm() {
         setSubmitError(true);
         setSubmitMessage('Network error. Please try again in a moment.');
       } finally {
+        setCaptchaValue('');
+        setIsCaptchaValid(false);
+        setCaptchaRefreshKey((current) => current + 1);
         setIsSubmitting(false);
       }
     };
@@ -123,27 +196,39 @@ export default function PartnerForm() {
             name="country"
             label="Country"
             placeholder="Select your country"
-            options={[
-              { label: 'India', value: 'India' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={countries.map((country) => ({
+              label: country.name,
+              value: country.isoCode,
+            }))}
             wrapperClassName={styles.inputGroup}
             required
-            defaultValue=""
+            value={selectedCountryCode}
+            onChange={(event) => {
+              const code = event.target.value;
+              setSelectedCountryCode(code);
+              const selectedCountry = countries.find((country) => country.isoCode === code);
+              setSelectedCountryName(selectedCountry?.name ?? '');
+            }}
           />
           <SelectField
             id="state"
             name="state"
             label="State"
             placeholder="Select your state"
-            options={[
-              { label: 'Maharashtra', value: 'Maharashtra' },
-              { label: 'Gujarat', value: 'gujarat' },
-              { label: 'Other', value: 'other' },
-            ]}
+            options={statesList.map((state) => ({
+              label: state.name,
+              value: state.isoCode,
+            }))}
             wrapperClassName={styles.inputGroup}
             required
-            defaultValue=""
+            value={selectedStateCode}
+            onChange={(event) => {
+              const code = event.target.value;
+              setSelectedStateCode(code);
+              const selectedState = statesList.find((state) => state.isoCode === code);
+              setSelectedStateName(selectedState?.name ?? '');
+            }}
+            disabled={!selectedCountryCode || statesList.length === 0}
           />
         </div>
         <div className={styles.formRow}>
@@ -152,14 +237,15 @@ export default function PartnerForm() {
             name="city"
             label="City"
             placeholder="Select your city"
-            options={[
-              { label: 'Mumbai', value: 'Mumbai' },
-              { label: 'Surat', value: 'surat' },
-              { label: 'Other', value: 'other' },
-            ]}
+            options={citiesList.map((city) => ({
+              label: city.name,
+              value: city.name,
+            }))}
             wrapperClassName={styles.inputGroup}
             required
-            defaultValue=""
+            value={selectedCityName}
+            onChange={(event) => setSelectedCityName(event.target.value)}
+            disabled={!selectedStateCode || citiesList.length === 0}
           />
           <InputField
             id="pincode"

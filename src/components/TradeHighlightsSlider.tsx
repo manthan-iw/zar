@@ -6,6 +6,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import styles from './TradeHighlightsSlider.module.css';
 import style from '../app/collections/[purity]/[category]/[style]/[id]/page.module.css';
+import { getImageUrl } from '@/lib/utils';
 
 export type TradeHighlight = {
   icon: string;
@@ -33,7 +34,7 @@ export default function TradeHighlightsSlider({ highlights }: TradeHighlightsSli
               <SwiperSlide key={item.title}>
                 <article className={style.highlightCard}>
                   <div className={style.highlightIcon} aria-hidden="true">
-                    <img src={item.icon} alt="" />
+                    <img src={getImageUrl(item.icon)} alt="" />
                   </div>
                   <h3 className={style.highlightTitle}>{item.title}</h3>
                   <p

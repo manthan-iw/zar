@@ -11,16 +11,16 @@ import SelectField from '@/components/ui/atoms/SelectField/SelectField';
 import InputField from '@/components/ui/atoms/InputField/InputField';
 import PhoneField from '@/components/ui/atoms/PhoneField/PhoneField';
 import CustomCaptcha from '@/components/ui/molecules/CustomCaptcha/CustomCaptcha';
-import { fetchCareerPositions } from '@/lib/api/careers';
+import { fetchCareerPositions, submitCareerApplication } from '@/lib/api/careers';
 import type { CareerPosition } from '@/types/domain';
 
 type CareerFormValues = {
-  name: string;
-  company: string;
+  fullName: string;
+  companyName: string;
   role: string;
-  work: string;
+  workExperience: string;
   email: string;
-  phone: string;
+  contactNumber: string;
   resume: FileList | undefined;
 };
 
@@ -37,6 +37,7 @@ export default function CareersPage() {
   const [captchaValue, setCaptchaValue] = useState('');
   const [isCaptchaValid, setIsCaptchaValid] = useState(false);
   const [captchaRefreshKey, setCaptchaRefreshKey] = useState(0);
+  const [resumeFileName, setResumeFileName] = useState('');
   const formRef = useRef<HTMLDivElement>(null);
   const openingsRef = useRef<HTMLElement>(null);
 
@@ -56,7 +57,15 @@ export default function CareersPage() {
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<CareerFormValues>({
-    defaultValues: { name: '', company: '', role: '', work: '', email: '', phone: '', resume: undefined },
+    defaultValues: {
+      fullName: '',
+      companyName: '',
+      role: '',
+      workExperience: '',
+      email: '',
+      contactNumber: '',
+      resume: undefined,
+    },
     mode: 'onBlur',
   });
 
@@ -100,32 +109,33 @@ export default function CareersPage() {
     }
 
     try {
-      const response = await fetch('/api/careers', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          positionId: positions.find((p) => p.title === values.role)?.id ?? values.role,
-          applicantName: values.name,
-          email: values.email,
-          phone: values.phone,
-          coverLetter: values.work,
-        }),
-      });
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        setSubmitError(true);
-        setSubmitMessage(result?.error || 'Unable to submit your application. Please try again.');
-        return;
+      const formData = new FormData();
+      formData.append('fullName', values.fullName || '');
+      formData.append('companyName', values.companyName || '');
+      formData.append('role', values.role || '');
+      formData.append('workExperience', values.workExperience || '');
+      formData.append('email', values.email || '');
+      formData.append('contactNumber', values.contactNumber || '');
+      if (values.resume?.[0]) {
+        formData.append('cvFile', values.resume[0]);
       }
+
+      await submitCareerApplication(formData);
       reset();
+      setResumeFileName('');
       setCaptchaValue('');
       setIsCaptchaValid(false);
-      setCaptchaRefreshKey((current) => current + 1);
       setSubmitError(false);
       setSubmitMessage('Your application has been submitted successfully. We will be in touch!');
-    } catch {
+    } catch (error: unknown) {
       setSubmitError(true);
-      setSubmitMessage('Network error. Please try again in a moment.');
+      setSubmitMessage(
+        error instanceof Error
+          ? error.message
+          : 'Network error. Please try again in a moment.'
+      );
+    } finally {
+      setCaptchaRefreshKey((current) => current + 1);
     }
   });
 
@@ -138,7 +148,7 @@ export default function CareersPage() {
         ]}
         heading="Build Your Career with ZAR"
         description="Be part of a team where craftsmanship meets innovation. At ZAR, we combine traditional artistry with modern precision to create jewellery defined by quality and design."
-      />      
+      />
       <div className='bannerImage'>
         <Image
           src="/images/career/career-banner.webp"
@@ -179,11 +189,11 @@ export default function CareersPage() {
                 At ZAR, craftsmanship is driven by collaboration. Designers, artisans, and technicians work together seamlessly, ensuring every piece reflects precision, consistency, and attention to detail.
               </p>
               <p>
-              We foster a culture where ideas are valued and skill is continuously refined. From concept to final finishing, each stage is guided by teamwork, discipline, and a shared commitment to quality.
+                We foster a culture where ideas are valued and skill is continuously refined. From concept to final finishing, each stage is guided by teamwork, discipline, and a shared commitment to quality.
               </p>
               <p>
                 We believe in enabling growth through learning and real opportunities, so our people don’t just create jewellery, but build meaningful and lasting careers.
-              </p>              
+              </p>
             </div>
           </div>
         </div>
@@ -259,7 +269,7 @@ export default function CareersPage() {
         </div>
       </section>
       <CareerSlider />
-      
+
       {/* Current Openings Section */}
       {positions.length > 0 && (
         <section ref={openingsRef} className={`mt-100 ${styles.openingsSection}`}>
@@ -336,13 +346,13 @@ export default function CareersPage() {
               <form className="form" onSubmit={onCareerSubmit} noValidate>
                 <div className="formRow">
                   <InputField
-                    id="name"
+                    id="fullName"
                     label="Full Name"
                     placeholder="Type full name here"
                     wrapperClassName={styles.inputGroup}
                     required
-                    errorMessage={errors.name?.message}
-                    {...register('name', {
+                    errorMessage={errors.fullName?.message}
+                    {...register('fullName', {
                       required: 'Full name is required.',
                       pattern: { value: NAME_REGEX, message: 'Enter a valid full name.' },
                       minLength: { value: 2, message: 'Full name must be at least 2 characters.' },
@@ -350,12 +360,12 @@ export default function CareersPage() {
                     })}
                   />
                   <InputField
-                    id="company"
+                    id="companyName"
                     label="Company Name"
                     placeholder="Type your company name here"
                     wrapperClassName={styles.inputGroup}
-                    errorMessage={errors.company?.message}
-                    {...register('company', {
+                    errorMessage={errors.companyName?.message}
+                    {...register('companyName', {
                       validate: (value) =>
                         !value || COMPANY_REGEX.test(value) || 'Enter a valid company name.',
                       maxLength: { value: 100, message: 'Company name cannot exceed 100 characters.' },
@@ -375,7 +385,10 @@ export default function CareersPage() {
                         value={field.value}
                         onChange={field.onChange}
                         onBlur={field.onBlur}
-                        options={positions.map((pos) => ({ label: pos.title, value: pos.title }))}
+                        options={[
+                          { label: 'General Application', value: 'General' },
+                          ...positions.map((pos) => ({ label: pos.title, value: pos.title }))
+                        ]}
                         wrapperClassName={styles.inputGroup}
                         required
                         errorMessage={errors.role?.message}
@@ -383,13 +396,13 @@ export default function CareersPage() {
                     )}
                   />
                   <InputField
-                    id="work"
+                    id="workExperience"
                     label="Work Experience"
                     placeholder="e.g. 3 years"
                     wrapperClassName={styles.inputGroup}
                     required
-                    errorMessage={errors.work?.message}
-                    {...register('work', {
+                    errorMessage={errors.workExperience?.message}
+                    {...register('workExperience', {
                       required: 'Work experience is required.',
                       pattern: { value: WORK_REGEX, message: 'Enter a valid work experience (e.g. 3 years).' },
                       maxLength: { value: 30, message: 'Work experience cannot exceed 30 characters.' },
@@ -411,7 +424,7 @@ export default function CareersPage() {
                     })}
                   />
                   <Controller
-                    name="phone"
+                    name="contactNumber"
                     control={control}
                     rules={{
                       required: 'Contact number is required.',
@@ -425,7 +438,7 @@ export default function CareersPage() {
                     }}
                     render={({ field }) => (
                       <PhoneField
-                        id="phone"
+                        id="contactNumber"
                         name={field.name}
                         label="Contact No."
                         placeholder="Enter your contact number"
@@ -434,7 +447,7 @@ export default function CareersPage() {
                         value={field.value}
                         onChange={field.onChange}
                         onBlur={field.onBlur}
-                        errorMessage={errors.phone?.message}
+                        errorMessage={errors.contactNumber?.message}
                       />
                     )}
                   />
@@ -442,28 +455,50 @@ export default function CareersPage() {
                 <div className="formRow">
                   <div className="inputfile">
                     <label htmlFor="uploadResume" className="custom-file-upload">
-                      <input
-                        type="file"
-                        id="uploadResume"
-                        accept=".pdf,.doc,.docx"
-                        {...register('resume', {
+                      <Controller
+                        name="resume"
+                        control={control}
+                        rules={{
                           required: 'Please attach your resume.',
                           validate: {
                             acceptedFormats: (files) => {
-                              if (!files?.[0]) return true;
+                              const fileList = files as FileList | undefined;
+                              if (!fileList?.[0]) return true;
                               const allowed = [
                                 'application/pdf',
                                 'application/msword',
                                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                               ];
-                              return allowed.includes(files[0].type) || 'Only PDF, DOC, DOCX files are accepted.';
+                              return allowed.includes(fileList[0].type) || 'Only PDF, DOC, DOCX files are accepted.';
                             },
                             fileSize: (files) => {
-                              if (!files?.[0]) return true;
-                              return files[0].size <= 5 * 1024 * 1024 || 'File size must not exceed 5 MB.';
+                              const fileList = files as FileList | undefined;
+                              if (!fileList?.[0]) return true;
+                              return fileList[0].size <= 5 * 1024 * 1024 || 'File size must not exceed 5 MB.';
                             },
                           },
-                        })}
+                        }}
+                        defaultValue={undefined}
+                        render={({ field }) => (
+                          <input
+                            type="file"
+                            id="uploadResume"
+                            name={field.name}
+                            accept=".pdf,.doc,.docx"
+                            ref={field.ref}
+                            value={undefined}
+                            onBlur={field.onBlur}
+                            onChange={(event) => {
+                              field.onChange(event.target.files);
+                              const files = event.target.files;
+                              if (files?.[0]) {
+                                setResumeFileName(files[0].name);
+                              } else {
+                                setResumeFileName('');
+                              }
+                            }}
+                          />
+                        )}
                       />
                       <p>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -476,6 +511,11 @@ export default function CareersPage() {
                     </label>
                     {errors.resume && (
                       <p style={{ color: '#c00', fontSize: '12px', marginTop: '4px' }}>{errors.resume.message}</p>
+                    )}
+                    {resumeFileName && (
+                      <p style={{ marginTop: '12px', fontSize: '14px', color: '#111' }}>
+                        <strong>Selected file:</strong> {resumeFileName}
+                      </p>
                     )}
                   </div>
                 </div>

@@ -8,7 +8,6 @@ import InputField from '@/components/ui/atoms/InputField/InputField';
 import PhoneField from '@/components/ui/atoms/PhoneField/PhoneField';
 import SelectField from '@/components/ui/atoms/SelectField/SelectField';
 import TextareaField from '@/components/ui/atoms/TextareaField/TextareaField';
-import AppLoader from '@/components/ui/organisms/AppLoader/AppLoader';
 import { submitContactInquiry } from '@/lib/api/contact';
 import styles from './page.module.css';
 
@@ -88,12 +87,13 @@ export default function ContactForm() {
       reset();
       setCaptchaValue('');
       setIsCaptchaValid(false);
-      setCaptchaRefreshKey((current) => current + 1);
       setSubmitError(false);
       setSubmitMessage(result.message || 'Your message has been submitted successfully.');
     } catch {
       setSubmitError(true);
       setSubmitMessage('Network error. Please try again in a moment.');
+    } finally {
+      setCaptchaRefreshKey((current) => current + 1);
     }
   });
 

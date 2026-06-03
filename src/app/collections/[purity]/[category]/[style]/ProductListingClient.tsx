@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
+import { getImageUrl } from '@/lib/utils';
 import { useRouter, usePathname } from 'next/navigation';
 import CartButton from '@/components/ui/atoms/CartButton/CartButton';
 import styles from './ProductListingClient.module.css';
@@ -153,7 +154,7 @@ export default function ProductListingClient({
                     >
                         <div className={styles.productImageWrapper}>
                             <Image
-                                src={product.image}
+                                src={getImageUrl(product.image)}
                                 alt={product.title}
                                 fill
                                 className={styles.productImage}
