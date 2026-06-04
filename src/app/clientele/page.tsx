@@ -40,14 +40,14 @@ export default function ClientelePage() {
         description="ZAR partners with leading jewellers and retail brands, built on consistency, precision, and long-standing trust."
       />
       <div className='bannerImage'>
-              <Image
-                src="/images/client_bg.webp"
-                alt="Crafting gold bangle"
-                fill
-                style={{ objectFit: 'cover' }}
-                priority
-              />
-            </div>
+        <Image
+          src="/images/client_bg.webp"
+          alt="Crafting gold bangle"
+          fill
+          style={{ objectFit: 'cover' }}
+          priority
+        />
+      </div>
 
 
       <section className={`container mt-100 ${styles.section2}`}>
@@ -62,24 +62,25 @@ export default function ClientelePage() {
 
       <section className="mt-100">
         <div className={styles.mapSection}>
-          <div className="container">
-            <div className={styles.mapWrapper}>
-              <div>
-                <Image
-                  src="/images/clients/map.webp"
-                  alt="map"
-                  width={500}
-                  height={800}
-                  className={styles.mapImage}
-                />
+          <div className={styles.mapWrapper}>
+            <div>
+              <Image
+                src="/images/clients/map-final.webp"
+                alt="map"
+                width={1920}
+                height={900}
+                className={styles.mapImage}
+              />
+            </div>
+            <div className={styles.mapContent}>
+              <div className={styles.mapContent1}>
+                <h3>Geographical distribution</h3>
+                <h5>35+ Distribution Centers | 1,100+ Retail Outlets | 7 Export Markets</h5>
               </div>
-              <div className={styles.mapContent}>
-                <div>
-                  <h3>Geographical distribution</h3>
-                </div>
-                <div>
-                  <div className={styles.locationBox}>
-                    <h6>Legend</h6>
+              <div className={styles.mapContent2}>
+                <div className={styles.locationBox}>
+                  <h6>Legend</h6>
+                  <div>
                     <div className={styles.locationLine}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="11" height="17" viewBox="0 0 11 17" fill="none">
                         <path d="M5.02405 6.80159C3.96128 6.80159 3.10233 5.9423 3.10233 4.87909C3.10233 3.81589 3.96128 2.95658 5.02405 2.95658C6.08682 2.95658 6.94575 3.81589 6.94575 4.87909C6.94575 5.9423 6.08682 6.80159 5.02405 6.80159ZM4.98035 0C0.409004 0.203902 -1.71652 4.60237 1.64648 9.24842C4.77655 13.6469 4.98035 16.4578 4.98035 16.4578C4.98035 16.4578 5.18418 13.6469 8.35792 9.24842C11.7792 4.60237 9.66817 0.116515 4.98035 0Z" fill="#CFB480" />
@@ -93,13 +94,40 @@ export default function ClientelePage() {
                       Retail centers
                     </div>
                   </div>
-                  <ul>
-                    <li>35 distribution centres which supply to over 1,100 retail outlets across India</li>
-                    <li>Exports to Dubai, Singapore, London, New York and Canada</li>
-                  </ul>
+                </div>
+              </div>
+              <div className={styles.mapContent3}>
+                <div className={styles.locationBox}>
+                  <h6>Exports to 7 Countries</h6>
+                  <div className={styles.mapGrid}>
+                    <div className={styles.locationLine}>
+                      <span>USA</span>
+                      <span>Canada</span>
+                    </div>
+                    <div className={styles.locationLine}>
+                      <span>Singapore</span>
+                      <span>Oman</span>
+                    </div>
+                    <div className={styles.locationLine}>
+                      <span>Malaysia</span>
+                      <span>Saudia Arabia</span>
+                    </div>
+                    <div className={styles.locationLine}>
+                      <span>Qatar</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+          <div className={styles.mapWrapper2}>
+            <Image
+              src="/images/clients/map-final-m.webp"
+              alt="map"
+              width={768}
+              height={900}
+              className={styles.mapImage}
+            />
           </div>
         </div>
       </section>

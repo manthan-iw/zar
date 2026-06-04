@@ -3,7 +3,7 @@ import styles from './page.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import PageHeader from '@/components/ui/PageHeader/PageHeader';
-import Timeline from '@/components/ui/Timeline/Timeline';
+
 
 export const metadata = {
   title: 'Story of Zar  Zar Jewels',
@@ -45,138 +45,114 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Our Story Section */}
-      <section className="storySection">
+      {/* dynamic section */}
+      <section className={styles.ourStory}>
+        <div className="container">
+          <h2 className="fs_54 txt_center">OUR STORY</h2>
+          <div className={styles.storyGrid}>
+            <div className={styles.storyBox}>
+              <div className={styles.storyChild1}>
+                <h3 className={styles.storyYear}>1960</h3>
+                <h3 className={styles.storyTitle}>From Girdharlal & Bros to ZAR: A Journey of Evolution</h3>
+                <div className={styles.storyDescription}>
+                  <p>The journey began in the early 1950s, when Gurmukhdas Takhtani set out to master gold bangle craftsmanship through uncompromising quality and precision.</p>
+                  <p>What started as a craft was built on discipline a principle that shaped everything that followed.</p>
+                </div>
+              </div>
+              <div className={styles.storyChild2}>
+                <div className="storyImageWrapper">
+                  <Image src="/images/about/y-1.jpg" alt="Zar team at work" fill className={styles.ourImage} />
+                </div>
+              </div>
+            </div>
+            <div className={styles.storyBox}>
+              <div className={styles.storyChild1}>
+                <h3 className={styles.storyYear}>1960</h3>
+                <h3 className={styles.storyTitle}>From Girdharlal & Bros to ZAR: A Journey of Evolution</h3>
+                <div className={styles.storyDescription}>
+                  <p>The journey began in the early 1950s, when Gurmukhdas Takhtani set out to master gold bangle craftsmanship through uncompromising quality and precision.</p>
+                  <p>What started as a craft was built on discipline a principle that shaped everything that followed.</p>
+                </div>
+              </div>
+              <div className={styles.storyChild2}>
+                <div className="storyImageWrapper">
+                  <Image src="/images/about/y-1.jpg" alt="Zar team at work" fill className={styles.ourImage} />
+                </div>
+              </div>
+            </div>            
+            <div className={styles.storyBox}>
+              <div className={styles.storyChild1}>
+                <h3 className={styles.storyYear}>1960</h3>
+                <h3 className={styles.storyTitle}>From Girdharlal & Bros to ZAR: A Journey of Evolution</h3>
+                <div className={styles.storyDescription}>
+                  <p>The journey began in the early 1950s, when Gurmukhdas Takhtani set out to master gold bangle craftsmanship through uncompromising quality and precision.</p>
+                  <p>What started as a craft was built on discipline a principle that shaped everything that followed.</p>
+                </div>
+              </div>
+              <div className={styles.storyChild2}>
+                <div className="storyImageWrapper">
+                  <Image src="/images/about/y-1.jpg" alt="Zar team at work" fill className={styles.ourImage} />
+                </div>
+              </div>
+            </div>
+            <div className={styles.storyBox}>
+              <div className={styles.storyChild1}>
+                <h3 className={styles.storyYear}>1960</h3>
+                <h3 className={styles.storyTitle}>From Girdharlal & Bros to ZAR: A Journey of Evolution</h3>
+                <div className={styles.storyDescription}>
+                  <p>The journey began in the early 1950s, when Gurmukhdas Takhtani set out to master gold bangle craftsmanship through uncompromising quality and precision.</p>
+                  <p>What started as a craft was built on discipline a principle that shaped everything that followed.</p>
+                </div>
+              </div>
+              <div className={styles.storyChild2}>
+                <div className="storyImageWrapper">
+                  <Image src="/images/about/y-1.jpg" alt="Zar team at work" fill className={styles.ourImage} />
+                </div>
+              </div>
+            </div>            
+          </div>
+        </div>
+      </section>
+      {/* dynamic section */}
+      {/* 2 para secion */}
+      <section className="mt-100 mb-100">
+        <div className={styles.paraSection}>
+          <div className="container">
+            <p>Across generations, one belief has remained constant: there is always a higher standard to pursue.</p>
+            <p>This belief defines ZAR today not just as a legacy, but as a journey in motion.</p>
+          </div>
+        </div>
+      </section>
+      {/* 2 para secion */}
+
+      <section className={styles.aboutSection}>
         <div className="container">
           <div className="storyGrid">
             <div className="storyImageWrapper">
-              <Image src="/images/about/about_1.png" alt="Zar team at work" width={800}
-                height={500} className="storyImage" />
+              <Image src="/images/about/new_abt.png" alt="Zar team at work" fill className="storyImage" />
             </div>
             <div className="storyTextBlock">
-              <h2 className="fs_54">OUR STORY</h2>
+              <h2 className="fs_54">Legacy That Built the Foundation</h2>
               <p>
-                <strong className="txt_black">From Girdharlal & Bros to ZAR: A Journey of Evolution</strong>
-              </p>
-              <p>
-                The journey began in the early 1950s, when Gurmukhdas Takhtani set out to master gold bangle craftsmanship through uncompromising quality and precision.
-              </p>
-              <p>
-                What started as a craft was built on discipline a principle that shaped everything that followed.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Belief Section */}
-      <section className="mt-100 mb-100">
-        <div className="container">
-          <div className={styles.beliefSection}>
-            <Image src="/images/about/about-chain.jpg" alt="Zar" fill className={styles.beliefImage} />
-            <div className={styles.beliefContent}>
-              <div className={styles.beliefText_1}>
-                <p>In <span className="txt_black">1970</span>, the second generation carried this forward under Girdharlal & Bros, strengthening the foundation through deeper specialization and consistency. </p>
-                <h6 className="txt_black">Growth was never incidental.It was deliberate.</h6>
-              </div>
-              <div className={styles.beliefText_4}>
-                <Image src="/images/about/belief_mob.png" alt="Zar" width={300} height={300} className={styles.beliefMobImage} />
-              </div>
-              <div className={styles.beliefText_2}>
-                <p>In <span className="txt_black">2007</span>, the third generation established R.G. Bangle Private Limited, introducing scale, structure, and refined processes.</p>
-                <h6 className="txt_black">Standards were elevated.Efficiency became embedded.</h6>
-              </div>
-              <div className={styles.beliefText_3}>
-                <p>In <span className="txt_black">2012</span>, ZAR was born a modern identity built on decades of mastery, reimagined through design and forward thinking.</p>
-                <h6 className="txt_black">It marked the transition from manufacturer to brand where heritage meets continuous reinvention.</h6>
-              </div>
-            </div>
-          </div>
-          <div className={styles.beliefBottom}>
-            <div className="">
-              <p>Across generations, one belief has remained constant: there is always a higher standard to pursue.</p>
-              <p>This belief defines ZAR today not just as a legacy, but as a journey in motion.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Legacy Section */}
-      <section className="mt-100 mb-100">
-        <div className="container">
-          <div className={styles.legacyGrid}>
-            <div className={styles.legacyTextBlock}>
-              <h2 className="fs_54">LEGACY THAT BUILT THE FOUNDATION</h2>
-              <p className="txt_black">
                 Driven by Discipline. Defined by Progress.
               </p>
               <p>
-                For three generations, ZAR has crafted gold with a clear belief true luxury should feel effortless, even when built on precision.
+                For three generations, ZAR has crafted gold with a clear belief true luxury should feel effortless, even when built on precision. Because what appears simple is rarely so. It is the result of consistency, control, and uncompromising standards.
               </p>
               <p>
-                Because what appears simple is rarely so. It is the result of consistency, control, and uncompromising standards.
-              </p>
-              <p className="txt_black">
                 Blending heritage craftsmanship with modern design, every piece is made to be worn with ease and to endure over time.
               </p>
-              <p>The foundation of ZAR extends beyond craftsmanship.It lies in ownership—of process, detail, and outcome. </p>
+              <p>
+                The foundation of ZAR extends beyond craftsmanship.<br />
+                It lies in ownership—of process, detail, and outcome.
+              </p>
+              <p>This mindset has built lasting trust, strong partnerships, and a reputation grounded in reliability.</p>
             </div>
-            <div className={styles.legacyImageWrapper}>
-              <Image src="/images/about/about_2.webp" alt="Zar founders and team" fill className={styles.legacyImage} />
-            </div>
-          </div>
-          <div className={styles.legacyBottomText}>
-            <p>For us, legacy is not preserved - it is advanced.</p>
-            <p>As design and markets evolve, so do we through refinement, adaptation, and higher expectations.</p>
-            <p>As design and markets evolve, so do we through refinement, adaptation, and higher expectations.</p>
-            <p>Because progress is the only way forward.</p>
           </div>
         </div>
       </section>
 
-      {/* Our Philosophy Section */}
-      {/* <section className="mb-100">
-        <div className="container">
-          <div className={styles.legacyGrid}>
-            <div className={styles.legacyTextBlock}>
-              <h2 className={`fs_54 ${styles.margin_fs_54}`}>Our Philosophy</h2>
-              <p>Crafted with Care. Built to Scale.</p>
-              <p>At ZAR, craftsmanship and precision go hand in hand.</p>
-              <p>Traditional expertise is combined with modern manufacturing to create gold bangles that are refined, consistent, and elegant.</p>
-              <p>This approach allows ZAR to grow while remaining true to its craft.</p>
-            </div>
-            <div className={styles.legacyImageWrapper}>
-              <Image src="/images/about/about_4.webp" alt="Zar founders and team" fill className={styles.legacyImage} />
-            </div>
-          </div>
-        </div>
-      </section> */}
 
-      {/* Timeline Section */}
-      <Timeline />
-
-      {/* {design & finish section} */}
-      {/* <section className="mt-100">
-        <div className="container">
-          <div className={styles.abt_des_wrapper}>
-            <div>
-              <div>
-                <Image src="/images/design-finish-img.png" alt="Zar founders and team" width={690} height={820} className={styles.legacyImage} />
-              </div>
-            </div>
-            <div>
-              <h2 className={`fs_54 ${styles.margin_fs_54}`}>
-                Design & Finish
-              </h2>
-              <p>Excellence in Every Detail</p>
-              <p>Design lies at the heart of ZAR jewellery.</p>
-              <p>Our artisans and designers work together to create bangles defined by balance, elegance, and precision.</p>
-              <p>Every piece is finished with meticulous care, reflecting the craftsmanship that defines the ZAR legacy.</p>
-            </div>
-          </div>
-        </div>
-      </section> */}
       {/* Vision & Mission Section */}
       <section className={styles.visionMissionSection}>
         <div className="container">
