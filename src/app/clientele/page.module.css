@@ -218,6 +218,9 @@
   .mapWrapper {
     display: none;
   }
+  .mapSection {
+    padding: 0px 0 00px;
+  }
 }
 
 @media (max-width: 992px) {

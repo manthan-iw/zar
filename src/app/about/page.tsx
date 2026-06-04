@@ -1,14 +1,10 @@
 
+'use client';
+
 import styles from './page.module.css';
 import Image from 'next/image';
-import Link from 'next/link';
 import PageHeader from '@/components/ui/PageHeader/PageHeader';
-
-
-export const metadata = {
-  title: 'Story of Zar  Zar Jewels',
-  description: 'Discover the legacy behind Zar Jewels  over 60 years of crafting the finest gold bangles in India.',
-};
+import OurStory from '@/components/ui/OurStory/OurStory';
 
 export default function AboutPage() {
 
@@ -46,73 +42,7 @@ export default function AboutPage() {
       </section>
 
       {/* dynamic section */}
-      <section className={styles.ourStory}>
-        <div className="container">
-          <h2 className="fs_54 txt_center">OUR STORY</h2>
-          <div className={styles.storyGrid}>
-            <div className={styles.storyBox}>
-              <div className={styles.storyChild1}>
-                <h3 className={styles.storyYear}>1960</h3>
-                <h3 className={styles.storyTitle}>From Girdharlal & Bros to ZAR: A Journey of Evolution</h3>
-                <div className={styles.storyDescription}>
-                  <p>The journey began in the early 1950s, when Gurmukhdas Takhtani set out to master gold bangle craftsmanship through uncompromising quality and precision.</p>
-                  <p>What started as a craft was built on discipline a principle that shaped everything that followed.</p>
-                </div>
-              </div>
-              <div className={styles.storyChild2}>
-                <div className="storyImageWrapper">
-                  <Image src="/images/about/y-1.jpg" alt="Zar team at work" fill className={styles.ourImage} />
-                </div>
-              </div>
-            </div>
-            <div className={styles.storyBox}>
-              <div className={styles.storyChild1}>
-                <h3 className={styles.storyYear}>1960</h3>
-                <h3 className={styles.storyTitle}>From Girdharlal & Bros to ZAR: A Journey of Evolution</h3>
-                <div className={styles.storyDescription}>
-                  <p>The journey began in the early 1950s, when Gurmukhdas Takhtani set out to master gold bangle craftsmanship through uncompromising quality and precision.</p>
-                  <p>What started as a craft was built on discipline a principle that shaped everything that followed.</p>
-                </div>
-              </div>
-              <div className={styles.storyChild2}>
-                <div className="storyImageWrapper">
-                  <Image src="/images/about/y-1.jpg" alt="Zar team at work" fill className={styles.ourImage} />
-                </div>
-              </div>
-            </div>            
-            <div className={styles.storyBox}>
-              <div className={styles.storyChild1}>
-                <h3 className={styles.storyYear}>1960</h3>
-                <h3 className={styles.storyTitle}>From Girdharlal & Bros to ZAR: A Journey of Evolution</h3>
-                <div className={styles.storyDescription}>
-                  <p>The journey began in the early 1950s, when Gurmukhdas Takhtani set out to master gold bangle craftsmanship through uncompromising quality and precision.</p>
-                  <p>What started as a craft was built on discipline a principle that shaped everything that followed.</p>
-                </div>
-              </div>
-              <div className={styles.storyChild2}>
-                <div className="storyImageWrapper">
-                  <Image src="/images/about/y-1.jpg" alt="Zar team at work" fill className={styles.ourImage} />
-                </div>
-              </div>
-            </div>
-            <div className={styles.storyBox}>
-              <div className={styles.storyChild1}>
-                <h3 className={styles.storyYear}>1960</h3>
-                <h3 className={styles.storyTitle}>From Girdharlal & Bros to ZAR: A Journey of Evolution</h3>
-                <div className={styles.storyDescription}>
-                  <p>The journey began in the early 1950s, when Gurmukhdas Takhtani set out to master gold bangle craftsmanship through uncompromising quality and precision.</p>
-                  <p>What started as a craft was built on discipline a principle that shaped everything that followed.</p>
-                </div>
-              </div>
-              <div className={styles.storyChild2}>
-                <div className="storyImageWrapper">
-                  <Image src="/images/about/y-1.jpg" alt="Zar team at work" fill className={styles.ourImage} />
-                </div>
-              </div>
-            </div>            
-          </div>
-        </div>
-      </section>
+      <OurStory />
       {/* dynamic section */}
       {/* 2 para secion */}
       <section className="mt-100 mb-100">
