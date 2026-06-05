@@ -9,11 +9,83 @@ import styles from './page.module.css';
 
 import TradeHighlightsSlider from '@/components/TradeHighlightsSlider';
 
+
+export async function generateStaticParams(): Promise<
+  Array<{ purity: string; category: string; style: string; id: string }>
+> {
+  try {
+    const goldTypes = await fetchGoldTypes();
+    const params: Array<{ purity: string; category: string; style: string; id: string }> = [];
+
+    for (const goldType of goldTypes) {
+      const purity = goldType.purity;
+      const categories = await safeFetch(() => fetchCategories(purity), purity);
+
+      for (const cat of categories) {
+        const category = cat.slug;
+        const styles = await safeFetch(
+          () => fetchStyles(purity, cat.name),
+          `${purity}/${cat.name}`
+        );
+
+        for (const style of styles) {
+          const styleSlug = style.slug;
+          const products = await safeFetch(
+            () => fetchProducts(purity, cat.name, style.name),
+            `${purity}/${cat.name}/${style.name}`
+          );
+
+          for (const product of products) {
+            if (product.slug) {
+              params.push({
+                purity,
+                category,
+                style: styleSlug,
+                id: product.slug,
+              });
+            }
+          }
+        }
+      }
+    }
+
+    console.log(`✅ Generated ${params.length} static product paths`);
+
+    return params.length > 0 ? params : getFallbackParams();
+  } catch (error) {
+    console.error('❌ Failed to generate static params:', error);
+    return getFallbackParams();
+  }
+}
+
+// Helper to reduce nested try/catch complexity
+async function safeFetch<T>(
+  fetchFn: () => Promise<T[]>,
+  context: string
+): Promise<T[]> {
+  try {
+    return await fetchFn();
+  } catch (error) {
+    console.warn(`Failed to fetch data for ${context}`, error);
+    return []; // Continue with empty array instead of breaking
+  }
+}
+
+function getFallbackParams() {
+  return [
+    {
+      purity: '18k',
+      category: 'necklaces',
+      style: 'modern',
+      id: 'sample-product',
+    },
+  ];
+}
+
 type Props = {
   params: Promise<{ purity: string; category: string; style: string; id: string }>;
 };
 
-export const dynamicParams = true; // Allow on-demand generation if needed (though limited with export)
 
 type TradeHighlight = {
   icon: string;
@@ -78,80 +150,7 @@ function renderTradeHighlight(item: TradeHighlight) {
   );
 }
 
-export async function generateStaticParams(): Promise<Array<{ purity: string; category: string; style: string; id: string }>> {
-  try {
-    const goldTypes = await fetchGoldTypes();
 
-    const params: Array<{ purity: string; category: string; style: string; id: string }> = [];
-
-    for (const goldType of goldTypes) {
-      const purity = goldType.purity;
-
-      try {
-        const categories = await fetchCategories(purity);
-
-        for (const cat of categories) {
-          const category = cat.slug;
-
-          try {
-            const styles = await fetchStyles(purity, cat.name);
-
-            for (const style of styles) {
-              const styleSlug = style.slug;
-
-              try {
-                const products = await fetchProducts(purity, cat.name, style.name);
-
-                for (const product of products) {
-                  if (product.slug) {
-                    params.push({
-                      purity,
-                      category,
-                      style: styleSlug,
-                      id: product.slug,
-                    });
-                  }
-                }
-              } catch (e) {
-                console.warn(`Failed to fetch products for ${purity}/${cat.name}/${style.name}`, e);
-                // Continue with other styles
-              }
-            }
-          } catch (e) {
-            console.warn(`Failed to fetch styles for ${purity}/${cat.name}`, e);
-          }
-        }
-      } catch (e) {
-        console.warn(`Failed to fetch categories for purity ${purity}`, e);
-      }
-    }
-
-    console.log(`Generated ${params.length} static product paths`);
-
-    // IMPORTANT: Never return empty array with output: 'export'
-    if (params.length === 0) {
-      console.warn('No products found. Returning fallback params to avoid build error.');
-      return [{
-        purity: '18k',
-        category: 'necklaces',
-        style: 'modern',
-        id: 'sample-product',
-      }];
-    }
-
-    return params;
-  } catch (error) {
-    console.error('Failed to generate static params:', error);
-    
-    // Fallback to prevent build failure
-    return [{
-      purity: '18k',
-      category: 'necklaces',
-      style: 'modern',
-      id: 'sample-product',
-    }];
-  }
-}
 
 export async function generateMetadata({ params }: Readonly<Props>) {
   const { purity, category, style, id } = await params;

@@ -7,10 +7,10 @@ import styles from './ProductGallery.module.css';
 
 interface ProductGalleryProps {
   images: string[];
-  productName?: string;
+  // productName?: string;
 }
 
-export default function ProductGallery({ images, productName }: ProductGalleryProps) {
+export default function ProductGallery({ images }: ProductGalleryProps) {
   const [activeImage, setActiveImage] = useState(images[0]);
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
