@@ -2,15 +2,6 @@
   width: 100%;
 }
 
-
-
-@media (max-width: 768px) {
-  .banner {
-    height: 250px;
-    margin: 20px 0;
-  }
-}
-
 .introContent {
   display: flex;
   flex-direction: column;
@@ -28,9 +19,9 @@
 }
 
 .pastGrid {
-  display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 50px;
+  display: grid;
 }
 
 .pastCard {
@@ -69,41 +60,45 @@
 
 .cardDate {
   color: #666;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 150% */
+  line-height: 24px;
+  /* 150% */
   text-transform: uppercase;
 }
 
 .cardTitle {
-  color: #000;
-  font-family: "Helvetica Neue", sans-serif;
   font-size: 24px;
+  line-height: 24px;
+  color: #000;
+  font-family: var(--font-body);
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 100% */
+  /* 100% */
   margin-bottom: 12px;
 }
 
 .cardLocation {
   color: #d0b480;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: var(--font-body);
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
-  line-height: 26px; /* 144.444% */
+  line-height: 26px;
+  /* 144.444% */
 }
 
 .cardDescription {
   color: #666;
   text-align: justify;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 26px; /* 162.5% */
+  line-height: 26px;
+  /* 162.5% */
   margin-bottom: 24px;
   flex-grow: 1;
 }
@@ -161,20 +156,42 @@
   line-height: 1.6;
 }
 
+
+@media (max-width: 1367px) {
+  .pastGrid {
+    gap: 30px;
+  }
+
+  .cardContent {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 1281px) {
+  .cardTitle {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 992px) {
+  .pastGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .valuesGrid {
     grid-template-columns: 1fr;
   }
 
-  .introSection {
-    padding: 40px 0;
-  }
-
-  .pastExhibitions {
-    padding: 50px 0;
+  .pastGrid {
+    grid-template-columns: repeat(1, 1fr);
   }
 
   .valuesSection {
     padding: 50px 0;
+  }
+  .pastExhibitionsTitle{
+    margin-bottom: 30px;
   }
 }

@@ -207,8 +207,9 @@
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 577px) {
   .btn_wrapper {
     flex-direction: column;
+    gap:10px
   }
 }

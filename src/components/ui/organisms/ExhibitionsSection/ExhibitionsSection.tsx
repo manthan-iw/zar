@@ -8,9 +8,11 @@ import styles from './ExhibitionsSection.module.css';
 interface ExhibitionsSectionProps {
   title?: string;
   id?: string;
+  showHeader?: boolean;
+  showButton?: boolean;
 }
 
-export default function ExhibitionsSection({ title = "Upcoming Exhibitions", id }: ExhibitionsSectionProps) {
+export default function ExhibitionsSection({ title = "Upcoming Exhibitions", id, showHeader = true, showButton = true }: ExhibitionsSectionProps) {
   return (
     <section className={styles.section} id={id}>
       <div className={styles.backgroundImage}>
@@ -24,18 +26,20 @@ export default function ExhibitionsSection({ title = "Upcoming Exhibitions", id 
       </div>
       <div className={styles.overlay} />
       <div className={styles.inner}>
-        <motion.div 
-          className={styles.header}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <h2 className="fs_54 txt_white">{title}</h2>
-          <p className="txt_white">
-            Discover our latest jewellery showcases and exclusive retail partner events.
-          </p>
-        </motion.div>
+        {showHeader && (
+          <motion.div 
+            className={styles.header}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            <h2 className="fs_54 txt_white">{title}</h2>
+            <p className="txt_white">
+              Discover our latest jewellery showcases and exclusive retail partner events.
+            </p>
+          </motion.div>
+        )}
         <motion.div 
           className={styles.eventCard}
           initial={{ opacity: 0, y: 50 }}
@@ -69,9 +73,11 @@ export default function ExhibitionsSection({ title = "Upcoming Exhibitions", id 
             <p className={styles.eventDescription}>
               Sharjah Watch and Jewellery Show 2026 is a biannual event that will present the latest jewelry designs, trends in watch collections, and jewelry made up of precious stones and diamonds.
             </p>
-            <Button href="/event" variant="outline" showArrow>
-              View Event
-            </Button>
+            {showButton && (
+              <Button href="/event" variant="outline" showArrow>
+                View Event
+              </Button>
+            )}
           </div>
         </motion.div>
       </div>

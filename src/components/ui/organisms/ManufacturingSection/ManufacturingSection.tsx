@@ -15,7 +15,7 @@ export default function ManufacturingSection() {
         playsInline
         poster="/images/homepage/video.webp"        
       >
-        <source src="/videos/manufacturing.mp4" type="video/mp4" />
+        <source src="/images/homepage/manufacturing-video.mp4" type="video/mp4" />
       </motion.video>
       <div className={styles.overlay} />
       <div className={styles.content}>

@@ -2,7 +2,7 @@
   position: relative;
   padding: 100px 20px 120px;
   overflow: hidden;
-  color: var(--color-white)!important;
+  color: var(--color-white) !important;
 }
 
 .backgroundImage {
@@ -54,11 +54,8 @@
 
 /* Event card */
 .eventCard {
-  display: flex;
-  flex-direction: column;
   gap: 90px;
-  /* background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1); */
+  display: flex;
   overflow: hidden;
 }
 
@@ -103,43 +100,47 @@
   color: var(--color-gold-primary);
 }
 
+.eventImage {
+  flex: 0 0 50%;
+  aspect-ratio: auto;
+}
 
-@media (min-width: 1024px) {
-  .section {
-    padding: 100px 60px 120px;
-  }
+.eventDetails {
+  flex: 1;
+  padding: 50px 60px;
+  gap: 20px;
+  justify-content: center;
+}
 
+.eventTitle {
+  font-size: var(--fs-lg);
+  line-height: 38px;
+}
+
+@media (max-width: 1367px) {
   .eventCard {
-    flex-direction: row;
+    gap: 50px;
   }
 
-  .eventImage {
-    flex: 0 0 50%;
-    aspect-ratio: auto;
+  .section {
+    padding: 50px 60px 60px;
   }
 
   .eventDetails {
-    flex: 1;
-    padding: 50px 60px;
-    gap: 20px;
-    justify-content: center;
-  }
-
-  .eventTitle {
-    font-size: var(--fs-lg);
-    line-height: 38px;
+    padding: 0;
   }
 }
 
-@media (min-width: 1440px) {
+
+@media (max-width: 992px) {
   .section {
-    padding: 100px 0 120px;
+    padding: 50px 0px 60px;
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 769px) {
   .section {
-    padding: 60px 20px;
+    padding: 60px 0px;
   }
 
   .heading {
@@ -149,5 +150,17 @@
 
   .eventDetails {
     padding: 30px 20px;
+  }
+
+  .eventCard {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+}
+
+@media (max-width: 577px) {
+  .eventDetails {
+    padding: 30px 20px 0;
   }
 }

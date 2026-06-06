@@ -460,6 +460,19 @@ textarea::placeholder {
   .bannerImage {
     height: 285px;
   }
+
+  .valueIcon svg {
+    height: 80px;
+    width: 80px;
+  }
+
+  .valueCard h4 {
+    font-size: 24px;
+  }
+
+  .valueCard {
+    padding: 20px;
+  }
 }
 
 @media (max-width: 1281px) {
@@ -494,9 +507,6 @@ textarea::placeholder {
 }
 
 @media (max-width: 992px) {
-  .bannerImage img {
-    height: 270px !important;
-  }
 
   /* .storyImageWrapper {
     height: 500px;

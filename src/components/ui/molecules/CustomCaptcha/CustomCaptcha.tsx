@@ -129,28 +129,30 @@ export default function CustomCaptcha({
             </div>
 
             <div className={styles.captchaRow}>
-                <div className={styles.captchaImageFrame} aria-live="polite">
-                    {captchaImage && (
-                        <Image
-                            src={captchaImage}
-                            alt="4 digit captcha"
-                            className={styles.captchaImage}
-                            width={CAPTCHA_WIDTH}
-                            height={CAPTCHA_HEIGHT}
-                            unoptimized
-                        />
-                    )}
+                <div className={styles.captchaImageWrapper}>
+                    <div className={styles.captchaImageFrame} aria-live="polite">
+                        {captchaImage && (
+                            <Image
+                                src={captchaImage}
+                                alt="4 digit captcha"
+                                className={styles.captchaImage}
+                                width={CAPTCHA_WIDTH}
+                                height={CAPTCHA_HEIGHT}
+                                unoptimized
+                            />
+                        )}
+                    </div>
+                    <button
+                        type="button"
+                        className={styles.captchaRefreshButton}
+                        onClick={refreshCaptcha}
+                        aria-label="Refresh captcha"
+                    >
+                        <span className={styles.captchaRefreshIcon} aria-hidden="true">
+                            ↻
+                        </span>
+                    </button>
                 </div>
-                <button
-                    type="button"
-                    className={styles.captchaRefreshButton}
-                    onClick={refreshCaptcha}
-                    aria-label="Refresh captcha"
-                >
-                    <span className={styles.captchaRefreshIcon} aria-hidden="true">
-                        ↻
-                    </span>
-                </button>
                 <InputField
                     id={id}
                     label={label}
