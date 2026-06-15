@@ -436,6 +436,7 @@
   .content {
     padding: 0;
   }
+
 }
 
 @media (max-width: 1024px) {
@@ -474,11 +475,11 @@
 
 @media (max-width: 1441px) {
   .content {
-    top: 30%;
+    top: 45%;
   }
 
   .heroNav {
-    bottom: 15%;
+    bottom: 6%;
   }
 }
 
@@ -491,11 +492,11 @@
 }
 @media (max-width: 1281px) {
   .content {
-     padding: 0 0px;
+    padding: 0 0px;
   }
 
   .heroNav {
-    left: 9%;
+    left: 7%;
   }
 }
 

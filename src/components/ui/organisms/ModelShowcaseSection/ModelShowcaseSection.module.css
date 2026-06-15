@@ -42,16 +42,16 @@
 }
 
 .slider :global(.swiper-slide-active) .viewer {
-  width: 100%;
   height: 400px;
+  width: 100%;
 }
 
 .card {
+  height: 600px;
   overflow: hidden;
   transition: transform 0.3s ease;
   position: relative;
   z-index: 0;
-  height: 600px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -147,8 +147,8 @@
 
 /* Custom navigation arrows */
 .navBtn {
-  position: absolute;
   top: 50%;
+  position: absolute;
   transform: translateY(-50%);
   z-index: 10;
   background: none;
@@ -183,7 +183,19 @@
   .navBtn svg {
     height:40px;
     width:40px;
+  }
+  .navBtn {
+  top: 40%;}
+  .card {
+  height: 500px;}
+  .slider :global(.swiper-slide-active) .viewer {
+  height: 300px;}
 }
+@media (max-width: 1281px) {
+  /* .navBtn svg {
+    height:40px;
+    width:40px;
+  } */
 }
 @media (max-width: 1199px) {
 
