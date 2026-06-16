@@ -24,10 +24,10 @@
 }
 
 .textBlock {
+  max-width: 535px;
   display: flex;
   flex-direction: column;
   gap: 50px;
-  max-width: 535px;
   margin: 60px 0 100px;
 }
 
@@ -55,7 +55,7 @@
 
 @media (max-width: 1367px) {
   .textBlock {
-    max-width: 500px;
+    max-width: 410px;
   }
 }
 

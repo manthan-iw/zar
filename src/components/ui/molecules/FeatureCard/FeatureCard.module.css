@@ -27,6 +27,10 @@
   .card {
     padding: 25px 20px;
   }
+  .iconWrapper img{
+    width: 80px;
+    height: 80px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -34,8 +38,4 @@
     padding: 30px 24px;
   }
 
-  .iconWrapper img{
-    width: 80px;
-    height: 80px;
-  }
 }

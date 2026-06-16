@@ -88,6 +88,9 @@
   .imageWrapper {
     height: 250px;
   }
+  .careerSliderSection{
+    padding-inline:15px;
+  }
 }
 
 @media (max-width: 480px) {

@@ -56,6 +56,16 @@
   gap: 20px;
 }
 
+ .statOverlay {
+    right: -20%;
+  }
+
+@media (max-width: 1281px) {
+  .statOverlay {
+    right: -15%;
+    scale: 0.8;
+  }
+}
 @media (min-width: 768px) {
 
   .heading {
@@ -85,10 +95,6 @@
   .heading {
     font-size: var(--fs-2xl);
     line-height: 66px;
-  }
-
-  .statOverlay {
-    right: -20%;
   }
 
 }

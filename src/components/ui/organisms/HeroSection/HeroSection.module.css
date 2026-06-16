@@ -502,9 +502,13 @@
   .content {
     padding: 0 0px;
   }
-
+  .heading {
+    font-size: 54px;
+    line-height: 62px;
+  }
   .heroNav {
     left: 7%;
+    bottom: 6%;
   }
 }
 
