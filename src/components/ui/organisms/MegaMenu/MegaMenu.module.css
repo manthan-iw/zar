@@ -146,6 +146,15 @@
   opacity: 1;
   visibility: visible;
 }
+@media (max-width: 1367px) {
+  .inner>div {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .grid {
+    padding: 0 30px;
+  }
+}
 @media (max-width: 1024px) {
   .overlay {
     display: none;

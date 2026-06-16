@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@/components/ui/atoms/Button/Button';
 import styles from './page.module.css';
@@ -32,6 +33,7 @@ const WORK_REGEX = /^[A-Za-z0-9\s+-]{1,30}$/;
 
 
 export default function CareersPage() {
+  const router = useRouter();
   const { showToast } = useToast();
   const [positions, setPositions] = useState<CareerPosition[]>([]);
   const [captchaValue, setCaptchaValue] = useState('');
@@ -51,7 +53,7 @@ export default function CareersPage() {
   );
 
   const handleDrop = useCallback(
-    (event: React.DragEvent<HTMLDivElement>, onChange: (v: FileList | undefined) => void) => {
+    (event: React.DragEvent<HTMLElement>, onChange: (v: FileList | undefined) => void) => {
       event.preventDefault();
       setIsDragging(false);
       const files = event.dataTransfer.files;
@@ -145,7 +147,7 @@ export default function CareersPage() {
       setResumeFileName('');
       setCaptchaValue('');
       setIsCaptchaValid(false);
-      showToast('Your application has been submitted successfully. We will be in touch!', 'success');
+      router.push('/thank-you');
     } catch (error: unknown) {
       showToast(
         error instanceof Error
@@ -479,19 +481,17 @@ export default function CareersPage() {
                       required: 'Please attach your resume.',
                       validate: {
                         acceptedFormats: (files) => {
-                          const fileList = files as FileList | undefined;
-                          if (!fileList?.[0]) return true;
+                          if (!files?.[0]) return true;
                           const allowed = [
                             'application/pdf',
                             'application/msword',
                             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                           ];
-                          return allowed.includes(fileList[0].type) || 'Only PDF, DOC, DOCX files are accepted.';
+                          return allowed.includes(files[0].type) || 'Only PDF, DOC, DOCX files are accepted.';
                         },
                         fileSize: (files) => {
-                          const fileList = files as FileList | undefined;
-                          if (!fileList?.[0]) return true;
-                          return fileList[0].size <= 5 * 1024 * 1024 || 'File size must not exceed 5 MB.';
+                          if (!files?.[0]) return true;
+                          return files[0].size <= 5 * 1024 * 1024 || 'File size must not exceed 5 MB.';
                         },
                       },
                     }}
@@ -499,30 +499,41 @@ export default function CareersPage() {
                     render={({ field }) => (
                       <div
                         className={`inputfile${isDragging ? ' inputfile--dragging' : ''}`}
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Resume upload drop zone"
+                        onClick={() => document.getElementById('uploadResume')?.click()}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            document.getElementById('uploadResume')?.click();
+                          }
+                        }}
                         onDragEnter={(e) => { e.preventDefault(); setIsDragging(true); }}
                         onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
                         onDragLeave={() => setIsDragging(false)}
                         onDrop={(e) => handleDrop(e, field.onChange)}
                       >
-                        <label htmlFor="uploadResume" className="custom-file-upload">
-                          <input
-                            type="file"
-                            id="uploadResume"
-                            name={field.name}
-                            accept=".pdf,.doc,.docx"
-                            ref={field.ref}
-                            value={undefined}
-                            onBlur={field.onBlur}
-                            onChange={(event) => {
-                              field.onChange(event.target.files);
-                              const files = event.target.files;
-                              if (files?.[0]) {
-                                setResumeFileName(files[0].name);
-                              } else {
-                                setResumeFileName('');
-                              }
-                            }}
-                          />
+                        <input
+                          type="file"
+                          id="uploadResume"
+                          name={field.name}
+                          accept=".pdf,.doc,.docx"
+                          ref={field.ref}
+                          value={undefined}
+                          onBlur={field.onBlur}
+                          onChange={(event) => {
+                            field.onChange(event.target.files);
+                            const files = event.target.files;
+                            if (files?.[0]) {
+                              setResumeFileName(files[0].name);
+                            } else {
+                              setResumeFileName('');
+                            }
+                          }}
+                          style={{ display: 'none' }}
+                        />
+                        <div className="custom-file-upload">
                           <p>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="#666666" strokeLinecap="round" strokeLinejoin="round" />
@@ -532,7 +543,7 @@ export default function CareersPage() {
                             {isDragging ? 'Drop your file here' : 'Attach Your Resume In PDF, Word Format'}
                           </p>
                           <p><small>Max Size: 5 Mb</small></p>
-                        </label>
+                        </div>
                         {errors.resume && (
                           <p style={{ color: '#c00', fontSize: '12px', marginTop: '4px', textAlign: 'center' }}>{errors.resume.message}</p>
                         )}

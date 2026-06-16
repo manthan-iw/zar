@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Country, State, City } from 'country-state-city';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@/components/ui/atoms/Button/Button';
@@ -34,6 +35,7 @@ const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 const MESSAGE_REGEX = /^[A-Za-z0-9\s.,'"?!@#$%&*()\-:+;[\]{}]{10,1000}$/;
 
 export default function PartnerForm() {
+  const router = useRouter();
   const { showToast } = useToast();
   const [captchaValue, setCaptchaValue] = useState('');
   const [isCaptchaValid, setIsCaptchaValid] = useState(false);
@@ -45,7 +47,6 @@ export default function PartnerForm() {
   const [selectedCountryName, setSelectedCountryName] = useState('');
   const [selectedStateCode, setSelectedStateCode] = useState('');
   const [selectedStateName, setSelectedStateName] = useState('');
-  const [selectedCityName, setSelectedCityName] = useState('');
 
   const {
     register,
@@ -95,7 +96,6 @@ export default function PartnerForm() {
       setSelectedStateCode('');
       setSelectedStateName('');
       setCitiesList([]);
-      setSelectedCityName('');
       return;
     }
 
@@ -108,13 +108,11 @@ export default function PartnerForm() {
     setSelectedStateCode('');
     setSelectedStateName('');
     setCitiesList([]);
-    setSelectedCityName('');
   }, [selectedCountryCode]);
 
   useEffect(() => {
     if (!selectedCountryCode || !selectedStateCode) {
       setCitiesList([]);
-      setSelectedCityName('');
       return;
     }
 
@@ -123,7 +121,6 @@ export default function PartnerForm() {
         name: city.name,
       }))
     );
-    setSelectedCityName('');
   }, [selectedCountryCode, selectedStateCode]);
 
   const onPartnerSubmit = handleSubmit(async (values) => {
@@ -163,10 +160,7 @@ export default function PartnerForm() {
       setSelectedCityName('');
       setCaptchaValue('');
       setIsCaptchaValid(false);
-      showToast(
-        result.message || 'Your request has been submitted successfully. Our team will contact you soon.',
-        'success'
-      );
+      router.push('/thank-you');
     } catch {
       showToast('Network error. Please try again in a moment.', 'error');
     } finally {
@@ -299,23 +293,7 @@ export default function PartnerForm() {
                 value={field.value}
                 onChange={(event) => {
                   field.onChange(event.target.value);
-                  setSelectedCityName(event.target.value);
-                }}
-                onBlur={field.onBlur}
-                disabled={!selectedStateCode || citiesList.length === 0}
-              />
-            )}
-          />
 
-          <InputField
-            id="pincode"
-            type="number"
-            label="Pincode"
-            placeholder="Enter your pincode"
-            wrapperClassName={styles.inputGroup}
-            inputMode="numeric"
-            errorMessage={errors.pincode?.message}
-            {...register('pincode')}
           />
         </div>
 

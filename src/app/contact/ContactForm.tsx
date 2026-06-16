@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@/components/ui/atoms/Button/Button';
 import CustomCaptcha from '@/components/ui/molecules/CustomCaptcha/CustomCaptcha';
@@ -27,6 +28,7 @@ const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 const MESSAGE_REGEX = /^[A-Za-z0-9\s.,'"?!@#$%&*()\-:+;[\]{}]{10,1000}$/;
 
 export default function ContactForm() {
+  const router = useRouter();
   const { showToast } = useToast();
   const [captchaValue, setCaptchaValue] = useState('');
   const [isCaptchaValid, setIsCaptchaValid] = useState(false);
@@ -82,7 +84,7 @@ export default function ContactForm() {
       reset();
       setCaptchaValue('');
       setIsCaptchaValid(false);
-      showToast(result.message || 'Your message has been submitted successfully.', 'success');
+      router.push('/thank-you');
     } catch {
       showToast('Network error. Please try again in a moment.', 'error');
     } finally {
