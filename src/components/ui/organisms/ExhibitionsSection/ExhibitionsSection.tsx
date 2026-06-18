@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import Button from '@/components/ui/atoms/Button/Button';
 import { apiGet } from '@/lib/api/axios';
 import { getImageUrl } from '@/lib/utils';
+import { imagePath } from '@/lib/imagePath';
 import styles from './ExhibitionsSection.module.css';
 
 interface ApiEvent {
@@ -87,7 +88,7 @@ export default function ExhibitionsSection({
       <section className={styles.section} id={id}>
         <div className={styles.backgroundImage}>
           <Image
-            src="/images/homepage/event_bg.webp"
+            src={imagePath("/images/homepage/event_bg.webp")}
             alt=""
             fill
             loading="eager"
@@ -112,7 +113,7 @@ export default function ExhibitionsSection({
     <section className={styles.section} id={id}>
       <div className={styles.backgroundImage}>
         <Image
-          src="/images/homepage/event_bg.webp"
+          src={imagePath("/images/homepage/event_bg.webp")}
           alt=""
           fill
           loading="eager"
@@ -140,7 +141,7 @@ export default function ExhibitionsSection({
         {upcomingEvents.map((event) => {
           const thumbnail = event.event_images?.[0]
             ? getImageUrl(event.event_images[0])
-            : "/images/homepage/event.webp";
+            : imagePath("/images/homepage/event.webp");
 
           return (
             <motion.div 

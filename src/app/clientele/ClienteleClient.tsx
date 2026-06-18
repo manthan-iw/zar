@@ -1,6 +1,7 @@
 "use client";
 import { apiGet, IMAGE_BASE_PATH } from '@/lib/api/axios';
 import Image from 'next/image';
+import { imagePath } from '@/lib/imagePath';
 import styles from './page.module.css';
 import PageHeader from '@/components/ui/PageHeader/PageHeader';
 import RetailerSlider from '@/components/ui/organisms/RetailerSlider/RetailerSlider';
@@ -39,7 +40,7 @@ function getLogoSrc(client: ClientLogoItem) {
       : `${IMAGE_BASE_PATH}${client.image_url}`;
   }
 
-  return client.logo || '/images/clients/placeholder.webp';
+  return imagePath(client.logo || '/images/clients/placeholder.webp');
 }
 
 function LogoGrid({ selectedNation, logos }: { selectedNation: Nation; logos: ClientLogoItem[] }) {
@@ -96,7 +97,7 @@ export default function ClienteleClient() {
       />
       <div className='bannerImage'>
         <Image
-          src="/images/client_bg.webp"
+          src={imagePath("/images/client_bg.webp")}
           alt="Crafting gold bangle"
           fill
           style={{ objectFit: 'cover' }}
@@ -123,7 +124,7 @@ export default function ClienteleClient() {
           <div className={styles.mapWrapper}>
             <div>
               <Image
-                src="/images/clients/map-final.webp"
+                src={imagePath("/images/clients/map-final.webp")}
                 alt="map"
                 width={1920}
                 height={900}
@@ -180,7 +181,7 @@ export default function ClienteleClient() {
           </div>
           <div className={styles.mapWrapper2}>
             <Image
-              src="/images/clients/map-final-m.webp"
+              src={imagePath("/images/clients/map-final-m.webp")}
               alt="map"
               width={768}
               height={900}

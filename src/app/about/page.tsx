@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import styles from './page.module.css';
 import Image from 'next/image';
+import { imagePath } from '@/lib/imagePath';
 import PageHeader from '@/components/ui/PageHeader/PageHeader';
 import OurStory from '@/components/ui/OurStory/OurStory';
 
@@ -26,7 +27,7 @@ export default function AboutPage() {
       />
       <div className='bannerImage'>
         <Image
-          src="/images/about/about_banner.webp"
+          src={imagePath("/images/about/about_banner.webp")}
           alt="Crafting gold bangle"
           fill
           style={{ objectFit: 'cover' }}
@@ -65,7 +66,7 @@ export default function AboutPage() {
         <div className="container">
           <div className="storyGrid">
             <div className="storyImageWrapper">
-              <Image src="/images/about/new_abt.png" alt="Zar team at work" fill className="storyImage" />
+              <Image src={imagePath("/images/about/new_abt.png")} alt="Zar team at work" fill className="storyImage" />
             </div>
             <div className="storyTextBlock">
               <h2 className="fs_54">Legacy That Built the Foundation</h2>
@@ -155,7 +156,7 @@ export default function AboutPage() {
         <div className="container">
           <div className="storyGrid">
             <div className="storyImageWrapper">
-              <Image src="/images/about/abt-4.jpg" alt="Zar team at work" fill className="storyImage imgFluid h-full" />
+              <Image src={imagePath("/images/about/abt-4.jpg")} alt="Zar team at work" fill className="storyImage imgFluid h-full" />
             </div>
             <div className="storyTextBlock">
               <h2 className="fs_54">Design & Innovation</h2>
@@ -188,28 +189,28 @@ export default function AboutPage() {
           <div className="valuesGrid">
             <div className="valueCard">
               <div className="valueIcon">
-                <Image src="/images/about/rc.svg" alt="Zar team at work" height={130} width={130} />
+                <Image src={imagePath("/images/about/rc.svg")} alt="Zar team at work" height={130} width={130} />
               </div>
               <h4>Relentless Craftsmanship</h4>
               <p>We pursue excellence as a standard—refining every detail without compromise.</p>
             </div>
             <div className="valueCard">
               <div className="valueIcon">
-                <Image src="/images/about/om.svg" alt="Zar team at work" height={130} width={130} />
+                <Image src={imagePath("/images/about/om.svg")} alt="Zar team at work" height={130} width={130} />
               </div>
               <h4>Ownership Mindset</h4>
               <p>We take full responsibility for everything we create and deliver.</p>
             </div>
             <div className="valueCard">
               <div className="valueIcon">
-                <Image src="/images/about/pdi.svg" alt="Zar team at work" height={130} width={130} />
+                <Image src={imagePath("/images/about/pdi.svg")} alt="Zar team at work" height={130} width={130} />
               </div>
               <h4>Purpose-Driven Innovation</h4>
               <p>We innovate with intent—to lead, not follow.</p>
             </div>
             <div className="valueCard">
               <div className="valueIcon">
-                <Image src="/images/about/doh.svg" alt="Zar team at work" height={130} width={130} />
+                <Image src={imagePath("/images/about/doh.svg")} alt="Zar team at work" height={130} width={130} />
               </div>
               <h4>Discipline Over Hype</h4>
               <p>We value consistency, precision, and execution over noise.</p>

@@ -1,5 +1,6 @@
 import PageHeader from '@/components/ui/PageHeader/PageHeader';
 import Image from 'next/image';
+import { imagePath } from '@/lib/imagePath';
 import PartnerForm from './PartnerForm';
 import styles from './page.module.css';
 export const metadata = {
@@ -24,7 +25,7 @@ export default function PartnerPage() {
 
       <div className='bannerImage'>
         <Image
-          src="/images/partner_bg.webp"
+          src={imagePath("/images/partner_bg.webp")}
           alt="Crafting gold bangle"
           fill
           style={{ objectFit: 'cover' }}
@@ -38,7 +39,7 @@ export default function PartnerPage() {
           <div className={styles.benefitsGrid}>
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className={styles.benefitCard}>
-                <Image src="/images/Distributor-Testimonials.png" alt="Benefit" width={300} height={280} style={{ objectFit: 'cover' }} className='imgFluid'/>
+                <Image src={imagePath("/images/Distributor-Testimonials.png")} alt="Benefit" width={300} height={280} style={{ objectFit: 'cover' }} className='imgFluid'/>
                 <h3 className={styles.benefitTitle}>Benefit Title {i}</h3>
                 <p className={styles.benefitSubtitle}>Benefit subtitle description goes here.</p>
               </div>

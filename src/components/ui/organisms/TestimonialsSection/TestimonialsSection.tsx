@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { imagePath } from '@/lib/imagePath';
 import styles from './TestimonialsSection.module.css';
 import { useRef } from 'react';
 import type { Swiper as SwiperType } from 'swiper';
@@ -96,7 +97,7 @@ export default function TestimonialsSection() {
                   <div className={slideProps.isActive ? styles.centerContent : styles.sideImageContent}>
                     <div className={styles.videoWrapper}>
                       <Image
-                        src={testimonial.video}
+                        src={imagePath(testimonial.video)}
                         alt="Testimonial video"
                         fill
                         sizes="800px"
@@ -110,7 +111,7 @@ export default function TestimonialsSection() {
                     {slideProps.isActive && (
                       <div className={styles.quoteBlock}>
                         <Image
-                          src="/images/quote-icon.svg"
+                          src={imagePath("/images/quote-icon.svg")}
                           alt=""
                           width={54}
                           height={41}

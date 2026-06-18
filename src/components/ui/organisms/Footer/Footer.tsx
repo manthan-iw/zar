@@ -159,7 +159,7 @@ export default function Footer() {
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <span>Ground floor, Peninsula spenta, Mathuradas mill compound, N. M. Joshi Marg, Lower Parel(W), Mumbai - 400 013.</span>
+                    <span><a target='_blank' href="https://maps.app.goo.gl/PqCXmAwx82HVZn2J8">Ground floor, Peninsula spenta, Mathuradas mill compound, N. M. Joshi Marg, Lower Parel(W), Mumbai - 400 013.</a></span>
                   </li>
                   <li className={styles.contactItem}>
                     <svg
@@ -177,7 +177,7 @@ export default function Footer() {
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <span>info@zarjewels.com</span>
+                    <span><a target='_blank' href="mailto:info@zarjewels.com">info@zarjewels.com</a></span>
                   </li>
                   <li className={styles.contactItem}>
                     <svg
@@ -195,7 +195,7 @@ export default function Footer() {
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <span>Office No. : +91 86574 99151</span>
+                    <span><a target='_blank' href="tel:+918657499151">Office No. : +91 86574 99151</a></span>
                   </li>
                 </ul>
               </div>

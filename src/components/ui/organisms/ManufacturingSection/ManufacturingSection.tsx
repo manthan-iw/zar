@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { imagePath } from '@/lib/imagePath';
 import Button from '@/components/ui/atoms/Button/Button';
 import styles from './ManufacturingSection.module.css';
 
@@ -13,9 +14,9 @@ export default function ManufacturingSection() {
         muted
         loop
         playsInline
-        poster="/images/homepage/video.webp"
+        poster={imagePath("/images/homepage/video.webp")}
       >
-        <source src="/images/homepage/manufacturing-video.mp4" type="video/mp4" />
+        <source src={imagePath("/images/homepage/manufacturing-video.mp4")} type="video/mp4" />
       </motion.video>
       <div className={styles.overlay} />
       <div className={styles.content}>

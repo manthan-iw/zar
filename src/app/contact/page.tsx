@@ -48,7 +48,7 @@ export default function ContactPage() {
                       <path d="M10.5 9.16667C10.5 9.90305 9.90305 10.5 9.16667 10.5C8.43029 10.5 7.83333 9.90305 7.83333 9.16667C7.83333 8.43029 8.43029 7.83333 9.16667 7.83333C9.90305 7.83333 10.5 8.43029 10.5 9.16667Z" stroke="#A38274" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </span>
-                  <a className={styles.contactMapLink} href="https://goo.gl/maps/1Zt3n9sH2mL2" target="_blank" rel="noreferrer">
+                  <a className={styles.contactMapLink} href="#" target="_blank" rel="noreferrer">
                     <span className='txt_black'>Zar Experience Centre </span><br />
                     Bhuleshwar Road, next to Surti veg restaurant, Marine Lines East, Fanas Wadi, Kalbadevi, Mumbai — 400002
                   </a>
@@ -72,7 +72,7 @@ export default function ContactPage() {
                       <path d="M10.5 9.16667C10.5 9.90305 9.90305 10.5 9.16667 10.5C8.43029 10.5 7.83333 9.90305 7.83333 9.16667C7.83333 8.43029 8.43029 7.83333 9.16667 7.83333C9.90305 7.83333 10.5 8.43029 10.5 9.16667Z" stroke="#A38274" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </span>
-                  <a className={styles.contactMapLink} href="https://goo.gl/maps/1Zt3n9sH2mL2" target="_blank" rel="noreferrer">
+                  <a className={styles.contactMapLink} href="https://maps.app.goo.gl/PqCXmAwx82HVZn2J8" target="_blank" rel="noreferrer">
                     <span className='txt_black'>Zar Jewels</span> <br />Ground Floor, Peninsula Spenta, Mathuradas Mill Compound, N.M. Joshi Marg, Lower Parel Mumbai - 400013
                   </a>
                 </div>

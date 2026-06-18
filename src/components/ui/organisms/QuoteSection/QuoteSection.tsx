@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { imagePath } from '@/lib/imagePath';
 import styles from './QuoteSection.module.css';
 
 const stats = [
@@ -25,7 +26,7 @@ export default function QuoteSection() {
       <div className={styles.background}>
         <div className={styles.bgImage}>
           <Image
-            src="/images/quote-bg.svg"
+            src={imagePath("/images/quote-bg.svg")}
             alt="Craftsman at work"
             fill
             sizes="100vw"

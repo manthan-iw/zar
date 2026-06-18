@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { imagePath } from '@/lib/imagePath';
 import StatCard from '@/components/ui/atoms/StatCard/StatCard';
 import styles from './LegacySection.module.css';
 
@@ -35,7 +36,7 @@ export default function LegacySection() {
             <div className={styles.imageBlock}>
               <motion.div className={styles.mainImage} variants={imageVariants}>
                 <Image
-                  src="/images/homepage/about_home.png"
+                  src={imagePath("/images/homepage/about_home.png")}
                   alt="Gold bangle craftsmanship"
                   fill
                   sizes="(max-width: 1024px) 100vw, 800px"

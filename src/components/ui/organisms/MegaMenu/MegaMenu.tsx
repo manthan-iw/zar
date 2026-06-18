@@ -7,6 +7,7 @@ import { fetchCategories } from '@/lib/api/catalog';
 import type { Category } from '@/types/domain';
 import styles from './MegaMenu.module.css';
 import { cn, getImageUrl } from '@/lib/utils';
+import { imagePath } from '@/lib/imagePath';
 
 const ktFilters = [
   { label: '18 KT Jewellery', value: '18kt', purity: '18k' },
@@ -92,7 +93,7 @@ export default function MegaMenu({ open, onClose }: Readonly<MegaMenuProps>) {
             >
               <div className={styles.ktCardImageWrap}>
                 <Image
-                  src={kt.value === '18kt' ? '/images/menu/18k_menu.png' : '/images/menu/22kt_menu.png'}
+                  src={imagePath(kt.value === '18kt' ? '/images/menu/18k_menu.png' : '/images/menu/22kt_menu.png')}
                   alt={kt.label}
                   width={70}
                   height={70}

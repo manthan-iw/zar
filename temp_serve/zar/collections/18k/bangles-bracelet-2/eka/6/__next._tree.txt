@@ -1,0 +1,11 @@
+:HL["/zar/_next/static/css/dd5d352a082118c1.css","style"]
+:HL["/zar/_next/static/css/8982b452d5896a6f.css","style"]
+:HL["/zar/_next/static/css/2f1643ca7a3ed39a.css","style"]
+:HL["/zar/_next/static/css/e89d7c59c5022403.css","style"]
+:HL["/zar/_next/static/css/062da7c923005e51.css","style"]
+:HL["/zar/_next/static/css/3cac15bec82e0bb3.css","style"]
+:HL["/zar/_next/static/css/0cd54441d5cc9677.css","style"]
+:HL["/zar/_next/static/css/1a18addc2faa20e1.css","style"]
+:HL["/zar/_next/static/css/701d547b1c871129.css","style"]
+:HL["/zar/_next/static/css/a1fecc6e1f49ccd8.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":28,"slots":{"children":{"name":"collections","param":null,"prefetchHints":12,"slots":{"children":{"name":"purity","param":{"type":"d","key":"18k","siblings":null},"prefetchHints":12,"slots":{"children":{"name":"category","param":{"type":"d","key":"bangles-bracelet-2","siblings":null},"prefetchHints":12,"slots":{"children":{"name":"style","param":{"type":"d","key":"eka","siblings":null},"prefetchHints":12,"slots":{"children":{"name":"id","param":{"type":"d","key":"6","siblings":null},"prefetchHints":4,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}}}}}}}},"staleTime":300,"buildId":"9h_rw4wZnccGiFnAhd_TC"}

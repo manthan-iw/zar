@@ -7,6 +7,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { apiGet, API_BASE_URL } from '@/lib/api/axios';
 import { getImageUrl } from '@/lib/utils';
+import { imagePath } from '@/lib/imagePath';
 import styles from './RetailerSlider.module.css';
 
 // ---------------------------------------------------------------------------
@@ -395,7 +396,7 @@ export default function RetailerSlider() {
                 <div className={styles.slideBody}>
                   <div className={styles.slideBodyInner}>
                     <Image
-                      src="/images/quote_2.svg"
+                      src={imagePath("/images/quote_2.svg")}
                       alt="quote"
                       width={54}
                       height={40}

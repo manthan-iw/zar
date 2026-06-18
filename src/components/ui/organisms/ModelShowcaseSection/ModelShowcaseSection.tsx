@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Autoplay } from 'swiper/modules';
 import Button from '@/components/ui/atoms/Button/Button';
 import { showcaseModels } from '@/lib/model-showcase';
+import { imagePath } from '@/lib/imagePath';
 
 
 // Triple the list so we have enough real slides to scroll both directions
@@ -80,9 +81,9 @@ export default function ModelShowcaseSection() {
                   <div className={styles.modelWrapper}>
                     <div className={styles.circleBg} aria-hidden="true" />
                     <model-viewer
-                      src={model.src}
+                      src={imagePath(model.src)}
                       alt={model.alt}
-                      poster={model.poster}
+                      poster={imagePath(model.poster)}
                       camera-controls
                       disable-zoom
                       max-camera-orbit="auto auto 100%"

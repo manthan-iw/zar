@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { imagePath } from '@/lib/imagePath';
 import PageHeader from '@/components/ui/PageHeader/PageHeader';
 import Button from '@/components/ui/atoms/Button/Button';
 import ExhibitionsSection from '@/components/ui/organisms/ExhibitionsSection/ExhibitionsSection';
@@ -102,7 +103,7 @@ export default function EventClient() {
       
       <div className='bannerImage'>
         <Image
-          src="/images/about/about_banner.webp"
+          src={imagePath("/images/about/about_banner.webp")}
           alt="Crafting gold bangle"
           fill
           style={{ objectFit: 'cover' }}
@@ -140,7 +141,7 @@ export default function EventClient() {
               {pastEvents.map((exhibition) => {
                 const thumbnail = exhibition.event_images?.[0]
                   ? getImageUrl(exhibition.event_images[0])
-                  : '/images/homepage/event.webp';
+                  : imagePath('/images/homepage/event.webp');
                 const galleryImages = exhibition.event_images?.map((img) => getImageUrl(img)) || [];
 
                 return (

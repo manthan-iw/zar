@@ -1,12 +1,11 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-   output: 'export',
-   trailingSlash: true,
+const nextConfig = {
+  output: "export",
+  trailingSlash: false,
+  basePath: "/zar",
+  assetPrefix: "/zar",
   images: {
-    unoptimized: true,     // Required because normal servers can't resize images
+    unoptimized: true,
   },
-  /* config options here */
 };
 
 export default nextConfig;

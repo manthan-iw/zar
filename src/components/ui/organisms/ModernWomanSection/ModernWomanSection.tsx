@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { imagePath } from '@/lib/imagePath';
 import BulletPoint from '@/components/ui/atoms/BulletPoint/BulletPoint';
 import styles from './ModernWomanSection.module.css';
 
@@ -16,7 +17,7 @@ export default function ModernWomanSection() {
         viewport={{ once: true, amount: 0.2 }}
       >
         <Image
-          src="/images/homepage/ModernWoman-img.png"
+          src={imagePath("/images/homepage/ModernWoman-img.png")}
           alt="Modern woman wearing gold bangles"
           fill
           sizes="100vw"          

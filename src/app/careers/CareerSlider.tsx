@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
+import { imagePath } from '@/lib/imagePath';
 import styles from './CareerSlider.module.css';
 
 const skeletonCards = Array.from({ length: 3 });
@@ -81,7 +82,7 @@ export default function CareerSlider() {
           <SwiperSlide key={index} className={styles.careerSlide}>
             <div className={styles.imageWrapper}>
               <Image 
-                src={src} 
+                src={imagePath(src)} 
                 alt={`Career at Zar Jewels ${index + 1}`} 
                 fill 
                 style={{ objectFit: 'cover' }}

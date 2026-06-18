@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { imagePath } from '@/lib/imagePath';
 import PageHeader from '@/components/ui/PageHeader/PageHeader';
 import Button from '@/components/ui/atoms/Button/Button';
 import styles from './page.module.css';
@@ -14,7 +15,7 @@ export default function ThankYouPage() {
             <div className="container">
                 <div className='bannerImage'>
                     <Image
-                        src="/images/thank-you.webp"
+                        src={imagePath("/images/thank-you.webp")}
                         alt="Thank you for contacting Zar Jewels"
                         fill
                         style={{ objectFit: 'contain' }}

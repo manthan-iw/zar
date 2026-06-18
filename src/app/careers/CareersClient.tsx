@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import Button from '@/components/ui/atoms/Button/Button';
 import styles from './page.module.css';
 import Image from 'next/image';
+import { imagePath } from '@/lib/imagePath';
 import PageHeader from '@/components/ui/PageHeader/PageHeader';
 import CareerSlider from './CareerSlider';
 import SelectField from '@/components/ui/atoms/SelectField/SelectField';
@@ -172,7 +173,7 @@ export default function CareersClient() {
       />
       <div className='bannerImage'>
         <Image
-          src="/images/career/career-banner.webp"
+          src={imagePath("/images/career/career-banner.webp")}
           alt="Crafting gold bangle"
           fill
           style={{ objectFit: 'cover' }}
@@ -202,7 +203,7 @@ export default function CareersClient() {
         <div className="container">
           <div className="storyGrid">
             <div className="storyImageWrapper">
-              <Image src="/images/about/about_1.png" alt="Zar team at work" fill className="storyImage" />
+              <Image src={imagePath("/images/about/about_1.png")} alt="Zar team at work" fill className="storyImage" />
             </div>
             <div className="storyTextBlock">
               <h2 className="fs_54">A Culture Built on Craft & Collaboration</h2>
@@ -341,7 +342,7 @@ export default function CareersClient() {
       <section className={`mt-100 ${styles.ctaSection}`}>
         <div className={styles.ctaImageWrapper}>
           <Image
-            src="/images/career/career-bg.webp"
+            src={imagePath("/images/career/career-bg.webp")}
             alt="ZAR careers"
             fill
             style={{ objectFit: 'cover' }}
@@ -353,7 +354,7 @@ export default function CareersClient() {
           <p className={styles.ctaDescription}>
             If you don’t see a suitable role, share your profile with us we’ll reach out when an opportunity aligns with your expertise.
           </p>
-          <Button href="mailto:info@zarjewels.com" variant="secondary" showArrow>
+          <Button href="mailto:careers@zarjewels.com" variant="secondary" showArrow>
             Email Your Resume
           </Button>
         </div>

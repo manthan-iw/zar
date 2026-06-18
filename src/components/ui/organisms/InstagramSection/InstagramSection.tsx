@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { imagePath } from '@/lib/imagePath';
 import InstagramCard from '@/components/ui/molecules/InstagramCard/InstagramCard';
 import styles from './InstagramSection.module.css';
 
@@ -89,7 +90,7 @@ export default function InstagramSection() {
           viewport={{ once: true, amount: 0.2 }}
         >
           <Image
-            src="/images/homepage/instagram-icon.webp"
+            src={imagePath("/images/homepage/instagram-icon.webp")}
             alt="Instagram"
             width={72}
             height={72}
@@ -133,7 +134,7 @@ export default function InstagramSection() {
                   rel="noopener noreferrer"
                   className={styles.slideLink}
                 >
-                  <InstagramCard image={post.image} alt={post.alt} />
+                  <InstagramCard image={imagePath(post.image)} alt={post.alt} />
                 </a>
               </motion.div>
             ))}

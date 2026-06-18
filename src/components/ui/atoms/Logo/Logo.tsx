@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { imagePath } from '@/lib/imagePath';
 import styles from './Logo.module.css';
 
 export default function Logo() {
@@ -7,7 +8,7 @@ export default function Logo() {
     <div className={styles.logo}>
       <Link href="/" className={styles.logoLink}>
         <Image
-          src="/images/zar-logo.svg"
+          src={imagePath("/images/zar-logo.svg")}
           alt="Zar Jewels"
           width={100}
           height={40}

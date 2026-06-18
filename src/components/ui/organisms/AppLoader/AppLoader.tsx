@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { cn } from '@/lib/utils';
+import { imagePath } from '@/lib/imagePath';
 import styles from './AppLoader.module.css';
 
 interface AppLoaderProps {
@@ -64,7 +65,7 @@ export default function AppLoader({
   return (
     <div className={cn(styles.loaderRoot, className)} role="status" aria-live="polite" aria-label={label}>
       <DotLottieReact
-        src={src}
+        src={imagePath(src)}
         loop
         autoplay
         className={styles.loaderCanvas}

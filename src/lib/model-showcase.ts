@@ -1,3 +1,5 @@
+import { imagePath } from './imagePath';
+
 export interface ShowcaseModel {
   name: string;
   src: string;
@@ -47,27 +49,28 @@ export function preloadModel(src: string): Promise<void> {
     return Promise.resolve();
   }
 
-  const existingRequest = modelPreloadCache.get(src);
+  const resolvedSrc = imagePath(src);
+  const existingRequest = modelPreloadCache.get(resolvedSrc);
 
   if (existingRequest) {
     return existingRequest;
   }
 
-  const request = fetch(src)
+  const request = fetch(resolvedSrc)
     .then((response) => {
       if (!response.ok) {
-        throw new Error(`Failed to preload model: ${src}`);
+        throw new Error(`Failed to preload model: ${resolvedSrc}`);
       }
 
       return response.blob();
     })
     .then(() => undefined)
     .catch((error) => {
-      modelPreloadCache.delete(src);
+      modelPreloadCache.delete(resolvedSrc);
       throw error;
     });
 
-  modelPreloadCache.set(src, request);
+  modelPreloadCache.set(resolvedSrc, request);
 
   return request;
 }
