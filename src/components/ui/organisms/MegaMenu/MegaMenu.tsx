@@ -83,13 +83,20 @@ export default function MegaMenu({ open, onClose }: Readonly<MegaMenuProps>) {
       <div className={styles.inner}>
         <div className={styles.sidebar}>
           {ktFilters.map((kt) => (
-            <button
+            <div
               key={kt.value}
-              type="button"
               className={cn(styles.ktCard, activeKt === kt.value && styles.ktCardActive)}
               onClick={() => setActiveKt(kt.value)}
-              style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
+              style={{ cursor: 'pointer' }}
+              role="button"
+              tabIndex={0}
               aria-pressed={activeKt === kt.value}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setActiveKt(kt.value);
+                }
+              }}
             >
               <div className={styles.ktCardImageWrap}>
                 <Image
@@ -112,11 +119,14 @@ export default function MegaMenu({ open, onClose }: Readonly<MegaMenuProps>) {
                   ? 'Modern silhouettes, precise Italian design, and two-tone finishes for the minimalist.'
                   : 'Traditional craftsmanship meets everyday luxury in our signature high-purity collections.'}
                 <div>
-                  <a
+                  <Link
                     href={`/collections/${kt.purity}`}
                     className={styles.ktCardLink}
                     style={{ display: 'inline-block', marginTop: 8, color: '#bfa15a', textDecoration: 'underline' }}
-                    onClick={onClose}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onClose();
+                    }}
                     tabIndex={0}
                   >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -125,10 +135,10 @@ export default function MegaMenu({ open, onClose }: Readonly<MegaMenuProps>) {
                     </svg>
 
 
-                  </a>
+                  </Link>
                 </div>
               </div>
-            </button>
+            </div>
           ))}
         </div>
 

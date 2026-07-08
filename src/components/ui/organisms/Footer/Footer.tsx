@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import TypingText from '../../atoms/TypingText/TypingText';
 import styles from './Footer.module.css';
+import { imagePath } from '@/lib/imagePath';
 
 const linkCol1 = [
   { label: 'Home', href: '/' },
@@ -44,7 +45,7 @@ export default function Footer() {
             <div className={styles.topInner}>
               <div className={styles.brand}>
                 <Image
-                  src="/images/zar-logo.svg"
+                  src={imagePath("/images/zar-logo.svg")}
                   alt="Zar Jewels"
                   width={150}
                   height={60}
@@ -84,7 +85,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img src="/images/App-Store.svg" alt="Download on the App Store" style={{ height: 32 }} className='imgFluid' />
+                    <img src={imagePath("/images/App-Store.svg")} alt="Download on the App Store" style={{ height: 32 }} className='imgFluid' />
                   </a>
                   {/* Google Play */}
                   <a
@@ -94,7 +95,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img src="/images/Google-play.svg" alt="Get it on Google Play" style={{ height: 32 }} className='imgFluid' />
+                    <img src={imagePath("/images/Google-play.svg")} alt="Get it on Google Play" style={{ height: 32 }} className='imgFluid' />
                   </a>
                 </div>
               </div>

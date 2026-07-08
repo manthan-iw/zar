@@ -122,7 +122,7 @@ export default async function ProductListingPage({ params }: Readonly<Props>) {
           { label: `${purityLabel} Gold`, href: `/collections/${purity}` },
           { label: categoryName, href: `/collections/${purity}/${category}` },
           { label: styleName, isActive: true },
-        ]}        
+        ]}
       />
       <div className="bannerImage">
         <Image

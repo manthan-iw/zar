@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# ====================================================================
+# Apache Reverse Proxy Configuration for Next.js
+# ====================================================================
+# If you run the frontend on a port other than 3000 (in ecosystem.config.js),
+# make sure to update the port numbers (3000) below to match.
+
+# 1. Forward requests to the base path (/zar)
+RewriteRule ^$ http://127.0.0.1:3000/zar/ [P,L]
+
+# 2. Forward all other sub-paths (unless it is a real file or directory on the disk)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ http://127.0.0.1:3000/zar/$1 [P,L]

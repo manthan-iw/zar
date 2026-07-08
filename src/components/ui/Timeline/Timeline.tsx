@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import styles from './Timeline.module.css';
+import { imagePath } from '@/lib/imagePath';
 
 interface TimelineItem {
   year: string;
@@ -89,7 +90,7 @@ export default function Timeline() {
           {/* Image */}
           <div className={styles.imageWrapper}>
             <Image
-              src={activeItem.image}
+              src={imagePath(activeItem.image)}
               alt={`ZAR journey - ${activeItem.year}`}
               fill
               className={styles.timelineImage}

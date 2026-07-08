@@ -343,10 +343,10 @@ export async function fetchCollectionTypeDetail(purity: string, category: string
   });
   const payload = await fetchCatalogEndpoint<BackendListResponse<BackendCollectionTypeItem>>('/api/collection-types', searchParams);
   const items = payload.items || [];
-  
-  // Find matching collection type by normalized name
-  const normalized = normalize(collectionName);
-  return items.find((item) => normalize(item.name) === normalized) || null;
+
+  // Find matching collection type by normalized name (ignoring hyphens/spaces mismatch)
+  const normalized = normalize(collectionName).replaceAll('-', ' ');
+  return items.find((item) => normalize(item.name).replaceAll('-', ' ') === normalized) || null;
 }
 
 export async function fetchProducts(

@@ -7,6 +7,7 @@ import { fetchGoldTypes, fetchStyles, fetchProducts, isCatalogRouteError } from 
 import { fetchProductDetail, fetchCategories } from '@/lib/api/catalog.server';
 import { notFound } from 'next/navigation';
 import styles from './page.module.css';
+import { imagePath } from '@/lib/imagePath';
 
 import TradeHighlightsSlider from '@/components/TradeHighlightsSlider';
 
@@ -96,22 +97,22 @@ type TradeHighlight = {
 
 const TRADE_HIGHLIGHTS: TradeHighlight[] = [
   {
-    icon: '/images/sa.svg',
+    icon: imagePath('/images/sa.svg'),
     title: 'Sample Availability',
     description: 'At the Zar Experience Center, Mumbai as well as in leading trade shows across the country',
   },
   {
-    icon: '/images/slt.svg',
+    icon: imagePath('/images/slt.svg'),
     title: 'Service Lead Times',
     description: 'Bulk: 7–10 business days Customer order: 5 business days',
   },
   {
-    icon: '/images/rsa.svg',
+    icon: imagePath('/images/rsa.svg'),
     title: 'Ready Stock Availability',
     description: '12 to 15 business days from order confirmation.',
   },
   {
-    icon: '/images/za.svg',
+    icon: imagePath('/images/za.svg'),
     title: 'Zar App',
     description:
       'Get real-time updates to latest designs at your fingertips through the Zar app. <a href="https://zarapp.link/register" target="_blank" rel="noopener noreferrer">Register now!</a>',
