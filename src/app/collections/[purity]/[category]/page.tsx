@@ -48,25 +48,27 @@ export async function generateMetadata({ params }: Readonly<Props>) {
   };
 }
 
-export async function generateStaticParams(): Promise<Array<{ purity: string; category: string }>> {
-  const purities = ['18k', '22k'];
-  const results: Array<{ purity: string; category: string }> = [];
+export const dynamic = 'force-dynamic';
 
-  for (const purity of purities) {
-    try {
-      const categories = await fetchCategories(purity);
-      for (const cat of categories) {
-        results.push({ purity, category: cat.slug });
-      }
-    } catch (e) {
-      // if fetching fails during build, skip this purity
-      // leave params empty so build can continue for available data
-      // console.warn can be used but avoid side-effects in server build
-    }
-  }
-
-  return results;
-}
+// export async function generateStaticParams(): Promise<Array<{ purity: string; category: string }>> {
+//   const purities = ['18k', '22k'];
+//   const results: Array<{ purity: string; category: string }> = [];
+// 
+//   for (const purity of purities) {
+//     try {
+//       const categories = await fetchCategories(purity);
+//       for (const cat of categories) {
+//         results.push({ purity, category: cat.slug });
+//       }
+//     } catch (e) {
+//       // if fetching fails during build, skip this purity
+//       // leave params empty so build can continue for available data
+//       // console.warn can be used but avoid side-effects in server build
+//     }
+//   }
+// 
+//   return results;
+// }
 
 export default async function StyleListingPage({ params }: Readonly<Props>) {
   const { purity, category } = await params;

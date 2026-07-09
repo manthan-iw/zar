@@ -12,53 +12,55 @@ import { imagePath } from '@/lib/imagePath';
 import TradeHighlightsSlider from '@/components/TradeHighlightsSlider';
 
 
-export async function generateStaticParams(): Promise<
-  Array<{ purity: string; category: string; style: string; id: string }>
-> {
-  try {
-    const goldTypes = await fetchGoldTypes();
-    const params: Array<{ purity: string; category: string; style: string; id: string }> = [];
+export const dynamic = 'force-dynamic';
 
-    for (const goldType of goldTypes) {
-      const purity = goldType.purity;
-      const categories = await safeFetch(() => fetchCategories(purity), purity);
-
-      for (const cat of categories) {
-        const category = cat.slug;
-        const styles = await safeFetch(
-          () => fetchStyles(purity, cat.name),
-          `${purity}/${cat.name}`
-        );
-
-        for (const style of styles) {
-          const styleSlug = style.slug;
-          const products = await safeFetch(
-            () => fetchProducts(purity, cat.name, style.name),
-            `${purity}/${cat.name}/${style.name}`
-          );
-
-          for (const product of products) {
-            if (product.slug) {
-              params.push({
-                purity,
-                category,
-                style: styleSlug,
-                id: product.slug,
-              });
-            }
-          }
-        }
-      }
-    }
-
-    console.log(`✅ Generated ${params.length} static product paths`);
-
-    return params.length > 0 ? params : getFallbackParams();
-  } catch (error) {
-    console.error('❌ Failed to generate static params:', error);
-    return getFallbackParams();
-  }
-}
+// export async function generateStaticParams(): Promise<
+//   Array<{ purity: string; category: string; style: string; id: string }>
+// > {
+//   try {
+//     const goldTypes = await fetchGoldTypes();
+//     const params: Array<{ purity: string; category: string; style: string; id: string }> = [];
+// 
+//     for (const goldType of goldTypes) {
+//       const purity = goldType.purity;
+//       const categories = await safeFetch(() => fetchCategories(purity), purity);
+// 
+//       for (const cat of categories) {
+//         const category = cat.slug;
+//         const styles = await safeFetch(
+//           () => fetchStyles(purity, cat.slug),
+//           `${purity}/${cat.slug}`
+//         );
+// 
+//         for (const style of styles) {
+//           const styleSlug = style.slug;
+//           const products = await safeFetch(
+//             () => fetchProducts(purity, cat.slug, style.slug),
+//             `${purity}/${cat.slug}/${style.slug}`
+//           );
+// 
+//           for (const product of products) {
+//             if (product.slug) {
+//               params.push({
+//                 purity,
+//                 category,
+//                 style: styleSlug,
+//                 id: product.slug,
+//               });
+//             }
+//           }
+//         }
+//       }
+//     }
+// 
+//     console.log(`✅ Generated ${params.length} static product paths`);
+// 
+//     return params.length > 0 ? params : getFallbackParams();
+//   } catch (error) {
+//     console.error('❌ Failed to generate static params:', error);
+//     return getFallbackParams();
+//   }
+// }
 
 // Helper to reduce nested try/catch complexity
 async function safeFetch<T>(

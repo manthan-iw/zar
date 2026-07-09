@@ -49,30 +49,32 @@ export async function generateMetadata({ params }: Readonly<Props>) {
   };
 }
 
-export async function generateStaticParams(): Promise<Array<{ purity: string; category: string; style: string }>> {
-  const purities = ['18k', '22k'];
-  const results: Array<{ purity: string; category: string; style: string }> = [];
+export const dynamic = 'force-dynamic';
 
-  for (const purity of purities) {
-    try {
-      const categories = await fetchCategories(purity);
-      for (const cat of categories) {
-        try {
-          const styles = await fetchStyles(purity, cat.slug);
-          for (const s of styles) {
-            results.push({ purity, category: cat.slug, style: s.slug });
-          }
-        } catch {
-          // skip styles for this category if fetch fails
-        }
-      }
-    } catch {
-      // skip this purity if fetch fails
-    }
-  }
-
-  return results;
-}
+// export async function generateStaticParams(): Promise<Array<{ purity: string; category: string; style: string }>> {
+//   const purities = ['18k', '22k'];
+//   const results: Array<{ purity: string; category: string; style: string }> = [];
+// 
+//   for (const purity of purities) {
+//     try {
+//       const categories = await fetchCategories(purity);
+//       for (const cat of categories) {
+//         try {
+//           const styles = await fetchStyles(purity, cat.slug);
+//           for (const s of styles) {
+//             results.push({ purity, category: cat.slug, style: s.slug });
+//           }
+//         } catch {
+//           // skip styles for this category if fetch fails
+//         }
+//       }
+//     } catch {
+//       // skip this purity if fetch fails
+//     }
+//   }
+// 
+//   return results;
+// }
 
 export default async function ProductListingPage({ params }: Readonly<Props>) {
   const { purity, category, style } = await params;

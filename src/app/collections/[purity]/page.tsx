@@ -17,11 +17,13 @@ export async function generateMetadata({ params }: Readonly<Props>) {
   };
 }
 
-export async function generateStaticParams(): Promise<Array<{ purity: string }>> {
-  // Provide known purity options for static export. If you need dynamic discovery,
-  // we can fetch available purities from the backend instead.
-  return [{ purity: '18k' }, { purity: '22k' }];
-}
+export const dynamic = 'force-dynamic';
+
+// export async function generateStaticParams(): Promise<Array<{ purity: string }>> {
+//   // Provide known purity options for static export. If you need dynamic discovery,
+//   // we can fetch available purities from the backend instead.
+//   return [{ purity: '18k' }, { purity: '22k' }];
+// }
 
 export default async function CategoryListingPage({ params }: Readonly<Props>) {
   const { purity } = await params;
