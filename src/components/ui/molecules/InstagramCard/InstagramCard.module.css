@@ -3,15 +3,59 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   aspect-ratio: 375 / 590;
+  width: 100%;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: default;
 }
 
-.card img {
+.card img,
+.video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform var(--transition-slow);
 }
 
-.card:hover img {
+.card:hover img,
+.videoCard:hover .video {
   transform: scale(1.05);
+}
+
+.videoCard {
+  cursor: pointer;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f2ece4 25%, #e8dfd4 50%, #f2ece4 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.playOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  pointer-events: none;
+}
+
+.playOverlay svg {
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }

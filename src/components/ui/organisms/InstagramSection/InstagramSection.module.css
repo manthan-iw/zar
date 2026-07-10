@@ -66,6 +66,17 @@
   color: inherit;
 }
 
+.slideContent {
+  display: block;
+  width: 100%;
+}
+
+.errorMessage {
+  color: var(--color-gray-600);
+  text-align: center;
+  margin: 0;
+}
+
 /* Navigation */
 .navigation {
   display: flex;

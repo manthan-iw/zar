@@ -184,7 +184,7 @@ export default function CareersClient() {
       <section className={styles.descriptionSection}>
         <div className="container">
           <p>
-            Be part of a team where craftsmanship meets innovation. At ZAR, we combine traditional artistry with modern precision to create jewellery defined by quality and design.
+          Join a team where heritage inspires innovation and every contribution shapes exceptional jewellery. At Zar, we bring together artistry, expertise, and modern manufacturing to create designs that stand the test of time.
           </p>
           <div className={styles.btn_wrapper}>
             {positions.length > 0 && (
@@ -207,15 +207,9 @@ export default function CareersClient() {
             </div>
             <div className="storyTextBlock">
               <h2 className="fs_54">A Culture Built on Craft & Collaboration</h2>
-              <p>
-                At ZAR, craftsmanship is driven by collaboration. Designers, artisans, and technicians work together seamlessly, ensuring every piece reflects precision, consistency, and attention to detail.
-              </p>
-              <p>
-                We foster a culture where ideas are valued and skill is continuously refined. From concept to final finishing, each stage is guided by teamwork, discipline, and a shared commitment to quality.
-              </p>
-              <p>
-                We believe in enabling growth through learning and real opportunities, so our people don’t just create jewellery, but build meaningful and lasting careers.
-              </p>
+              <p>At Zar, every creation is the result of collaboration between designers, artisans, and skilled professionals. Together, we combine creativity, expertise, and meticulous attention to detail to bring exceptional jewellery to life.</p>
+              <p>We encourage ideas, keep expertise growing, and guide every stage of the journey with teamwork, discipline, and a shared commitment to excellence.</p>
+              <p>Through continuous learning and meaningful opportunities, we help our people build rewarding careers and contribute to our legacy of exceptional craftsmanship.</p>
             </div>
           </div>
         </div>
@@ -224,7 +218,8 @@ export default function CareersClient() {
       <section className="valuesSection mt-100">
         <div className="container">
           <h2 className="fs_54 txt_center">WHY WORK WITH ZAR</h2>
-          <p className="valuesSectionSubtitle">An environment where craftsmanship meets precision, and careers are built with purpose.</p>
+          <p className="valuesSectionSubtitle">Build your career with a company backed by decades of heritage, trusted partnerships, and sustained growth in fine jewellery manufacturing. Collaborate with designers, artisans, and innovators in an environment where creativity and craftsmanship thrive together.
+          Advance your career through continuous learning, hands-on experience, and opportunities for long-term professional growth</p>
           <div className="valuesGrid">
             <div className="valueCard">
               <div className="valueIcon">
@@ -241,7 +236,7 @@ export default function CareersClient() {
                 </svg>
               </div>
               <h4>Legacy and Stability</h4>
-              <p>Built on decades of expertise in gold jewellery manufacturing and trusted industry partnerships.</p>
+              <p>Build your career with a company backed by decades of expertise, trusted partnerships, and a strong legacy in fine jewellery manufacturing.</p>
             </div>
             <div className="valueCard">
               <div className="valueIcon">
@@ -265,7 +260,7 @@ export default function CareersClient() {
                 </svg>
               </div>
               <h4>Creative Environment</h4>
-              <p>Work alongside designers, artisans, and innovators in a space shaped by collaboration and detail.</p>
+              <p>Collaborate with talented designers, artisans, and innovators in a workplace where creativity, expertise, and craftsmanship come together.</p>
             </div>
             <div className="valueCard">
               <div className="valueIcon">
@@ -275,7 +270,7 @@ export default function CareersClient() {
                 </svg>
               </div>
               <h4>Growth Opportunities</h4>
-              <p> Continuous learning, skill development, and clear pathways for long-term career growth.</p>
+              <p> Expand your skills through continuous learning, hands-on experience, and opportunities designed to support long-term professional growth.</p>
             </div>
             <div className="valueCard">
               <div className="valueIcon">
@@ -285,7 +280,7 @@ export default function CareersClient() {
                 </svg>
               </div>
               <h4>Modern Infrastructure</h4>
-              <p>Advanced tools, efficient systems, and structured processes that support quality and precision.</p>
+              <p>Work with advanced manufacturing technologies, efficient systems, and world-class processes that empower excellence at every stage.</p>
             </div>
           </div>
         </div>
@@ -350,12 +345,12 @@ export default function CareersClient() {
           />
         </div>
         <div className={`container ${styles.ctaContainer}`}>
-          <h2 className={styles.ctaTitle}>Let’s Build Something Together</h2>
+          <h2 className={styles.ctaTitle}>Shape the Future with Zar</h2>
           <p className={styles.ctaDescription}>
-            If you don’t see a suitable role, share your profile with us we’ll reach out when an opportunity aligns with your expertise.
+            Ready to be part of a team driven by creativity, collaboration, and excellence? Join us and help craft jewellery that inspires generations.
           </p>
           <Button href="mailto:careers@zarjewels.com" variant="secondary" showArrow>
-            Email Your Resume
+          Apply Now
           </Button>
         </div>
       </section>
