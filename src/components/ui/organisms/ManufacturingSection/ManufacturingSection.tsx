@@ -36,9 +36,6 @@ export default function ManufacturingSection() {
             <Button href="/partner" variant="outline" showArrow className={styles.btn1}>
               Become a Partner
             </Button>
-            <Button href="/partner" variant="primary" showArrow className={styles.btn2}>
-              Become a Partner
-            </Button>
           </div>
         </motion.div>
       </div>

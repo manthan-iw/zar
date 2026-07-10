@@ -142,7 +142,7 @@ export default function RetailerSlider() {
         if (json?.success && Array.isArray(json.data) && json.data.length > 0) {
           const remoteTestimonials = json.data
              .map(resolveRetailerTestimonial)
-             .filter((item) => item.name && item.quote);
+             .filter((item) => item.name && (item.quote || item.video));
 
           if (remoteTestimonials.length > 0) {
             setSliderTestimonials(remoteTestimonials);
@@ -395,15 +395,19 @@ export default function RetailerSlider() {
                 {/* Content panel */}
                 <div className={styles.slideBody}>
                   <div className={styles.slideBodyInner}>
-                    <Image
-                      src={imagePath("/images/quote_2.svg")}
-                      alt="quote"
-                      width={54}
-                      height={40}
-                      className={styles.quoteImg}
-                    />
-                    <p className={styles.message}>{t.quote}</p>
-                    <span className={styles.name}>{t.name}</span>
+                    {t.quote && (
+                      <>
+                        <Image
+                          src={imagePath("/images/quote_2.svg")}
+                          alt="quote"
+                          width={54}
+                          height={40}
+                          className={styles.quoteImg}
+                        />
+                        <p className={styles.message}>{t.quote}</p>
+                      </>
+                    )}
+                    <span className={styles.name} style={!t.quote ? { marginTop: '30px' } : undefined}>{t.name}</span>
                     <span className={styles.designation}>{t.designation}</span>
                   </div>
                 </div>

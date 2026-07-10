@@ -12,7 +12,7 @@ const linkCol1 = [
 ];
 
 const linkCol2 = [
-  { label: 'Event', href: '/event' },
+  { label: 'Events', href: '/event' },
   { label: 'Careers', href: '/careers' },
   // { label: 'Blogs', href: '#' },
   { label: 'Contact', href: '/contact' },

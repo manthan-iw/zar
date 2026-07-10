@@ -111,17 +111,12 @@ export default function EventClient() {
         />
       </div>
 
-      <section className={`mb-100 ${styles.introSection}`}>
+      <section className={`mb-50 ${styles.introSection}`}>
         <div className="container">
           <div className={styles.introContent}>
             <p className={styles.introText}>
               At ZAR, craftsmanship is not just a process—it’s a shared philosophy. Every piece of jewellery is the result of seamless collaboration between designers, artisans, technicians, and business teams, all working towards a single standard of excellence.
             </p>
-            {hasUpcoming && (
-              <Button onClick={handleScrollToUpcoming} variant="primary" showArrow>
-                View Upcoming Events
-              </Button>
-            )}
           </div>
         </div>
       </section>
