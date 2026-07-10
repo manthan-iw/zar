@@ -497,6 +497,11 @@
     bottom: 15%;
     left: 9%;
   }
+
+  .textBlock
+  {
+    max-width: 520px;
+  }
 }
 @media (max-width: 1281px) {
   .content {
@@ -540,7 +545,7 @@
     object-fit: cover;
   }
   .content {
-    padding: 0 20px;
+    padding: 0;
   }
 
   .contentInner {

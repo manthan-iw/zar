@@ -119,6 +119,21 @@
   line-height: 38px;
 }
 
+@media (max-width: 1601px) {
+ .inner {
+  gap: 50px;
+}
+
+.eventCard {
+  gap: 60px;
+}
+
+.section {
+    padding: 70px 20px 70px;
+}
+
+}
+
 @media (max-width: 1367px) {
   .eventCard {
     gap: 50px;

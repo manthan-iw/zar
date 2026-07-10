@@ -44,14 +44,14 @@
 
 @media (max-width: 1441px) {
   .breadcrumbs {
-    margin-top: 20px;
+    margin-top: 30px;
   }
 }
 
 @media (max-width: 1281px) {
   .breadcrumbs {
     margin-bottom: 0px;
-    margin-top: 0px;
+    /* margin-top: 0px; */
   }
 }
 

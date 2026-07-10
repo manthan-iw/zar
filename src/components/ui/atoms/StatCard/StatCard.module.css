@@ -27,11 +27,16 @@
   max-width: 130px;
 }
 
-@media (max-width: 1537px) {
+@media (max-width: 1601px) {
   .value {
     font-size: 90px;
     line-height: 100px;
   }
+
+      .textBlock {
+        padding-top: 40px;
+        gap: 30px;
+    }
 }
 
 @media (max-width: 1441px) {

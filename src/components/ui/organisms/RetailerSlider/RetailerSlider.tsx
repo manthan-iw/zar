@@ -99,8 +99,6 @@ function debounce<T extends (...args: unknown[]) => void>(func: T, wait: number)
 // Component
 // ---------------------------------------------------------------------------
 export default function RetailerSlider() {
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const wrapRefs  = useRef<(HTMLDivElement | null)[]>([]);
   const swiperRef = useRef<SwiperType | null>(null);
 
   // FIX #7 — track active slide index from Swiper state, not DOM class
@@ -117,9 +115,6 @@ export default function RetailerSlider() {
   // FIX #5 — sync loadedVideos length whenever sliderTestimonials changes
   useEffect(() => {
     setLoadedVideos(sliderTestimonials.map((testimonial) => !isPlayableVideo(testimonial.video)));
-    // FIX #8 — reset refs so stale indices don't persist
-    videoRefs.current = sliderTestimonials.map(() => null);
-    wrapRefs.current  = sliderTestimonials.map(() => null);
   }, [sliderTestimonials]);
 
   useEffect(() => {
@@ -145,7 +140,13 @@ export default function RetailerSlider() {
              .filter((item) => item.name && (item.quote || item.video));
 
           if (remoteTestimonials.length > 0) {
-            setSliderTestimonials(remoteTestimonials);
+            let finalTestimonials = [...remoteTestimonials];
+            // Ensure we have at least 6 slides so Swiper loop works flawlessly
+            // and always shows 3 cards (left, center, right) without blank spaces.
+            while (finalTestimonials.length < 6) {
+              finalTestimonials = [...finalTestimonials, ...remoteTestimonials];
+            }
+            setSliderTestimonials(finalTestimonials);
           }
         }
       } catch (error) {
@@ -189,12 +190,19 @@ export default function RetailerSlider() {
    * Called on every slide change so autoplay is always restored.
    */
   const stopAll = useCallback(() => {
-    videoRefs.current.forEach((v, i) => {
-      if (!v) return;
-      v.pause();
-      v.currentTime = 0;
-      v.removeAttribute('controls');
-      wrapRefs.current[i]?.classList.remove(styles.playing);
+    if (!swiperRef.current || !swiperRef.current.el) return;
+    const slides = swiperRef.current.el.querySelectorAll('.swiper-slide');
+    slides.forEach((slide) => {
+      const v = slide.querySelector('video') as HTMLVideoElement | null;
+      if (v) {
+        v.pause();
+        v.currentTime = 0;
+        v.removeAttribute('controls');
+      }
+      const w = slide.querySelector(`.${styles.vwrap}`);
+      if (w) {
+        w.classList.remove(styles.playing);
+      }
     });
     // Resume autoplay that may have been stopped during video playback
     swiperRef.current?.autoplay?.start();
@@ -202,12 +210,14 @@ export default function RetailerSlider() {
 
   /**
    * FIX #2 — stop autoplay when a video starts; resume when it's paused/ended.
+   * Updated to use DOM traversal to support Swiper loop clones.
    */
-  function handlePlay(idx: number) {
-    const v = videoRefs.current[idx];
-    const w = wrapRefs.current[idx];
-    const testimonial = sliderTestimonials[idx];
-    if (!testimonial) return;
+  function handlePlay(e: React.MouseEvent<HTMLDivElement>, testimonial: Testimonial) {
+    const slide = e.currentTarget.closest('.swiper-slide');
+    if (!slide) return;
+
+    const v = slide.querySelector('video') as HTMLVideoElement | null;
+    const w = slide.querySelector(`.${styles.vwrap}`);
 
     const hasPlayableSource = isPlayableVideo(testimonial.video);
     if (!v || !hasPlayableSource) {
@@ -217,20 +227,29 @@ export default function RetailerSlider() {
 
     if (v.paused) {
       // Stop all other playing videos first
-      videoRefs.current.forEach((other, i) => {
-        if (i === idx || !other) return;
-        other.pause();
-        other.currentTime = 0;
-        other.removeAttribute('controls');
-        wrapRefs.current[i]?.classList.remove(styles.playing);
-      });
+      if (swiperRef.current && swiperRef.current.el) {
+        const allSlides = swiperRef.current.el.querySelectorAll('.swiper-slide');
+        allSlides.forEach((s) => {
+          if (s === slide) return; // skip current
+          const otherV = s.querySelector('video') as HTMLVideoElement | null;
+          if (otherV) {
+            otherV.pause();
+            otherV.currentTime = 0;
+            otherV.removeAttribute('controls');
+          }
+          const otherW = s.querySelector(`.${styles.vwrap}`);
+          if (otherW) {
+            otherW.classList.remove(styles.playing);
+          }
+        });
+      }
 
       const playPromise = v.play();
       if (playPromise instanceof Promise) {
         playPromise.catch((error) => {
           console.warn('RetailerSlider video play failed:', error);
           v.removeAttribute('controls');
-          wrapRefs.current[idx]?.classList.remove(styles.playing);
+          w?.classList.remove(styles.playing);
           swiperRef.current?.autoplay?.start();
           if (testimonial.video) window.open(testimonial.video, '_blank');
         });
@@ -251,16 +270,7 @@ export default function RetailerSlider() {
     }
   }
 
-  /**
-   * FIX #4 — removed redundant slideToClickedSlide logic.
-   * Swiper's own slideToClickedSlide prop handles this natively.
-   * This handler is only needed to stopAll when a non-active slide is clicked.
-   */
-  function handleSlideClick(idx: number) {
-    if (idx !== activeIndexRef.current) {
-      stopAll();
-    }
-  }
+
 
   // -------------------------------------------------------------------------
   // Render
@@ -311,12 +321,10 @@ export default function RetailerSlider() {
               reverseDirection: false,
             }}
             centeredSlides={true}
-            centeredSlidesBounds={true}
-            // FIX #4 — keep slideToClickedSlide; Swiper handles navigation natively
             slideToClickedSlide={true}
             slidesPerView={3}
             spaceBetween={50}
-            speed={600}
+            speed={800}
             grabCursor
             breakpoints={{
               0:    { slidesPerView: 1, spaceBetween: 20 },
@@ -339,13 +347,10 @@ export default function RetailerSlider() {
               <SwiperSlide
                 key={idx}
                 className={styles.slide}
-                // FIX #4 — simplified: just call stopAll for non-active slides
-                onClick={() => handleSlideClick(idx)}
               >
                 {/* Video wrapper */}
                 <div
                   className={styles.vwrap}
-                  ref={(el) => { wrapRefs.current[idx] = el; }}
                 >
                   <img
                     src={t.poster}
@@ -354,7 +359,6 @@ export default function RetailerSlider() {
                     draggable="false"
                   />
                   <video
-                    ref={(el) => { videoRefs.current[idx] = el; }}
                     // FIX #6 — broadened isPlayableVideo catches more URL formats
                     src={isPlayableVideo(t.video) ? t.video : undefined}
                     poster={t.poster}
@@ -368,13 +372,13 @@ export default function RetailerSlider() {
                     onPause={(e) => {
                       // Don't remove playing class if the video simply ended
                       if (!e.currentTarget.ended) {
-                        wrapRefs.current[idx]?.classList.remove(styles.playing);
+                        e.currentTarget.closest(`.${styles.vwrap}`)?.classList.remove(styles.playing);
                       }
                     }}
-                    onPlay={() => wrapRefs.current[idx]?.classList.add(styles.playing)}
-                    onEnded={() => {
-                      videoRefs.current[idx]?.removeAttribute('controls');
-                      wrapRefs.current[idx]?.classList.remove(styles.playing);
+                    onPlay={(e) => e.currentTarget.closest(`.${styles.vwrap}`)?.classList.add(styles.playing)}
+                    onEnded={(e) => {
+                      e.currentTarget.removeAttribute('controls');
+                      e.currentTarget.closest(`.${styles.vwrap}`)?.classList.remove(styles.playing);
                       // FIX #2 — resume autoplay when video finishes
                       swiperRef.current?.autoplay?.start();
                     }}
@@ -385,7 +389,7 @@ export default function RetailerSlider() {
                     className={styles.pbtn}
                     onClick={(e) => {
                       e.stopPropagation(); // prevent slide-click from firing
-                      handlePlay(idx);
+                      handlePlay(e, t);
                     }}
                   >
                     <PlayIcon />

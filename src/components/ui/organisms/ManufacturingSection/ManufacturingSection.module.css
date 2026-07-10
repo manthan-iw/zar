@@ -77,6 +77,17 @@
   display: none;
 }
 
+
+@media (max-width: 1601px) {
+  .backgroundVideo {
+    height: 100vh;
+  }
+
+  .content {
+     min-height: 724px;
+  }
+}
+
 @media (max-width: 1367px) {
   .backgroundVideo {
     height: 100vh;

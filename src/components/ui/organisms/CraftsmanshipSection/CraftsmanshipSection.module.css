@@ -20,6 +20,16 @@
   gap: 50px;
 }
 
+@media (max-width: 1601px) {
+  .grid {
+    gap: 35px;
+  }
+
+  .inner {
+  gap: 40px;
+}
+}
+
 
 @media (max-width: 1367px) {
   .grid {

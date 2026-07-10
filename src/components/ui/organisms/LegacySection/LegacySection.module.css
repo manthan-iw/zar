@@ -88,8 +88,8 @@
 
   .textBlock {
     flex: 1;
-    padding-top: 60px;
-    gap: 40px;
+    padding-top: 50px;
+    gap: 30px;
   }
 
   .heading {
