@@ -1,19 +1,33 @@
 import type { InstagramMediaType, InstagramPost } from '@/types/instagram';
 
-const INSTAGRAM_MEDIA_URL = 'https://graph.instagram.com/me/media';
+const GRAPH_API_VERSION = 'v19.0';
 const CACHE_SECONDS = 3600;
+
+const MEDIA_FIELDS = [
+  'id',
+  'caption',
+  'media_type',
+  'media_product_type',
+  'media_url',
+  'thumbnail_url',
+  'permalink',
+  'timestamp',
+].join(',');
 
 type InstagramMediaItem = {
   id: string;
+  caption?: string;
   media_type: InstagramMediaType;
+  media_product_type?: string;
   media_url?: string;
   thumbnail_url?: string;
   permalink?: string;
-  caption?: string;
+  timestamp?: string;
 };
 
 type InstagramMediaResponse = {
   data?: InstagramMediaItem[];
+  paging?: { next?: string };
   error?: { message: string; code?: number; type?: string };
 };
 
@@ -22,33 +36,31 @@ export type InstagramFetchResult = {
   error?: string;
 };
 
-function getAccessToken(): string | undefined {
-  return process.env.INSTAGRAM_ACCESS_TOKEN?.trim();
+function getUserId(): string | undefined {
+  return (process.env.IG_USER_ID ?? process.env.INSTAGRAM_USER_ID)?.trim();
 }
 
-function isAppAccessToken(token: string): boolean {
-  if (token.includes('|')) {
-    return true;
-  }
-
-  const appId = process.env.INSTAGRAM_APP_ID?.trim();
-  const appSecret = process.env.INSTAGRAM_APP_SECRET?.trim();
-
-  if (appId && appSecret && token === `${appId}|${appSecret}`) {
-    return true;
-  }
-
-  return false;
+function getAccessToken(): string | undefined {
+  return (process.env.IG_ACCESS_TOKEN ?? process.env.INSTAGRAM_ACCESS_TOKEN)?.trim();
 }
 
 function toProxyUrl(sourceUrl: string): string {
   return `/api/instagram/media?url=${encodeURIComponent(sourceUrl)}`;
 }
 
-function getDisplayUrl(item: InstagramMediaItem): string {
-  const isVideo = item.media_type?.toUpperCase() === 'VIDEO';
+function isVideoMedia(item: InstagramMediaItem): boolean {
+  const mediaType = item.media_type?.toUpperCase();
+  const productType = item.media_product_type?.toUpperCase();
 
-  if (isVideo) {
+  return mediaType === 'VIDEO' || productType === 'REELS';
+}
+
+/**
+ * VIDEO / REELS → thumbnail_url for poster
+ * IMAGE / CAROUSEL → media_url
+ */
+function getDisplayUrl(item: InstagramMediaItem): string {
+  if (isVideoMedia(item)) {
     return item.thumbnail_url ?? item.media_url ?? '';
   }
 
@@ -61,10 +73,13 @@ function toAltText(item: InstagramMediaItem, index: number): string {
     return caption.length > 120 ? `${caption.slice(0, 117)}...` : caption;
   }
 
-  const isVideo = item.media_type?.toUpperCase() === 'VIDEO';
-  return isVideo
-    ? `ZAR Jewels Instagram reel ${index + 1}`
-    : `ZAR Jewels Instagram post ${index + 1}`;
+  if (isVideoMedia(item)) {
+    return item.media_product_type?.toUpperCase() === 'REELS'
+      ? `ZAR Jewels Instagram reel ${index + 1}`
+      : `ZAR Jewels Instagram video ${index + 1}`;
+  }
+
+  return `ZAR Jewels Instagram post ${index + 1}`;
 }
 
 function mapMediaItem(item: InstagramMediaItem, index: number): InstagramPost | null {
@@ -73,42 +88,36 @@ function mapMediaItem(item: InstagramMediaItem, index: number): InstagramPost | 
     return null;
   }
 
-  const isVideo = item.media_type?.toUpperCase() === 'VIDEO';
+  const isVideo = isVideoMedia(item);
 
   return {
     id: item.id,
     image: toProxyUrl(displayUrl),
     alt: toAltText(item, index),
     mediaType: item.media_type,
+    mediaProductType: item.media_product_type as InstagramPost['mediaProductType'],
     videoUrl: isVideo && item.media_url ? toProxyUrl(item.media_url) : undefined,
+    timestamp: item.timestamp,
   };
 }
 
 /**
- * Fetches Instagram posts — same as Laravel:
- * GET https://graph.instagram.com/me/media
+ * Fetches Instagram posts & reels via Facebook Graph API:
+ * GET https://graph.facebook.com/v19.0/{IG_USER_ID}/media
  */
-export async function fetchInstagramPosts(limit = 6): Promise<InstagramFetchResult> {
+export async function fetchInstagramPosts(limit = 12): Promise<InstagramFetchResult> {
+  const userId = getUserId();
   const accessToken = getAccessToken();
 
-  if (!accessToken) {
+  if (!userId || !accessToken) {
     return {
       posts: [],
-      error: 'INSTAGRAM_ACCESS_TOKEN is not set in .env.local',
+      error: 'IG_USER_ID and IG_ACCESS_TOKEN must be set in .env.local',
     };
   }
 
-  if (isAppAccessToken(accessToken)) {
-    return {
-      posts: [],
-      error:
-        'Invalid token type: you provided an App token (app_id|secret). ' +
-        'Use the long-lived User Access Token from your Laravel .env (INSTAGRAM_ACCESS_TOKEN) — it usually starts with IG... or EAAG...',
-    };
-  }
-
-  const url = new URL(INSTAGRAM_MEDIA_URL);
-  url.searchParams.set('fields', 'id,media_type,media_url,thumbnail_url,permalink,caption');
+  const url = new URL(`https://graph.facebook.com/${GRAPH_API_VERSION}/${userId}/media`);
+  url.searchParams.set('fields', MEDIA_FIELDS);
   url.searchParams.set('access_token', accessToken);
   url.searchParams.set('limit', String(limit));
 
@@ -133,7 +142,7 @@ export async function fetchInstagramPosts(limit = 6): Promise<InstagramFetchResu
     if (posts.length === 0) {
       return {
         posts: [],
-        error: 'Instagram returned no posts for this account.',
+        error: 'Instagram returned no posts or reels for this account.',
       };
     }
 
