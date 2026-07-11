@@ -32,11 +32,11 @@ export default function Footer() {
           {/* ── Quote ── */}
           <div className={styles.quoteSection}>
             <div className={styles.quoteInner}>
-              <span className={styles.quoteMarkLeft}>&ldquo;</span>
               <p className={styles.quoteText}>
+                <span className={styles.quoteMarkLeft}>&ldquo;</span>
                 <TypingText text="Every masterpiece begins with a commitment to excellence." speed={100} />
+                <span className={styles.quoteMarkRight}>&rdquo;</span>
               </p>
-              <span className={styles.quoteMarkRight}>&ldquo;</span>
             </div>
           </div>
 

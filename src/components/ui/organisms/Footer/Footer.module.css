@@ -43,13 +43,9 @@
 .quoteMarkRight {
   font-family: var(--font-decorative);
   font-size: 100px;
-  line-height: 80px;
+  line-height: 1;
   color: var(--color-gold-accent);
-}
-
-.quoteMarkRight {
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
+  display: inline;
 }
 
 .quoteText {
@@ -299,7 +295,7 @@
   .quoteMarkLeft,
   .quoteMarkRight {
     font-size: 50px;
-    line-height: 40px;
+    line-height: 1;
   }
 
   .quoteSection {
@@ -321,8 +317,7 @@
 
 @media (max-width: 576px) {
   .quoteInner {
-    align-items: flex-start;
-    gap: 2px;
+    display: block;
   }
 
   .quoteText {
@@ -334,7 +329,7 @@
   .quoteMarkLeft,
   .quoteMarkRight {
     font-size: 40px;
-    line-height: 30px;
+    line-height: 1;
   }
 
   .quoteSection {
