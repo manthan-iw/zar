@@ -55,14 +55,26 @@
   flex-direction: column;
   gap: 20px;
 }
-
- .statOverlay {
-    right: -20%;
+@media (max-width: 1440px) and (min-width: 1368px) {
+  .statOverlay {
+    right: -12%;
+    bottom: 10%;
+    scale: 0.9;
   }
+}
 
-@media (max-width: 1281px) {
+@media (max-width: 1367px) and (min-width: 1281px) {
   .statOverlay {
     right: -15%;
+    bottom: 8%;
+    scale: 0.9;
+  }
+}
+
+@media (max-width: 1280px) {
+  .statOverlay {
+    right: -15%;
+    bottom: 10%;
     scale: 0.8;
   }
 }

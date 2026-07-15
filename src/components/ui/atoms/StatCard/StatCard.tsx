@@ -20,9 +20,11 @@ export default function StatCard({ value, label, animate = false }: StatCardProp
   const [count, setCount] = useState(animate ? 0 : target);
   const ref = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const hasRunRef = useRef(false);
 
   const runCounter = useCallback(() => {
-    if (!animate) return;
+    if (!animate || hasRunRef.current) return; 
+    hasRunRef.current = true;
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
@@ -50,8 +52,9 @@ export default function StatCard({ value, label, animate = false }: StatCardProp
     const el = ref.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !hasRunRef.current) {
           runCounter();
+          observer.disconnect();
         }
       },
       { threshold: 0.5 }
