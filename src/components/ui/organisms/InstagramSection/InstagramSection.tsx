@@ -25,6 +25,16 @@ function debounce<T extends (...args: unknown[]) => void>(func: T, wait: number)
 
 const SKELETON_COUNT = 6;
 
+/** Static gallery from pre-API Instagram section (commit 56eafcd) — used when token/API fails */
+const FALLBACK_POSTS: InstagramPost[] = [
+  { id: 'fallback-1', image: '/images/homepage/reel_1.webp', alt: 'Gold bangle design 1', mediaType: 'IMAGE' },
+  { id: 'fallback-2', image: '/images/homepage/reel_2.webp', alt: 'Gold bangle design 2', mediaType: 'IMAGE' },
+  { id: 'fallback-3', image: '/images/homepage/reel_3.webp', alt: 'Gold bangle design 3', mediaType: 'IMAGE' },
+  { id: 'fallback-4', image: '/images/homepage/reel_4.webp', alt: 'Gold bangle design 4', mediaType: 'IMAGE' },
+  { id: 'fallback-5', image: '/images/homepage/reel_2.webp', alt: 'Gold bangle design 5', mediaType: 'IMAGE' },
+  { id: 'fallback-6', image: '/images/homepage/reel_3.webp', alt: 'Gold bangle design 6', mediaType: 'IMAGE' },
+];
+
 function useVisibleCount() {
   const [count, setCount] = useState(4);
 
@@ -61,8 +71,7 @@ function resolveMediaPath(path: string): string {
     return path;
   }
 
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-  return `${basePath}${path.startsWith('/') ? path : `/${path}`}`;
+  return imagePath(path.startsWith('/') ? path : `/${path}`);
 }
 
 export default function InstagramSection() {
@@ -70,14 +79,13 @@ export default function InstagramSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [posts, setPosts] = useState<InstagramPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
 
     async function loadInstagramPosts() {
       try {
-        const response = await fetch(resolveApiPath('/instagram.json'));
+        const response = await fetch(resolveApiPath('/api/instagram'));
         const payload = (await response.json()) as {
           success?: boolean;
           posts?: InstagramPost[];
@@ -88,15 +96,13 @@ export default function InstagramSection() {
 
         if (payload.success && Array.isArray(payload.posts) && payload.posts.length > 0) {
           setPosts(payload.posts);
-          setLoadError(null);
         } else {
-          setPosts([]);
-          setLoadError(payload.error || 'Unable to load Instagram posts right now.');
+          // Token expired / API error / empty feed → static section
+          setPosts(FALLBACK_POSTS);
         }
       } catch {
         if (!cancelled) {
-          setPosts([]);
-          setLoadError('Unable to load Instagram posts right now.');
+          setPosts(FALLBACK_POSTS);
         }
       } finally {
         if (!cancelled) {
@@ -114,7 +120,7 @@ export default function InstagramSection() {
 
   const displayItems = isLoading
     ? Array.from({ length: SKELETON_COUNT }, (_, index) => ({ id: `skeleton-${index}` }))
-  : posts;
+    : posts;
 
   const maxIndex = Math.max(0, displayItems.length - visibleCount);
 
@@ -131,10 +137,6 @@ export default function InstagramSection() {
   }, [maxIndex]);
 
   const progress = maxIndex > 0 ? currentIndex / maxIndex : 0;
-
-  if (!isLoading && posts.length === 0) {
-    return null;
-  }
 
   return (
     <section>
@@ -160,10 +162,6 @@ export default function InstagramSection() {
             </p>
           </div>
         </motion.div>
-
-        {!isLoading && posts.length === 0 && loadError && (
-          <p className={styles.errorMessage}>{loadError}</p>
-        )}
 
         {displayItems.length > 0 && (
           <>
