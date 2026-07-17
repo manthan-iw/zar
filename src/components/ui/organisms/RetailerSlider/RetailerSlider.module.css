@@ -14,7 +14,8 @@
 .outer {
   position: relative;
   margin: 0 auto;
-  padding: 0  0;
+  padding: 0;
+  height: 480px;
   overflow: hidden;
 }
 
@@ -87,6 +88,7 @@
 
 /* ── Swiper ── */
 .swiper {
+  height: 100%;
   overflow: visible !important;
 }
 
@@ -352,6 +354,10 @@
   margin: 10px 0 20px;}
 }
 @media (max-width: 1199px) {
+  .outer {
+    height:450px;
+  }
+
   .slide {
     transform: scale(0.94);
   }
@@ -383,7 +389,13 @@
 
 @media (max-width: 767px) {
   .outer {
+    height: auto;
     padding: 0 16px;
+    overflow: visible;
+  }
+
+  .swiper {
+    height: auto;
   }
 
   .skeletonGrid {
