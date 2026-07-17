@@ -15,11 +15,11 @@
 .title {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 400;
   line-height: 1.2;
   color: var(--color-brown);
-  text-transform: none;
+  text-transform: uppercase;
 }
 
 .productDesc {

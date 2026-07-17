@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "next dev --turbopack",
     "build": "node scripts/fetch-instagram.mjs && next build --webpack",
     "export": "next export",
     "start": "next start",
