@@ -63,6 +63,24 @@
   /* Offset for header/navbar */
 }
 
+.gallerySkeleton {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f5f5f5 0%, #ececec 50%, #f5f5f5 100%);
+  background-size: 200% 100%;
+  animation: galleryShimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes galleryShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 /* .infoColumn {
   padding: 20px 0;
 } */

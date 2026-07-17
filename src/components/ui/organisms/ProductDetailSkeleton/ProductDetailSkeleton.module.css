@@ -1,0 +1,96 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  padding-top: 24px;
+}
+
+.gallery,
+.info,
+.mainImage,
+.thumb,
+.title,
+.sku,
+.line,
+.button {
+  background: linear-gradient(90deg, #f5f5f5 0%, #ececec 50%, #f5f5f5 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+
+.gallery {
+  background: transparent;
+  animation: none;
+}
+
+.info {
+  background: transparent;
+  animation: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 8px;
+}
+
+.mainImage {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+}
+
+.thumbs {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+}
+
+.title {
+  width: 70%;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.sku {
+  width: 30%;
+  height: 16px;
+  border-radius: 999px;
+}
+
+.line {
+  width: 100%;
+  height: 12px;
+  border-radius: 999px;
+}
+
+.lineShort {
+  width: 55%;
+}
+
+.button {
+  margin-top: 18px;
+  width: 180px;
+  height: 48px;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}

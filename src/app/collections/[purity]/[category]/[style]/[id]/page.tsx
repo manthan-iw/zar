@@ -1,15 +1,27 @@
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import PageHeader from '@/components/ui/PageHeader/PageHeader';
-import ProductGallery from '@/components/ProductGallery/ProductGallery';
 import ProductInfo from '@/components/ProductInfo/ProductInfo';
-import RelatedProductsSlider from '@/components/RelatedProductsSlider/RelatedProductsSlider';
 import { fetchGoldTypes, fetchStyles, fetchProducts, isCatalogRouteError } from '@/lib/api/catalog';
 import { fetchProductDetail, fetchCategories } from '@/lib/api/catalog.server';
 import { notFound } from 'next/navigation';
 import styles from './page.module.css';
 import { imagePath } from '@/lib/imagePath';
+import HomeSectionSkeleton from '@/components/ui/organisms/HomeSectionSkeleton/HomeSectionSkeleton';
 
-import TradeHighlightsSlider from '@/components/TradeHighlightsSlider';
+const ProductGallery = dynamic(() => import('@/components/ProductGallery/ProductGallery'), {
+  loading: () => <div className={styles.gallerySkeleton} aria-hidden="true" />,
+});
+
+const TradeHighlightsSlider = dynamic(() => import('@/components/TradeHighlightsSlider'), {
+  loading: () => null,
+  ssr: false,
+});
+
+const RelatedProductsSlider = dynamic(
+  () => import('@/components/RelatedProductsSlider/RelatedProductsSlider'),
+  { loading: () => <HomeSectionSkeleton height={360} /> },
+);
 
 
 export async function generateStaticParams(): Promise<
