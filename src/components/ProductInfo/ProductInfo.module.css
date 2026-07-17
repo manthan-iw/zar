@@ -7,7 +7,7 @@
 .title {
   font-size: 36px;
   line-height: 44px;
-  font-family: var(--font-body);
+  font-family: var(--font-heading);
   font-weight: 400;
   margin: 0;
   color: var(--color-brown);
