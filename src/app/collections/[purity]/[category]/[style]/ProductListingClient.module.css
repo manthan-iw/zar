@@ -4,8 +4,8 @@
 } */
 
 .heading {
-    font-size: 60px;
-    line-height: 70px;
+    font-size: 40px;
+    line-height: 48px;
     margin-bottom: 8px;
     font-family: var(--font-heading);
     color: var(--color-brown);
@@ -19,7 +19,7 @@
 
 .resultCount {
     font-size: 20px;
-    line-height: 70px;
+    line-height: 48px;
     color: var(--color-brown);
     font-family: var(--font-heading);
     font-style: normal;
@@ -109,12 +109,12 @@
 
 @media (max-width: 1536px) {
     .heading {
-        font-size: 48px;
-        line-height: 56px;
+        font-size: 40px;
+        line-height: 48px;
     }
 
     .resultCount {
-        line-height: 56px;
+        line-height: 48px;
     }
 }
 
